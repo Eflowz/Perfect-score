@@ -21,7 +21,7 @@ const Features = () => {
         </div>
         <div className="bg-[#5300b7]  text-white rounded-3xl p-5 md:p-10 shadow flex flex-col duration-300 hover:translate-y-[-4px] ">
             <div className="w-12 h-12   rounded-2xl mb-4 text-xl bg-white/20 flex items-center justify-center text-white"><IoMdTime /></div>
-            <h3 className="text-2xl md:text-3xl dark:text-white mb-4 font-semibold">Self-paced learning</h3>
+            <h3 className="text-2xl md:text-3xl dark:text-white mb-4 font-semibold text-black">Self-paced learning</h3>
             <p className=" text-lg text-gray-300 ">Life is busy. Study whenever and wherever it suits you, without any fixed deadlines.</p>
         </div>
         </div>  
@@ -29,12 +29,12 @@ const Features = () => {
 
         <div className="bg-white dark:bg-[#1b2337]  text-black rounded-3xl p-5 md:p-10 shadow  flex flex-col duration-300 hover:translate-y-[-4px]   ">
             <div className="w-12 h-12 mb-4 text-2xl  rounded-xl bg-[#5d3900]/10 flex items-center justify-center text-[#5d3900] dark:bg-[ffb95f]/20 dark:text-[#ffb95f]"><IoNewspaper /></div>
-            <h3 className="text-2xl dark:text-white md:text-3xl mb-4 font-semibold">Online assessments</h3>
+            <h3 className="text-2xl dark:text-white text-black md:text-3xl mb-4 font-semibold">Online assessments</h3>
             <p className=" text-lg text-gray-700 dark:text-[#cac4cf]">Validate your knowledge with rigorous, comprehensive exams designed to test deep understanding.</p>
         </div>
         <div className="bg-white dark:bg-[#1b2337] text-black rounded-3xl p-5 md:p-10 shadow  flex flex-col duration-300 hover:translate-y-[-4px] ">
             <div className="w-12 h-12 mb-4 rounded-xl text-2xl bg-[#006c49]/10 dark:bg-[#4edea3]/20  dark:text-[#4edea3] flex items-center justify-center text-[#006c49]"><BsLightningChargeFill /></div>
-            <h3 className="text-2xl dark:text-white md:text-3xl mb-4 font-semibold">Instant results</h3>
+            <h3 className="text-2xl dark:text-white text-black md:text-3xl mb-4 font-semibold">Instant results</h3>
             <p className=" text-lg text-gray-700 dark:text-[#cac4cf]">Get graded immediately. No more waiting days to find out how you performed on your certification exam.</p>
         </div>
         <div className="bg-white dark:text-white dark:bg-[#1b2337] text-black rounded-3xl p-5 md:p-10 shadow  flex flex-col duration-300 hover:translate-y-[-4px] ">

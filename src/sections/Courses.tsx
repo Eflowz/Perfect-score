@@ -51,7 +51,7 @@ const Courses = () => {
     return ( <div id='courses' className="bg-[#fef7ff] dark:bg-[#060e20]  p-5 md:p-15">
     <div className="flex justify-between flex-col md:flex-row gap-4 mb-10 items-center">
         <div className="flex flex-col gap-2">
-            <h3 className="text-2xl md:text-4xl dark:text-white font-semibold head">Popular Certification Tracks</h3>
+            <h3 className="text-2xl md:text-4xl dark:text-white text-black font-semibold head">Popular Certification Tracks</h3>
             <p className="text-lg md:text-xl dark:text-[#cac4cf] text-gray-800">Most chosen by professionals for skill elevation this quarter.</p>
         </div>
         <div onClick={() => setShowAll(!showAll)} className="flex items-center gap-1 cursor-pointer">

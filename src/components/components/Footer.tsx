@@ -26,7 +26,7 @@ const Fotter = () => {
 
  {/* Courses */}
  <div>
- <h3 className="font-semibold mb-3 text-dark dark:text-white ">Courses</h3>
+ <h3 className="font-semibold mb-3 text-black dark:text-white ">Courses</h3>
  <ul className="space-y-2 text-gray-700 dark:text-[#cac4cf]">
  <li>Python</li>
  <li>DevOps</li>
