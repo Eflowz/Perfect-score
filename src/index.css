@@ -5,5 +5,8 @@ html{
 .head{
     font-family: Inter, sans-serif ;
 }
+/*
 @custom-variant dark
 (&:where(.dark, .dark *))
+*/
+@custom-variant dark (&:where(.dark, .dark *));

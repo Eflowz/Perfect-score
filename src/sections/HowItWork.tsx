@@ -5,7 +5,7 @@ const HowItWork = () => {
         <h2 className="text-3xl lg:text-4xl font-semibold text-gray-900 dark:text-white">Your Path to <span className="text-[#6D28D9] dark:text-[#d3bbff]">Success</span></h2>
         <p className="text-gray-700 text-lg lg:text-xl dark:text-[#cac4cf]">We've streamlined the learning journey to make career advancement as efficient as possible</p>
     </div>
-    <hr className="text-gray-200 dark:text-gray-700"/>
+    <hr className="text-gray-200 dark:text-gray-800"/>
     
 </div>
 
