@@ -6,7 +6,7 @@ const Fotter = () => {
  
  {/* Brand */}
  <div>
- <h2 className="text-2xl font-bold dark:text-white">Perfect Score</h2>
+ <h2 className="text-2xl font-bold text-black dark:text-white">Perfect Score</h2>
  <p className="mt-2 text-gray-700 max-w-sm dark:text-[#cac4cf]">
  Learn in-demand skills, take assessments, and achieve your academic and career goals.
  </p>
@@ -14,7 +14,7 @@ const Fotter = () => {
 
  {/* Quick Links */}
  <div>
- <h3 className="font-semibold mb-3 text-white">Quick Links</h3>
+ <h3 className="font-semibold mb-3 text-black dark:text-white ">Quick Links</h3>
  <ul className="space-y-2 text-gray-700 dark:text-[#cac4cf]">
  <li><a href="#features">   Features</a></li>
  <li><a href="#courses">Courses</a></li>
@@ -26,7 +26,7 @@ const Fotter = () => {
 
  {/* Courses */}
  <div>
- <h3 className="font-semibold mb-3 text-white">Courses</h3>
+ <h3 className="font-semibold mb-3 text-dark dark:text-white ">Courses</h3>
  <ul className="space-y-2 text-gray-700 dark:text-[#cac4cf]">
  <li>Python</li>
  <li>DevOps</li>
