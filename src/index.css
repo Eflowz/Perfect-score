@@ -1,0 +1,9 @@
+@import "tailwindcss";
+html{
+    scroll-behavior: smooth;
+}
+.head{
+    font-family: Inter, sans-serif ;
+}
+@custom-variant dark
+(&:where(.dark, .dark *))
