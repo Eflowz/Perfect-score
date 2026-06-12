@@ -14,14 +14,14 @@ const Features = () => {
         <div className="bg-white dark:card-border shadow dark:bg-[#1b2337] text-black rounded-3xl md:p-5 p-5 shadow  flex flex-col md:flex-row duration-300 hover:translate-y-[-4px] ">
             <div className="flex md:pl-10 items-center md:items-start mb-10 flex-col md:justify-center">
                 <div className="w-12 h-12 rounded-xl mb-4 text-2xl bg-[#5300b7]/10 dark:bg-[#d3bbff]/10 dark:text-[#d3bbff] flex items-center justify-center text-[#5300b7]"><IoIosPeople /></div>
-                <h3 className="text-2xl md:text-3xl mb-4 font-semibold dark:text-white bg-gray-900">Expert-led courses</h3>
+                <h3 className="text-2xl md:text-3xl mb-4 font-semibold dark:text-white text-gray-900">Expert-led courses</h3>
                 <p className=" text-center md:text-start  text-lg text-gray-700 dark:text-[#cac4cf]">Learn directly from industry veterans and academic leaders who bring real-world experience into every lesson.</p>
             </div>
             <div className="md:w-[100%] lg:w-[70%]"><img className="md:h-[200px] h-[250px] md:flex-1 rounded-2xl w-full object-cover dark:bg-[#0b1236]" src="/images/lap-1.png" alt="" /></div>
         </div>
         <div className="bg-[#5300b7]  text-white rounded-3xl p-5 md:p-10 shadow flex flex-col duration-300 hover:translate-y-[-4px] ">
             <div className="w-12 h-12   rounded-2xl mb-4 text-xl bg-white/20 flex items-center justify-center text-white"><IoMdTime /></div>
-            <h3 className="text-2xl md:text-3xl dark:text-white mb-4 font-semibold text-black">Self-paced learning</h3>
+            <h3 className="text-2xl md:text-3xl dark:text-white mb-4 font-semibold ">Self-paced learning</h3>
             <p className=" text-lg text-gray-300 ">Life is busy. Study whenever and wherever it suits you, without any fixed deadlines.</p>
         </div>
         </div>  
