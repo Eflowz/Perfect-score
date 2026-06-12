@@ -135,10 +135,8 @@ export default function Navbar() {
  <div className="p-6">
 
  {/* HEADER (NEW CLOSE BUTTON ADDED HERE) */}
- <div className="flex justify-between items-center mb-6">
- <h2 className="text-lg font-bold dark:text-[#d3bbff] text-[#5300b7]">
-Perfect Score
- </h2>
+ <div className="flex  justify-end items-right mb-6">
+ 
 
  {/* ❌ CLOSE BUTTON */}
  <button
