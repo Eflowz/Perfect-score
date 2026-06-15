@@ -9,13 +9,14 @@ import Hero from "../sections/Hero";
 import HowItWork from "../sections/HowItWork";
 import Rating from "../sections/Rating";
 import Testimonial from "../sections/Testimonal";
+//import Register from "./auth/Register";
 
 const Home = () => {
     return (<div className="dark:bg-[#060e20] bg-[#f9f1ff]">
         <Navbar />
      
             <Hero />
-      
+        
            <Rating /> 
         
         <LazySection>

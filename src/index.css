@@ -5,8 +5,17 @@ html{
 .head{
     font-family: Inter, sans-serif ;
 }
-/*
-@custom-variant dark
-(&:where(.dark, .dark *))
-*/
+
+
+
+@keyframes spin {
+ to {
+ transform: rotate(360deg);
+ }
+}
 @custom-variant dark (&:where(.dark, .dark *));
+.image{
+    background-image: url("/images/libary.jpg");
+    background-size: cover;
+    background-position: center;
+}

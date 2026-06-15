@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
  const [open, setOpen] = useState(false);
@@ -98,7 +99,7 @@ export default function Navbar() {
 
  {/* Right controls */}
 <div className="hidden md:flex items-center gap-4 shadow-b-lg flex-gap-2 text-white w-fit rounded-xl dark:text-[#381e72] bg-[#5300b7] dark:bg-[#d3bbff] font-semibold px-8 py-2">
-                <button className="text-lg cursor-pointer ">Sign in</button>
+                <Link to="/register"  className="text-lg cursor-pointer ">Sign in</Link>
                
             </div>
  <div className="flex md:hidden items-center gap-3">
@@ -168,8 +169,9 @@ export default function Navbar() {
  ))}
  </div>
  <div className="md:hidden mt-5 flex items-center gap-4 shadow-b-lg flex-gap-2 text-white dark:text-[#381e72] w-fit rounded-xl bg-[#5300b7] dark:bg-[#d3bbff] font-semibold px-8 py-2">
-                <button className="text-lg cursor-pointer">Sign in</button>
                
+                <Link to="/register" className="text-lg cursor-pointer">Sign in</Link>
+             
             </div>
  </div>
 </div>
