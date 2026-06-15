@@ -1,50 +1,103 @@
-const Fotter = () => {
-    return ( <>
-    <footer className="bg-white dark:bg-[#060e20] p-5 md:p-15">
- <div className="max-w-7xl mx-auto  ">
- <div className="flex flex-col md:flex-row justify-between gap-8">
- 
- {/* Brand */}
- <div>
- <h2 className="text-2xl font-bold text-black dark:text-white">Perfect Score</h2>
- <p className="mt-2 text-gray-700 max-w-sm dark:text-[#cac4cf]">
- Learn in-demand skills, take assessments, and achieve your academic and career goals.
- </p>
- </div>
+import { FaGithub, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
 
- {/* Quick Links */}
- <div>
- <h3 className="font-semibold mb-3 text-black dark:text-white ">Quick Links</h3>
- <ul className="space-y-2 text-gray-700 dark:text-[#cac4cf]">
- <li><a href="#features">   Features</a></li>
- <li><a href="#courses">Courses</a></li>
- <li><a href="#HowItWork">HowItWorks</a></li>
- <li><a href="#FAQ">FAQ</a></li>
- <li><a href="#Testimonial">Testimonial</a></li>
- </ul>
- </div>
+const Footer = () => {
+  return (
+    <footer className="bg-transparent border-t border-gray-100 dark:border-slate-800/60 p-6 pt-16 md:p-16">
+      <div className="max-w-7xl mx-auto">
+        
+        {/* --- Main Info Grid Columns --- */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-12">
+          
+          {/* Brand Identity / Bio */}
+          <div className="flex flex-col gap-3 sm:col-span-2 md:col-span-1">
+            <h2 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+              Perfect Score
+            </h2>
+            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed max-w-xs">
+              Learn in-demand skills, validate your engineering proficiency with rigorous assessments, and achieve your global career milestones.
+            </p>
+            
+            {/* Social Media Links Layer */}
+            <div className="flex gap-4 mt-2 text-gray-400 dark:text-slate-500">
+              <a href="#" className="hover:text-[#16423C] dark:hover:text-[#a9f5a8] transition-colors duration-200">
+                <FaTwitter className="text-lg" />
+              </a>
+              <a href="#" className="hover:text-[#16423C] dark:hover:text-[#a9f5a8] transition-colors duration-200">
+                <FaLinkedin className="text-lg" />
+              </a>
+              <a href="#" className="hover:text-[#16423C] dark:hover:text-[#a9f5a8] transition-colors duration-200">
+                <FaGithub className="text-lg" />
+              </a>
+              <a href="#" className="hover:text-[#16423C] dark:hover:text-[#a9f5a8] transition-colors duration-200">
+                <FaYoutube className="text-lg" />
+              </a>
+            </div>
+          </div>
 
- {/* Courses */}
- <div>
- <h3 className="font-semibold mb-3 text-black dark:text-white ">Courses</h3>
- <ul className="space-y-2 text-gray-700 dark:text-[#cac4cf]">
- <li>Python</li>
- <li>DevOps</li>
- <li>Data Analysis</li>
- <li>Cloud Computing</li>
- <li>Software Engineering</li>
- 
- </ul>
- </div>
- </div>
+          {/* Navigation Tracks */}
+          <div>
+            <h3 className="font-bold text-sm tracking-wider uppercase text-gray-900 dark:text-slate-300 mb-4">
+              Quick Links
+            </h3>
+            <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-400 font-medium">
+              <li>
+                <a href="#features" className="hover:text-[#16423C] dark:hover:text-[#a9f5a8] transition-colors">
+                  Features Overview
+                </a>
+              </li>
+              <li>
+                <a href="#courses" className="hover:text-[#16423C] dark:hover:text-[#a9f5a8] transition-colors">
+                  Certification Tracks
+                </a>
+              </li>
+              <li>
+                <a href="#HowItWork" className="hover:text-[#16423C] dark:hover:text-[#a9f5a8] transition-colors">
+                  How It Works
+                </a>
+              </li>
+              <li>
+                <a href="#FAQ" className="hover:text-[#16423C] dark:hover:text-[#a9f5a8] transition-colors">
+                  General FAQ
+                </a>
+              </li>
+              <li>
+                <a href="#Testimonial" className="hover:text-[#16423C] dark:hover:text-[#a9f5a8] transition-colors">
+                  Success Stories
+                </a>
+              </li>
+            </ul>
+          </div>
 
- {/* Bottom Bar */}
- <div className="border-t border-gray-300 dark:text-[#cac4cf] dark:border-[#514e53] mt-8 pt-6 text-center text-gray-500 text-sm">
- © {new Date().getFullYear()} Perfect Score. All rights reserved.
- </div>
- </div>
-</footer>
-    </> );
-}
- 
-export default Fotter;
+          {/* Featured Courses Column */}
+          <div>
+            <h3 className="font-bold text-sm tracking-wider uppercase text-gray-900 dark:text-slate-300 mb-4">
+              Popular Tracks
+            </h3>
+            <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-400 font-medium">
+              <li><a href="#courses" className="hover:text-[#16423C] dark:hover:text-[#a9f5a8] transition-colors">Python Mastery</a></li>
+              <li><a href="#courses" className="hover:text-[#16423C] dark:hover:text-[#a9f5a8] transition-colors">DevOps Infrastructure</a></li>
+              <li><a href="#courses" className="hover:text-[#16423C] dark:hover:text-[#a9f5a8] transition-colors">Data Analytics</a></li>
+              <li><a href="#courses" className="hover:text-[#16423C] dark:hover:text-[#a9f5a8] transition-colors">Cloud Systems</a></li>
+              <li><a href="#courses" className="hover:text-[#16423C] dark:hover:text-[#a9f5a8] transition-colors">Software Architecture</a></li>
+            </ul>
+          </div>
+        </div>
+
+        {/* --- Bottom Utility Metabar Row --- */}
+        <div className="border-t border-gray-100 dark:border-slate-800/80 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500 dark:text-slate-500">
+          <div>
+            © {new Date().getFullYear()} Perfect Score. Engineered to build future-proof careers.
+          </div>
+          <div className="flex gap-6 font-medium">
+            <a href="#" className="hover:text-gray-800 dark:hover:text-slate-300 transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-gray-800 dark:hover:text-slate-300 transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-gray-800 dark:hover:text-slate-300 transition-colors">Cookie Dashboard</a>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

@@ -21,7 +21,7 @@ export default function CreateCourse() {
  setLoading(true);
  setError("");
 
-console.log(getAccessToken());
+// console.log(getAccessToken());
  await createCourse(
  {
  title,

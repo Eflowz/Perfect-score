@@ -1,48 +1,57 @@
-import { FaArrowRight, FaCheck } from "react-icons/fa";
-import { Link } from "react-router-dom";
+export default function HeroSection() {
+  return (
+    <section id="hero" className="bg-transparent min-h-screen text-[#112211] dark:text-[#E8ECD7] font-sans antialiased overflow-hidden relative px-6 py-12 md:py-20">
+      <div className="absolute inset-0 pointer-events-none select-none z-0">
+        <svg className="absolute inset-0 w-full h-full opacity-60 dark:opacity-[0.15]" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="hero-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.75" className="text-gray-200 dark:text-slate-700" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#hero-grid)" />
+        </svg>
+      </div>
 
-export default function Hero(){
-return(<div className=" bg-[#f9f1ff] dark:bg-[#0f172a] p-5 md:p-15  ">
-<div className="flex flex-col lg:flex-row gap-20 mb-10 md:mb-20 mt-20">
-    <div className="flex flex-col md:mb-0 gap-10 md:gap-15 md:flex-1">
-        <div className="flex items-center gap-2 px-6 w-fit rounded-full bg-[#5300b7]/10 dark:bg-[#d3bbff]/10 border border-[#5300b7]/20">
-            <p className="w-2 h-2 bg-[#5300b7] rounded-full dark:bg-[#d3bbff]"></p>
-            <p className="text-[#5300b7] dark:text-[#d3bbff]  font-semibold whitespace-nowrap">Next Enrollment: Starts Today</p>
-        </div>
-        <div className=" flex gap-7 md:gap-10 flex-col">
-            <h1 className="text-3xl md:text-5xl text-black head font-bold tracking-wide dark:text-white">Master New Skills with <span className="text-[#5300b7] dark:text-[#d3bbff]">Industry-Recognized </span> Certifications</h1>
-            <p className="text-gray-700 dark:text-gray-300  tracking-wide leading-7  text-lg md:text-xl">Learn from experts, take assessments at your own pace, and earn verified certificates that boost your career journey in the digital economy.</p>
+      {/* ================== CONTENT LAYER================== */}
+      <div className="relative z-10 max-w-7xl mx-auto text-center mt-28 md:mt-36">
+         <div className="max-w-7xl mx-auto text-center mt-36 md:mt-24">
+        <h1 className="text-4xl md:text-6xl font-bold tracking-tight max-w-4xl mx-auto leading-tight">
+          Experience the future of Tech education with <span className="text-[#16423C] dark:text-[#C2FFC1]">Perfect Score</span>.
+        </h1>
+        <p className="mt-6 text-base md:text-lg text-gray-6xl dark:text-gray-300 max-w-2xl mx-auto font-medium">
+          Lightning-fast performance, seamless offline access, and instant app installation. Your learning never stops.
+        </p>
+        <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <a href="/login">
+          <button className="bg-[#16423C] dark:bg-[#C2FFC1] text-white dark:text-[#060e20] font-semibold px-8 py-3.5 rounded-full hover:bg-[#0d2a26] dark:hover:bg-[#aefcae] transition-colors shadow-sm">
+            Get Started
+          </button>
+            </a>
+          <button className="bg-white dark:bg-transparent text-[#16423C] dark:text-white border border-gray-200 dark:border-gray-700 font-semibold px-8 py-3.5 rounded-full hover:bg-gray-50 dark:hover:bg-white/5 transition-colors shadow-sm">
+            Try Demo
+          </button>
         </div> 
-        <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex items-center gap-4 shadow-b-lg whitespace-nowrap flex-gap-2 text-white dark:text-[#381e72] w-fit rounded-4xl bg-[#5300b7] dark:bg-[#d3bbff] dark:shadow-[#d3bbff]/25 dark:shadow-lg  font-semibold px-6 py-2 md:px-8 md:py-4">
-                <Link to="/register" className="text-lg cursor-pointer">Start Learning</Link>
-                <FaArrowRight />
+      </div>
+
+        {/* --- Product/Image Showcase Frame --- */}
+        <div className="mt-14 md:mt-20 max-w-5xl mx-auto">
+          <div className="container mx-auto px-2 md:px-4">
+            {/* Mockup Frame with modern translucent borders */}
+            <div className="relative rounded-2xl md:rounded-4xl overflow-hidden shadow-2xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-950 p-2">
+              <div className="overflow-hidden rounded-xl md:rounded-[1.7rem] relative">
+                <img 
+                  src="/images/group-1.avif" 
+                  alt="Perfect Score Dashboard Interface" 
+                  className="w-full h-auto max-h-137.5 object-cover transition-transform duration-700 hover:scale-[1.02]" 
+                />
+                {/* Soft Dynamic Gradient Overlay */}
+                <div className="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent dark:from-black/60 pointer-events-none" />
+              </div>
             </div>
-            <div className="flex items-center gap-4 flex-gap-2 whitespace-nowrap  w-fit rounded-4xl text-[#5300b7] border-2 border-[#5300b7]/20 dark:border-[#d3bbff]/20 dark:text-[#d3bbff] bg-inherit  font-semibold px-10 py-2 md:px-12 md:py-4">
-                <button>Browse Courses</button>
-             
-            </div>
+          </div>
         </div>
-    </div>
 
-    <div className="relative md:flex-1 ">
-        <img src="/images/group-1.avif" alt="" className="rounded-2xl lg:rounded-4xl h-[350px] md:h-[500px] lg:h-[550px] w-full object-cover" />
-        <div className="absolute bottom-4  z-0 flex gap-2 items-center right-4  left-4 bg-white/90 dark:bg-[#1b2337]/90 dark:border dark:border-white/10 p-5 rounded-2xl">
-            <div className="w-12 h-12 mb-4 rounded-xl text-2xl bg-[#006c49]/10 dark:bg-[#4edea3]/20 flex items-center justify-center text-[#006c49] dark:text-[#4edea3]"><FaCheck /></div>
-            <div >
-                 
-                <p className="font-semibold text-gray-800 text-lg dark:text-white">Verified Certificates</p>
-                <p className="dark:text-[#cac4cf] text-gray-800 text-sm md:text-md">Endorsed by top universities & companies</p>
-    
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-</div>)
+      </div>
+    </section>
+  );
 }

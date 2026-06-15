@@ -1,7 +1,3 @@
-
-
-
-
 import api from "./axios";
 
 export type CreateCourseRequest = {
