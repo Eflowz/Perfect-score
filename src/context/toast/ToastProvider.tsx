@@ -3,10 +3,10 @@
 import { useState } from "react";
 
 import { ToastContext } from "./ToastContext";
-import { Toast } from "../components/common/Toast";
+import { Toast } from "../../components/common/Toast";
 
 import type { Toast as ToastType,
- ToastType as Type} from "../types/toast.types";
+ ToastType as Type} from "../../types/toast.types";
 
 export const ToastProvider = ({
  children,

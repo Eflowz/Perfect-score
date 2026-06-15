@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/useAuth";
-import { useToast } from "../../hook/useToast";
+import { useAuth } from "../../context/auth/useAuth";
+import { useToast } from "../../context/toast/useToast";
 import { Input } from "../../components/common/Input";
 import { Button } from "../../components/common/Button";
 

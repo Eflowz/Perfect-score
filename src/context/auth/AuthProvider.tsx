@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 
 import { AuthContext } from "./AuthContext";
 
-import { getUser, clearAuth, } from "../utlis/storage";
-import { loginUser, registerUser,} from "../api/authApi";
-import type { User } from "../types/auth.types";
+import { getUser, clearAuth, } from "../../utlis/storage";
+import { loginUser, registerUser,} from "../../api/authApi";
+import type { User } from "../../types/auth.types";
 
 export const AuthProvider = ({
  children,
