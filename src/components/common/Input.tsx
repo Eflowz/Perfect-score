@@ -4,9 +4,9 @@ import { FaEye, FaEyeSlash } from "react-icons/fa6";
 type InputProps = {
  label?: string;
  type?: string;
- value: string;
+ value?: string;
  placeholder?: string;
- onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+ onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
  showPasswordToggle?: boolean;
 };
 
@@ -46,7 +46,7 @@ export const Input = ({
  value={value}
  placeholder={placeholder}
  onChange={onChange}
-  className="w-full h-14 border border-[#fef7ff] bg-gray-50 rounded-2xl px-6 text-[#1d1a24] placeholder:text-[#7b7486] focus:ring-1 focus:ring-[#5300b7] outline-none transition-all text-md md:text-lg"
+  className="w-full h-14 border border-[#fef7ff] bg-gray-50 rounded-2xl px-6 text-[#1d1a24] placeholder:text-[#7b7486] focus:ring-2 focus:ring-[#16423C] outline-none transition-all text-md md:text-lg"
  />
 
 
@@ -60,7 +60,7 @@ export const Input = ({
  className="absolute right-3 top-5 cursor-pointer"
  >
 
- {showPassword ?<FaEye className="text-[#915bd3]"/> : <FaEyeSlash className="text-[#915bd3]" />}
+ {showPassword ?<FaEye className="text-[#277268]"/> : <FaEyeSlash className="text-[#277268]" />}
 
  </button>
 

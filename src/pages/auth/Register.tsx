@@ -108,12 +108,62 @@ else if (password !== confirmPassword) {
  };
  return (
  <div className="min-h-screen px-5 md:px-10  mb-10 mt-10 ">
-<main className="flex shadow rounded-2xl overflow-hidden border border-gray-100 ">
+<main className="flex shadow  rounded-2xl overflow-hidden border border-gray-100 ">
+{/* --- Premium Background SVG Lines & Defs --- */}
+        
+ <section className="hidden lg:flex relative py-10 lg:w-1/2  flex-col px-16 bg-[#16423C]">
+<div className="absolute inset-0 pointer-events-none select-none z-10 opacity-40">
+ <svg
+ className="w-full h-full"
+ viewBox="0 0 800 400"
+ fill="none"
+ xmlns="http://www.w3.org/2000/svg"
+ preserveAspectRatio="xMidYMid slice"
+ >
+ <defs>
+ {/* Soft gradient glow */}
+ <linearGradient id="soft-wave" x1="0%" y1="0%" x2="100%" y2="0%">
+ <stop offset="0%" stopColor="#E2FB6C" stopOpacity="0.25" />
+ <stop offset="50%" stopColor="#3ab3a2" stopOpacity="0.15" />
+ <stop offset="100%" stopColor="#16423C" stopOpacity="0" />
+ </linearGradient>
 
- <section className="hidden  py-10 lg:flex lg:w-1/2 relative flex-col px-16 bg-[#5300b7]">
+ {/* subtle blur glow */}
+ <filter id="blur">
+ <feGaussianBlur stdDeviation="2" />
+ </filter>
+ </defs>
 
+ {/* Main smooth wave */}
+ <path
+ d="M0 250 C 150 150, 350 350, 500 250 C 650 150, 750 300, 900 200"
+ stroke="url(#soft-wave)"
+ strokeWidth="1.5"
+ fill="none"
+ filter="url(#blur)"
+ />
+
+ {/* Secondary wave */}
+ <path
+ d="M-50 300 C 200 200, 300 400, 600 280 C 750 220, 850 260, 950 180"
+ stroke="url(#soft-wave)"
+ strokeWidth="1"
+ fill="none"
+ opacity="0.7"
+ />
+
+ {/* Soft diagonal energy line */}
+ <path
+ d="M-100 100 C 200 50, 400 200, 800 80"
+ stroke="url(#soft-wave)"
+ strokeWidth="1.5"
+ fill="none"
+ opacity="0.5"
+ />
+ </svg>
+</div>
  {/* Overlay */}
- <div className="absolute inset-0 z-0 bg-[#5300b7]/70"></div>
+ <div className="absolute inset-0 z-0 bg-[#16423C]/70"></div>
 
 
  {/* Content */}
@@ -288,7 +338,7 @@ else if (password !== confirmPassword) {
  <div className="flex items-start  gap-2">
  <div className="flex items-center h-5 ">
  <input
- className="w-5 h-5 cursor-pointer accent-[#5300b7] border-[#7b7486] rounded-md focus:ring-[#5300b7]"
+ className="w-5 h-5 cursor-pointer accent-[#1d1a24] border-[#7b7486] rounded-md focus:ring-[#5300b7]"
  id="terms"
  type="checkbox"
  onChange={(e)=> setAccepted(e.target.checked)}
@@ -301,7 +351,7 @@ else if (password !== confirmPassword) {
  >
  I agree to the{" "}
  <span
- className="text-[#5300b7] font-semibold "
+ className="text-[#16423C] font-semibold "
 
  >
  Terms of Service
@@ -309,7 +359,7 @@ else if (password !== confirmPassword) {
  and{" "}
 
  <span
- className="text-[#5300b7] font-semibold "
+ className="text-[#16423C] font-semibold "
  
  >
  Privacy Policy
@@ -342,7 +392,7 @@ loadingText="Creating account..."
  <p className="mt-12 text-center text-[16px] leading-[1.5] text-[#4a4455]">
  Already have an account?{" "}
  <Link
- className="text-[#5300b7] font-bold hover:underline"
+ className="text-[#16423C] font-bold hover:underline"
  to="/login"
  >
  Log In

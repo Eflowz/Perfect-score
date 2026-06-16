@@ -30,6 +30,7 @@ const HowItWork = () => {
                 {step.id}
               </div>
               <div className="h-1 w-8 rounded-full bg-gray-100 dark:bg-slate-800 group-hover:bg-[#16423C] dark:group-hover:bg-[#a9f5a8] transition-all" />
+           
             </div>
 
             {/* Content */}

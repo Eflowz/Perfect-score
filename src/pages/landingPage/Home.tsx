@@ -1,17 +1,17 @@
-import Navbar from "../components/components/Navbar";
-import Fotter from "../components/components/Footer";
-import LazySection from "../components/components/LazySection";
+import Navbar from "../../components/components/Navbar";
+import Fotter from "../../components/components/Footer";
+import LazySection from "../../components/components/LazySection";
 
 // Sections
-import Hero from "../sections/Hero";
-import Rating from "../sections/Rating";
-import Features from "../sections/Features";
-import HowItWork from "../sections/HowItWork";
-import Courses from "../sections/Courses";
+import Hero from "../../sections/Hero";
+import Rating from "../../sections/Rating";
+import Features from "../../sections/Features";
+import HowItWork from "../../sections/HowItWork";
+import Courses from "../../sections/Courses";
 // i feel like there's no need for testimonial now maybe later sha
 // import Testimonial from "../sections/Testimonal";
-import FAQ from "../sections/FAQ";
-import CTA from "../sections/CTA";
+import FAQ from "../../sections/FAQ";
+import CTA from "../../sections/CTA";
 
 const sections = [
   { Component: Hero, lazy: false },

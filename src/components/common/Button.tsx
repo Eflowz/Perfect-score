@@ -20,7 +20,7 @@ export const Button = ({
  type={type}
  onClick={onClick}
  disabled={loading}
- className="w-full cursor-pointer h-14 bg-[#5300b7] text-white rounded-full text-sm font-medium flex items-center justify-center gap-2 hover:bg-[#5300b7]/90 active:scale-[0.98] transition-all duration-200 shadow-lg shadow-[#5300b7]/20 group"
+ className="w-full cursor-pointer h-14 bg-[#16423C] text-white rounded-full text-sm font-medium flex items-center justify-center gap-2 hover:bg-[#16423C]/90 active:scale-[0.98] transition-all duration-200 shadow-lg shadow-[#16423C]/20 group"
  
  >
  {loading ?<>

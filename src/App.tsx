@@ -4,7 +4,7 @@ import ScrollToTop from './components/common/ScrollToTop';
 
 import { ProtectedRoute } from './routes/ProtectedRoutes';
 
-import Home from './pages/Home';
+import Home from './pages/landingPage/Home';
 import Register from './pages/auth/Register';
 import Login from './pages/auth/Login';
 
@@ -15,6 +15,7 @@ import LessonPage from './context/course/LessonPage';
 
 import CreateCourse from './pages/admin/CreateCourse';
 import CreateModule from './pages/admin/CreateModules';
+import Contact from './pages/landingPage/Contact';
 
 function App() {
   return (
@@ -73,7 +74,12 @@ function App() {
           path="/admin/modules/new" 
           element={<CreateModule />} 
         />
+        <Route 
+          path="/contact" 
+          element={<Contact />} 
+        />
       </Routes>
+      
     </>
   );
 }

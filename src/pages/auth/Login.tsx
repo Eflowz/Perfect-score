@@ -140,10 +140,10 @@ export default function Login() {
  <div className="min-h-screen px-5 md:px-10  mb-10 mt-10 ">
 <main className="flex shadow rounded-2xl overflow-hidden border border-gray-100 justify-center items-center">
 
- <section className="hidden  py-10 lg:flex lg:w-1/2 relative flex-col px-16 bg-[#5300b7]">
+ <section className="hidden  py-10 lg:flex lg:w-1/2 relative flex-col px-16 bg-[#16423C]">
 
  {/* Overlay */}
- <div className="absolute inset-0 z-0 bg-[#5300b7]/70"></div>
+ <div className="absolute inset-0 z-0 bg-[#16423C]/70"></div>
 
 
  {/* Content */}
@@ -194,10 +194,61 @@ Accesss your world class certificate  dashboard and continue  your journe toward
  
  {/* Right Side: Form */}
  <section className="w-full lg:w-1/2  bg-white flex flex-col justify-center items-center px-6 py-12 lg:px-16">
+ <div className="absolute inset-0 pointer-events-none select-none z-10 opacity-40">
+ <svg
+ className="w-full h-full"
+ viewBox="0 0 800 400"
+ fill="none"
+ xmlns="http://www.w3.org/2000/svg"
+ preserveAspectRatio="xMidYMid slice"
+ >
+ <defs>
+ {/* Soft gradient glow */}
+ <linearGradient id="soft-wave" x1="0%" y1="0%" x2="100%" y2="0%">
+ <stop offset="0%" stopColor="#E2FB6C" stopOpacity="0.25" />
+ <stop offset="50%" stopColor="#3ab3a2" stopOpacity="0.15" />
+ <stop offset="100%" stopColor="#16423C" stopOpacity="0" />
+ </linearGradient>
+
+ {/* subtle blur glow */}
+ <filter id="blur">
+ <feGaussianBlur stdDeviation="2" />
+ </filter>
+ </defs>
+
+ {/* Main smooth wave */}
+ <path
+ d="M0 250 C 150 150, 350 350, 500 250 C 650 150, 750 300, 900 200"
+ stroke="url(#soft-wave)"
+ strokeWidth="1.5"
+ fill="none"
+ filter="url(#blur)"
+ />
+
+ {/* Secondary wave */}
+ <path
+ d="M-50 300 C 200 200, 300 400, 600 280 C 750 220, 850 260, 950 180"
+ stroke="url(#soft-wave)"
+ strokeWidth="1"
+ fill="none"
+ opacity="0.7"
+ />
+
+ {/* Soft diagonal energy line */}
+ <path
+ d="M-100 100 C 200 50, 400 200, 800 80"
+ stroke="url(#soft-wave)"
+ strokeWidth="1.5"
+ fill="none"
+ opacity="0.5"
+ />
+ </svg>
+</div>
+ 
  <div className="w-full max-w-[440px] md:max-w-[600px]">
  {/* Logo */}
  <div className="flex items-center gap-2 mb-12">
- <div className="w-10 lg:hidden h-10 bg-[#5300b7] rounded-xl flex items-center justify-center text-white">
+ <div className="w-10 lg:hidden h-10 bg-[#16423C] rounded-xl flex items-center justify-center text-white">
  <span
  className="material-symbols-outlined"
  style={{ fontVariationSettings: "'FILL' 1" }}
@@ -206,7 +257,7 @@ Accesss your world class certificate  dashboard and continue  your journe toward
  </span>
  </div>
 
- <span className="text-[24px] lg:hidden  leading-[1.3] font-bold text-[#5300b7] tracking-tight">
+ <span className="text-[24px] lg:hidden  leading-[1.3] font-bold text-[#16423C] tracking-tight">
  PerfectScore
  </span> </div>
 
@@ -298,7 +349,7 @@ loadingText="signing in..."
  <p className="mt-12 text-center text-[16px] leading-[1.5] text-[#4a4455]">
 Don't  have an account?{" "}
  <Link
- className="text-[#5300b7] font-bold hover:underline"
+ className="text-[#16423C] font-bold hover:underline"
  to="/register"
  >
  Sign Up
