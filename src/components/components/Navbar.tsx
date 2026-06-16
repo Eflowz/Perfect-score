@@ -81,15 +81,12 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          
-          {/* Platform Identity Branding */}
           <Link to="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
             <span className="text-xl font-bold tracking-tight text-[#16423C] dark:text-[#C2FFC1]">
               Perfect<span className="font-light text-gray-700 dark:text-gray-300">Score</span>
             </span>
           </Link>
 
-          {/* Desktop Navigation Links Container */}
           <div className="hidden md:flex items-center bg-gray-100/60 dark:bg-slate-800/40 p-1.5 rounded-full border border-gray-200/30 dark:border-slate-700/30">
             {links.map((link) =>
               link.type === "route" ? (
@@ -137,16 +134,23 @@ export default function Navbar() {
               Sign In
             </Link>
 
-            {/* Hamburger Interactive Menu Trigger */}
-            <button
-              onClick={() => setOpen(!open)}
-              className="md:hidden flex flex-col items-center justify-center gap-1 w-9 h-9 rounded-full bg-gray-100 dark:bg-slate-800/60 z-50 cursor-pointer"
-              aria-label="Toggle Drawer Menu"
-            >
-              <span className={`w-6 h-0.5 bg-gray-800 dark:bg-white transition-all duration-300 ${open ? "rotate-45 translate-y-1.5" : ""}`} />
-              <span className={`w-6 h-0.5 bg-gray-800 dark:bg-white transition-all duration-300 ${open ? "opacity-0" : ""}`} />
-              {/* <span className={`w-4 h-0.5 bg-gray-800 dark:bg-white transition-all duration-300 ${open ? "-rotate-45 -translate-y-1" : ""}`} /> */}
-            </button>
+        {/* for the navbar */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="md:hidden flex flex-col items-center justify-center gap-1 w-9 h-9 z-50 cursor-pointer"
+            aria-label="Toggle Drawer Menu"
+          >
+            <span 
+              className={`w-6 h-0.5 bg-gray-800 dark:bg-white transition-all duration-300 ${
+                open ? "rotate-45 translate-y-0.75" : ""
+              }`} 
+            />
+            <span 
+              className={`w-6 h-0.5 bg-gray-800 dark:bg-white transition-all duration-300 ${
+                open ? "-rotate-45 -translate-y-0.75" : ""
+              }`} 
+            />
+          </button>
           </div>
         </div>
       </nav>
