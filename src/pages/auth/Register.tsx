@@ -217,7 +217,7 @@ else if (password !== confirmPassword) {
  <div className="w-full max-w-[440px] md:max-w-[600px]">
  {/* Logo */}
  <div className="flex items-center gap-2 mb-12">
- <div className="w-10 lg:hidden h-10 bg-[#5300b7] rounded-xl flex items-center justify-center text-white">
+ <div className="w-10 lg:hidden h-10 bg-[#16423C] rounded-xl flex items-center justify-center text-white">
  <span
  className="material-symbols-outlined"
  style={{ fontVariationSettings: "'FILL' 1" }}
@@ -226,7 +226,7 @@ else if (password !== confirmPassword) {
  </span>
  </div>
 
- <span className="text-[24px] lg:hidden  leading-[1.3] font-bold text-[#5300b7] tracking-tight">
+ <span className="text-[24px] lg:hidden  leading-[1.3] font-bold text-[#16423C] tracking-tight">
  PerfectScore
  </span> </div>
 
@@ -338,7 +338,7 @@ else if (password !== confirmPassword) {
  <div className="flex items-start  gap-2">
  <div className="flex items-center h-5 ">
  <input
- className="w-5 h-5 cursor-pointer accent-[#1d1a24] border-[#7b7486] rounded-md focus:ring-[#5300b7]"
+ className="w-5 h-5 cursor-pointer accent-[#1d1a24] border-[#7b7486] rounded-md focus:ring-[#16423C]"
  id="terms"
  type="checkbox"
  onChange={(e)=> setAccepted(e.target.checked)}
