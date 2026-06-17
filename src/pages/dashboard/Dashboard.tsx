@@ -1,33 +1,28 @@
-import { LogoutButton } from "../auth/Logout";
-import { useAuth } from "../../context/auth/useAuth";
-import { Link } from "react-router-dom";
-import CreateCourse from "../admin/CreateCourse";
-import Courses from "../courses/Courses";
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
+import Sidebar from "./components/Sidebar";
+import Header from "./components/Header";
 
 const DashBoard = () => {
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
 
- const { user } = useAuth();
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-800 dark:text-gray-100 antialiased flex transition-colors duration-200">
+      <Sidebar isExpanded={isSidebarExpanded} setIsExpanded={setIsSidebarExpanded} />
 
- return (
- <div className="pt-30">
+      <div
+        className={`flex-1 min-w-0 flex flex-col transition-all duration-300 ease-in-out ${
+          isSidebarExpanded ? "pl-64" : "pl-20"
+        }`}
+      >
+        <Header />
 
- <p className="text-xl font-semibold">
- Welcome, {user?.name}
- </p>
-
- <div className="mt-4">
- <Link to="/courses">
- My Courses
- </Link>
- </div>
-
- <div className="mt-4">
- <LogoutButton />
- </div>
-<CreateCourse />
-<Courses />
- </div>
- );
+        <main className="p-8 max-w-7xl w-full mx-auto space-y-6 flex-1">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
 };
 
 export default DashBoard;

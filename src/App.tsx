@@ -9,6 +9,12 @@ import Register from './pages/auth/Register';
 import Login from './pages/auth/Login';
 
 import Dashboard from './pages/dashboard/Dashboard';
+import DashboardHome from './pages/dashboard/DashboardHome';
+import Roadmap from './pages/dashboard/Roadmap';
+import Projects from './pages/dashboard/Projects';
+import Sandbox from './pages/dashboard/Sandbox';
+import Certificates from './pages/dashboard/Certificates';
+import Settings from './pages/dashboard/Settings';
 import Courses from './pages/courses/Courses';
 import CourseDetails from './pages/courses/CourseDetails';
 import LessonPage from './context/course/LessonPage';
@@ -35,7 +41,14 @@ function App() {
               <Dashboard />
             </ProtectedRoute>
           } 
-        />
+        >
+          <Route index element={<DashboardHome />} />
+          <Route path="roadmap" element={<Roadmap />} />
+          <Route path="projects" element={<Projects />} />
+          <Route path="ide" element={<Sandbox />} />
+          <Route path="certificates" element={<Certificates />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
         
         <Route 
           path="/courses" 
