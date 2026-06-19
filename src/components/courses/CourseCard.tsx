@@ -1,5 +1,5 @@
 import { FaLongArrowAltRight } from "react-icons/fa";
-import { MdBook } from "react-icons/md";
+
 import { Link } from "react-router-dom";
 import { deleteCourse, updateCourse } from "../../api/courses.api";
 //import { getAccessToken } from "../../utlis/storage";
@@ -13,10 +13,10 @@ import EditCourseDrawer from "../../pages/admin/EditCourseDrawer";
 type Props = {
   course: Course;
   removeCourse: (id: string) => void;
-  count: number;
+ 
 };
 
-export default function CourseCard({ course, removeCourse, count }: Props) {
+export default function CourseCard({ course, removeCourse}: Props) {
   const { user } = useAuth();
   const role = user?.role;
   const handleDelete = async (course: Course) => {
@@ -43,21 +43,7 @@ export default function CourseCard({ course, removeCourse, count }: Props) {
 
   return (
     <>
-      {/* Header */}
-      <div className="flex items-center justify-between bg-white/80 dark:bg-white/5 border border-gray-100 dark:border-white/8 backdrop-blur-sm py-4 px-5 rounded-2xl shadow-sm">
-        <div className="flex items-center gap-3">
-          <div className="p-2 rounded-xl bg-[#16423C]/10 dark:bg-[#E2FB6C]/10">
-            <MdBook size={22} className="text-[#16423C] dark:text-[#E2FB6C]" />
-          </div>
-          <h3 className="font-bold dark:text-white text-xl md:text-3xl tracking-tight">
-            Course List
-          </h3>
-        </div>
-        <span className="text-xs font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-white/8 px-3 py-1.5 rounded-full">
-          {count} courses
-        </span>
-      </div>
-
+      
       {/* Grid */}
       <div>
         <div className="group relative flex flex-col animate-fade-in bg-white dark:bg-white/5 border border-gray-100 dark:border-white/8 rounded-2xl px-5 pt-4 pb-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
