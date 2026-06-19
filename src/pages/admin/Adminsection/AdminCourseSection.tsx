@@ -159,7 +159,7 @@ export default function AdminCoursesSection() {
                 {openMenuId === course.id && (
                   <div
                     onClick={(e) => e.stopPropagation()} // IMPORTANT
-                    className="absolute right-0 top-10 w-36 bg-white dark:bg-[hashtag#0F2C28] border border-gray-200 dark:border-white/10 rounded-xl shadow-lg z-50 overflow-hidden"
+                    className="absolute right-0 top-10 w-20 bg-white dark:bg-[#0F2C28] border border-gray-200 dark:border-white/10 rounded-xl shadow-lg z-50 overflow-hidden flex"
                   >
                     {/* EDIT */}
                     <button
@@ -167,7 +167,7 @@ export default function AdminCoursesSection() {
                       className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-white/5"
                     >
                       <MdEdit size={16} />
-                      Edit
+                   
                     </button>
 
                     {/* DELETE */}
@@ -176,7 +176,7 @@ export default function AdminCoursesSection() {
                       className="flex items-center gap-2 w-full px-3 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10"
                     >
                       <MdDelete size={16} />
-                      Delete
+                     
                     </button>
                   </div>
                 )}

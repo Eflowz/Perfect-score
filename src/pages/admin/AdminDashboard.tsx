@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import AdminSidebar from "./AdminSidebar";
 import Header from "../dashboard/components/Header";
 import { useAuth } from "../../context/auth/useAuth";
+import { useCourse } from "../../context/course/useCourse";
 const AdminDashBoard = () => {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
   const { user } = useAuth();
+const {fetchCourses}=useCourse()
+
+useEffect (()=>{
+  fetchCourses()
+},[])
 
   if (user?.role !== "SUPER_ADMIN") {
     return <Navigate to="/admindashboard" />;

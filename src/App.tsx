@@ -66,6 +66,7 @@ function App() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminPanel />} />
           <Route index element={<AdminDashBoard />} />
+          <Route index element={<Courses />} />
           <Route path="courses" element={<AdminCourses />} />
           <Route path="courses/new" element={<CreateCourse />} />
           <Route path="courses/:id" element={<CourseDetails />} />
