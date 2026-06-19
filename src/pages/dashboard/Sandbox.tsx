@@ -9,7 +9,9 @@ def greet(name):
 greet("Perfect Learner")
 `);
 
-  const [output, setOutput] = useState("Run your script to see outputs here...");
+  const [output, setOutput] = useState(
+    "Run your script to see outputs here...",
+  );
   const [isRunning, setIsRunning] = useState(false);
 
   const runCode = () => {
@@ -26,10 +28,12 @@ greet("Perfect Learner")
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-            <MdTerminal className="text-[#16423C] dark:text-[#E2FB6C]" /> IDE Sandbox
+            <MdTerminal className="text-[#16423C] dark:text-[#E2FB6C]" /> IDE
+            Sandbox
           </h1>
           <p className="text-sm text-gray-500 dark:text-[#6B8A85] mt-1">
-            Test algorithms, write code snippets, and play around with interactive environments.
+            Test algorithms, write code snippets, and play around with
+            interactive environments.
           </p>
         </div>
 
@@ -38,7 +42,11 @@ greet("Perfect Learner")
           disabled={isRunning}
           className="flex items-center gap-1.5 px-4 py-2 bg-[#16423C] dark:bg-[#E2FB6C] text-white dark:text-[#16423C] rounded-xl hover:opacity-90 disabled:opacity-50 transition-opacity font-semibold text-xs cursor-pointer shadow-sm"
         >
-          {isRunning ? <MdCached className="animate-spin" size={16} /> : <MdPlayArrow size={16} />}
+          {isRunning ? (
+            <MdCached className="animate-spin" size={16} />
+          ) : (
+            <MdPlayArrow size={16} />
+          )}
           Run Script
         </button>
       </div>
@@ -48,7 +56,9 @@ greet("Perfect Learner")
         <div className="flex flex-col bg-gray-900 dark:bg-black border border-white/5 rounded-2xl overflow-hidden shadow-xl">
           <div className="bg-gray-950 dark:bg-black px-4 py-2 border-b border-white/5 flex items-center justify-between text-[11px] font-mono text-gray-400">
             <span>main.py</span>
-            <span className="text-emerald-500 font-bold uppercase tracking-wider scale-90">Python 3.10</span>
+            <span className="text-emerald-500 font-bold uppercase tracking-wider scale-90">
+              Python 3.10
+            </span>
           </div>
           <textarea
             value={code}

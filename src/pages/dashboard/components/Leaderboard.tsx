@@ -11,19 +11,21 @@ const Leaderboard = () => {
 
   return (
     <div className="bg-white dark:bg-[#16423C] border border-gray-200/60 dark:border-white/5 rounded-2xl shadow-sm dark:shadow-xl p-6 transition-all duration-200 flex flex-col justify-between h-full space-y-5">
-      
       {/* Header Info Block */}
       <div className="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-white/5">
         <div className="space-y-0.5">
           <h3 className="text-sm font-bold text-gray-900 dark:text-white tracking-tight flex items-center gap-1.5">
-            <MdWorkspacePremium className="text-amber-500 dark:text-[#E2FB6C]" size={16} />
+            <MdWorkspacePremium
+              className="text-amber-500 dark:text-[#E2FB6C]"
+              size={16}
+            />
             Top Learners This Week
           </h3>
           <p className="text-[11px] text-gray-400 dark:text-[#6B8A85] font-medium">
             Weekly leaderboard cycle
           </p>
         </div>
-        
+
         <button className="text-[11px] font-bold text-[#16423C] dark:text-[#E2FB6C] hover:underline cursor-pointer flex items-center gap-0.5">
           Full Board →
         </button>
@@ -42,30 +44,38 @@ const Leaderboard = () => {
           >
             {/* Left Hand: Position Medal / Rank & Student Name */}
             <div className="flex items-center space-x-3">
-              <span className={`w-5 h-5 flex items-center justify-center font-mono text-[11px] font-bold rounded-md ${
-                student.rank === 1 
-                  ? "bg-amber-500/10 text-amber-600 dark:text-amber-400" 
-                  : student.rank === 2
-                  ? "bg-slate-400/10 text-slate-500"
-                  : student.rank === 3 && !student.isUser
-                  ? "bg-amber-700/10 text-amber-800"
-                  : "text-gray-400 dark:text-[#6B8A85]"
-              }`}>
+              <span
+                className={`w-5 h-5 flex items-center justify-center font-mono text-[11px] font-bold rounded-md ${
+                  student.rank === 1
+                    ? "bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                    : student.rank === 2
+                      ? "bg-slate-400/10 text-slate-500"
+                      : student.rank === 3 && !student.isUser
+                        ? "bg-amber-700/10 text-amber-800"
+                        : "text-gray-400 dark:text-[#6B8A85]"
+                }`}
+              >
                 {student.rank}
               </span>
-              
+
               {/* Dynamic Identity Initial Icon Badge */}
-              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-mono font-bold select-none ${
-                student.isUser 
-                  ? "bg-[#16423C] dark:bg-[#E2FB6C] text-white dark:text-[#16423C]" 
-                  : "bg-gray-200 dark:bg-white/5 text-gray-600 dark:text-gray-300"
-              }`}>
+              <div
+                className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-mono font-bold select-none ${
+                  student.isUser
+                    ? "bg-[#16423C] dark:bg-[#E2FB6C] text-white dark:text-[#16423C]"
+                    : "bg-gray-200 dark:bg-white/5 text-gray-600 dark:text-gray-300"
+                }`}
+              >
                 {student.name.substring(0, 2).toUpperCase()}
               </div>
 
-              <span className={`text-xs font-semibold ${
-                student.isUser ? "text-gray-900 dark:text-[#E2FB6C]" : "text-gray-700 dark:text-gray-200"
-              }`}>
+              <span
+                className={`text-xs font-semibold ${
+                  student.isUser
+                    ? "text-gray-900 dark:text-[#E2FB6C]"
+                    : "text-gray-700 dark:text-gray-200"
+                }`}
+              >
                 {student.name}
               </span>
             </div>
@@ -73,7 +83,10 @@ const Leaderboard = () => {
             {/* Right Hand: Metric Readings & Delta Variations */}
             <div className="flex items-center space-x-4 font-mono text-[11px]">
               <span className="text-gray-500 dark:text-gray-300 font-bold">
-                {student.xp} <span className="text-[9px] font-sans font-normal text-gray-400">XP</span>
+                {student.xp}{" "}
+                <span className="text-[9px] font-sans font-normal text-gray-400">
+                  XP
+                </span>
               </span>
               <span className="text-emerald-600 dark:text-[#E2FB6C] font-semibold flex items-center gap-0.5 min-w-11 justify-end">
                 <MdTrendingUp size={12} />
@@ -88,11 +101,18 @@ const Leaderboard = () => {
       <div className="pt-3 border-t border-gray-100 dark:border-white/5 flex items-center justify-between text-[11px] font-medium text-gray-400 dark:text-[#6B8A85]">
         <div className="flex items-center gap-1.5">
           <MdLayers size={14} className="text-[#16423C] dark:text-[#E2FB6C]" />
-          <span>You're <span className="text-emerald-600 dark:text-[#E2FB6C] font-bold font-mono">top 3%</span> globally</span>
+          <span>
+            You're{" "}
+            <span className="text-emerald-600 dark:text-[#E2FB6C] font-bold font-mono">
+              top 3%
+            </span>{" "}
+            globally
+          </span>
         </div>
-        <span className="font-mono text-[10px] text-gray-400/80 dark:text-gray-400">+190 XP vs last week 🚀</span>
+        <span className="font-mono text-[10px] text-gray-400/80 dark:text-gray-400">
+          +190 XP vs last week 🚀
+        </span>
       </div>
-
     </div>
   );
 };

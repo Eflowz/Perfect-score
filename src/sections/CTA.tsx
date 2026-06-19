@@ -6,7 +6,6 @@ const CTA = () => {
     <div className="bg-transparent p-6 py-12 md:p-16 max-w-7xl mx-auto">
       {/* Outer Card Container styled with your brand's deep forest green */}
       <div className="relative overflow-hidden bg-[#16423C] rounded-[2.5rem] p-8 py-16 md:p-16 flex flex-col justify-center items-center shadow-xl text-center">
-        
         {/* --- Premium Background SVG Lines & Defs --- */}
         <div className="absolute inset-0 pointer-events-none select-none z-0 opacity-40">
           <svg
@@ -18,13 +17,19 @@ const CTA = () => {
           >
             <defs>
               {/* Linear gradient mapping for the vector line pathing */}
-              <linearGradient id="cta-line-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <linearGradient
+                id="cta-line-grad"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
                 <stop offset="0%" stopColor="#E2FB6C" stopOpacity="0.3" />
                 <stop offset="50%" stopColor="#a9f5a8" stopOpacity="0.1" />
                 <stop offset="100%" stopColor="#16423C" stopOpacity="0" />
               </linearGradient>
             </defs>
-            
+
             {/* Elegant Abstract Accent Flow Lines */}
             <path
               d="M-100,200 C150,50 350,350 600,100 C750,-20 850,150 950,50"
@@ -53,27 +58,30 @@ const CTA = () => {
           <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
             Ready to Advance Your Career?
           </h2>
-          
+
           <p className="text-base md:text-xl text-emerald-100/80 leading-relaxed max-w-2xl font-medium">
-            Join thousands of professionals today and gain unrestricted access to premium learning tools, expert guides, and globally recognized credentials.
+            Join thousands of professionals today and gain unrestricted access
+            to premium learning tools, expert guides, and globally recognized
+            credentials.
           </p>
-          
+
           <div className="mt-4">
             {/* Brand New Lime/Neon Green Accent Button */}
             <Link
               to="/register"
               className="group flex items-center gap-3 bg-[#E2FB6C] hover:bg-[#d0eb59] text-[#16423C] font-bold px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 outline-none"
             >
-              <span className="text-sm md:text-base tracking-wide">Sign Up Now</span>
+              <span className="text-sm md:text-base tracking-wide">
+                Sign Up Now
+              </span>
               <FiArrowRight className="text-lg transform group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
           </div>
         </div>
-        
+
         {/* Decorative corner glow rings */}
         <div className="absolute -top-24 -left-24 w-48 h-48 rounded-full bg-[#E2FB6C]/10 blur-3xl pointer-events-none" />
         <div className="absolute -bottom-24 -right-24 w-48 h-48 rounded-full bg-[#a9f5a8]/10 blur-3xl pointer-events-none" />
-
       </div>
     </div>
   );

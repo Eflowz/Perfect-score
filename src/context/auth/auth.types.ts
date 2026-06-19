@@ -1,22 +1,18 @@
-;
-import type { User } from "../../types/auth.types"; 
+import type { User } from "../../types/auth.types";
 export type AuthContextType = {
- user: User | null;
+  user: User | null;
 
- loading: boolean;
+  loading: boolean;
 
- isAuthenticated: boolean;
+  isAuthenticated: boolean;
 
- login: (
- email: string,
- password: string
- ) => Promise<void>;
+  login: (email: string, password: string) => Promise<User>;
 
- register: (data: {
- name: string;
- email: string;
- password: string;
- }) => Promise<void>;
+  register: (data: {
+    name: string;
+    email: string;
+    password: string;
+  }) => Promise<void>;
 
- logout: () => void;
+  logout: () => void;
 };

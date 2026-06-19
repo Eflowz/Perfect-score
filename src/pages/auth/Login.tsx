@@ -9,6 +9,7 @@ type LoginErrors = {
   email?: string;
   password?: string;
   general?: string;
+ 
 };
 
 export default function Login() {
@@ -22,7 +23,6 @@ export default function Login() {
 
   const [errors, setErrors] = useState<LoginErrors>({});
   const [loading, setLoading] = useState(false);
-
   const validate = () => {
     const newErrors: LoginErrors = {};
 
@@ -42,7 +42,35 @@ export default function Login() {
 
     return Object.keys(newErrors).length === 0;
   };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
+    if (!validate()) return;
+
+    try {
+      setLoading(true);
+      setErrors({});
+
+      const user = await login(email, password);
+
+      showToast("Login successful", "success");
+
+      if (user?.role === "SUPER_ADMIN") {
+        navigate("/admin");
+      } else {
+        navigate("/dashboard");
+      }
+    } catch (error: any) {
+      const message =
+        error?.response?.data?.message || "Invalid email or password";
+
+      setErrors({ general: message });
+      showToast(message, "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+  /*
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -56,17 +84,18 @@ export default function Login() {
 
       showToast("Login successful", "success");
       navigate("/dashboard");
-    } catch (error: any) {
+    } catch (error: Error) {
       const message =
         error?.response?.data?.message || "Invalid email or password";
 
       setErrors({ general: message });
-      showToast(message, "error");
+      showToast(message, "error")
+      
     } finally {
       setLoading(false);
     }
   };
-
+*/
   return (
     <>
       {errors.general && <p>{errors.general}</p>}
@@ -127,16 +156,8 @@ export default function Login() {
                     y2="0%"
                   >
                     <stop offset="0%" stopColor="#E2FB6C" stopOpacity="0.25" />
-                    <stop
-                      offset="50%"
-                      stopColor="#3ab3a2"
-                      stopOpacity="0.15"
-                    />
-                    <stop
-                      offset="100%"
-                      stopColor="#16423C"
-                      stopOpacity="0"
-                    />
+                    <stop offset="50%" stopColor="#3ab3a2" stopOpacity="0.15" />
+                    <stop offset="100%" stopColor="#16423C" stopOpacity="0" />
                   </linearGradient>
 
                   {/* subtle blur glow */}
@@ -200,7 +221,9 @@ export default function Login() {
                 </p>
               </div>
 
-              {errors.general && <p className="text-red-400">{errors.general}</p>}
+              {errors.general && (
+                <p className="text-red-400">{errors.general}</p>
+              )}
 
               {/* Form */}
               <form className="space-y-6" onSubmit={handleSubmit}>
@@ -213,7 +236,9 @@ export default function Login() {
                     onChange={(e) => setEmail(e.target.value)}
                   />
 
-                  {errors.email && <p className="text-red-400">{errors.email}</p>}
+                  {errors.email && (
+                    <p className="text-red-400">{errors.email}</p>
+                  )}
                 </div>
 
                 <div>

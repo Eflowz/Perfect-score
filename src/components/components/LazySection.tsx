@@ -14,7 +14,7 @@ export default function LazySection({ children }: { children: ReactNode }) {
       },
       {
         threshold: 0.2,
-      }
+      },
     );
 
     if (ref.current) {

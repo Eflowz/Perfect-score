@@ -7,7 +7,10 @@ interface LogoutButtonProps {
   className?: string;
 }
 
-export const LogoutButton = ({ hideText = false, className }: LogoutButtonProps) => {
+export const LogoutButton = ({
+  hideText = false,
+  className,
+}: LogoutButtonProps) => {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -28,11 +31,11 @@ export const LogoutButton = ({ hideText = false, className }: LogoutButtonProps)
       className={className || defaultStyle}
       title={hideText ? "Log Out" : undefined}
     >
-      <MdLogout 
-        size={18} 
-        className="shrink-0 text-gray-400 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors" 
+      <MdLogout
+        size={18}
+        className="shrink-0 text-gray-400 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors"
       />
-      
+
       {!hideText && (
         <span className="whitespace-nowrap transition-opacity duration-200">
           Log Out

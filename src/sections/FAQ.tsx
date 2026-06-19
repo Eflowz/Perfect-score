@@ -5,23 +5,28 @@ const FAQ = () => {
   const faqs = [
     {
       question: "How do I enroll in a course?",
-      answer: "Simply create an account, choose your preferred course, and click the enroll button to get started instantly.",
+      answer:
+        "Simply create an account, choose your preferred course, and click the enroll button to get started instantly.",
     },
     {
       question: "Can I access courses on my phone?",
-      answer: "Yes, all courses are fully responsive and accessible across mobile phones, tablets, and desktop devices.",
+      answer:
+        "Yes, all courses are fully responsive and accessible across mobile phones, tablets, and desktop devices.",
     },
     {
       question: "Do I receive a certificate after completion?",
-      answer: "Eligible courses provide verified digital certificates upon successful completion of all required lessons and assessments.",
+      answer:
+        "Eligible courses provide verified digital certificates upon successful completion of all required lessons and assessments.",
     },
     {
       question: "Can I learn at my own pace?",
-      answer: "Yes, our tracks are entirely self-paced, allowing you to learn whenever and wherever it is convenient for you.",
+      answer:
+        "Yes, our tracks are entirely self-paced, allowing you to learn whenever and wherever it is convenient for you.",
     },
     {
       question: "Can I take exams at any time?",
-      answer: "Exams can be taken within the window specified by your course administrator. Be sure to check your specific dashboard track schedule for deadlines.",
+      answer:
+        "Exams can be taken within the window specified by your course administrator. Be sure to check your specific dashboard track schedule for deadlines.",
     },
   ];
 
@@ -32,14 +37,18 @@ const FAQ = () => {
   };
 
   return (
-    <div id="FAQ" className="bg-gray-100dark:bg-gray-900 p-6 py-12 md:p-16 max-w-4xl mx-auto">
+    <div
+      id="FAQ"
+      className="bg-gray-100dark:bg-gray-900 p-6 py-12 md:p-16 max-w-4xl mx-auto"
+    >
       <div>
         <div className="flex flex-col gap-2 mb-12 text-center md:text-left">
           <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
             Frequently Asked Questions
           </h2>
           <p className="text-sm md:text-base text-gray-600 dark:text-gray-400">
-            Everything you need to know about our certification tracks and learning process.
+            Everything you need to know about our certification tracks and
+            learning process.
           </p>
         </div>
         <div className="space-y-4">
@@ -80,7 +89,9 @@ const FAQ = () => {
 
                 <div
                   className={`grid transition-all duration-300 ease-in-out ${
-                    isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                    isOpen
+                      ? "grid-rows-[1fr] opacity-100"
+                      : "grid-rows-[0fr] opacity-0"
                   }`}
                 >
                   <div className="overflow-hidden">

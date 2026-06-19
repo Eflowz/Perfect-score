@@ -1,29 +1,28 @@
-import {
- createContext
-} from "react";
+import { createContext } from "react";
 
 import type { Course } from "../../types/courses.types";
 
 type CourseContextType = {
+  courses: Course[];
 
- courses: Course[];
+  selectedCourse: Course | null;
 
- selectedCourse: Course | null;
+  loading: boolean;
+  removeCourse: (id: string) => void;
 
- loading:boolean;
-removeCourse: (id:string) => void;
+  updateCourse: (
+    id: string,
+    data: {
+      id: string;
+      data: Partial<Course>;
+    },
+  ) => Promise<void>;
 
+  fetchCourses: () => Promise<void>;
 
-
- fetchCourses:()=>Promise<void>;
-
- fetchCourseById:
- (id:string)=>Promise<void>;
-
+  fetchCourseById: (id: string) => Promise<void>;
 };
 
-
-export const CourseContext =
-createContext<CourseContextType | undefined>(
- undefined
+export const CourseContext = createContext<CourseContextType | undefined>(
+  undefined,
 );

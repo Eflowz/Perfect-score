@@ -10,7 +10,7 @@ const DashboardHome = () => {
         <DaysChallenge />
         <PerformanceTracker />
       </div>
-      
+
       {/* Right Content Analytic Standings Row */}
       <div className="h-full">
         <Leaderboard />

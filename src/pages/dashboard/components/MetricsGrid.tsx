@@ -1,4 +1,9 @@
-import { MdPeople, MdAssignmentTurnedIn, MdRadioButtonChecked, MdTrendingUp } from "react-icons/md";
+import {
+  MdPeople,
+  MdAssignmentTurnedIn,
+  MdRadioButtonChecked,
+  MdTrendingUp,
+} from "react-icons/md";
 
 const MetricsGrid = () => {
   // Mock data representing current mini-school stats
@@ -59,7 +64,6 @@ const MetricsGrid = () => {
 
             {/* Bottom Row: Dynamic Visual Element Layer based on data type */}
             <div className="mt-5 pt-4 border-t border-gray-100 dark:border-white/5 flex items-center justify-between">
-              
               {/* Context A: Sparkline mini data visualization (Attendance Card) */}
               {metric.chartPoints && (
                 <div className="flex items-center justify-between w-full">
@@ -83,8 +87,12 @@ const MetricsGrid = () => {
               {metric.progressBar && (
                 <div className="w-full space-y-1.5">
                   <div className="flex justify-between items-center text-[11px] font-medium">
-                    <span className="text-gray-400 dark:text-[#6B8A85]">{metric.subtext}</span>
-                    <span className="text-gray-700 dark:text-white font-mono">{metric.progressValue}%</span>
+                    <span className="text-gray-400 dark:text-[#6B8A85]">
+                      {metric.subtext}
+                    </span>
+                    <span className="text-gray-700 dark:text-white font-mono">
+                      {metric.progressValue}%
+                    </span>
                   </div>
                   <div className="w-full h-1.5 bg-gray-100 dark:bg-white/10 rounded-full overflow-hidden">
                     <div
@@ -107,7 +115,6 @@ const MetricsGrid = () => {
                   </span>
                 </div>
               )}
-
             </div>
           </div>
         );

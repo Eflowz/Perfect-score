@@ -1,17 +1,20 @@
-import { MdOutlineArrowBack, MdOutlineCall, MdOutlineMailOutline } from "react-icons/md";
+import {
+  MdOutlineArrowBack,
+  MdOutlineCall,
+  MdOutlineMailOutline,
+} from "react-icons/md";
 import { Input } from "../../components/common/Input";
 import { Button } from "../../components/common/Button";
 import { Link } from "react-router-dom";
 const Contact = () => {
   return (
     <section className="mx-5 md:mx-20 my-10">
-        <Link to="/" className="flex items-center text-sm mb-10">
-            <p>Back</p>
-            <MdOutlineArrowBack  className="text-xl"/>
-        </Link>
+      <Link to="/" className="flex items-center text-sm mb-10">
+        <p>Back</p>
+        <MdOutlineArrowBack className="text-xl" />
+      </Link>
       <div className="flex justify-center">
         <div className="w-full max-w-5xl bg-[#16423C] border border-gray-200 rounded-3xl overflow-hidden flex flex-col md:flex-row">
-
           {/* Left Contact Information */}
           <div className="w-full bg-[#16423C] px-10 py-10 flex flex-col justify-center">
             <div className="mb-10">
@@ -27,7 +30,6 @@ const Contact = () => {
             </div>
 
             <div className="flex flex-col gap-5">
-
               {/* Email */}
               <div className="flex items-center gap-3">
                 <div className="bg-white w-12 h-12 flex items-center justify-center rounded-full shadow-md hover:bg-[#3ab3a2] transition-all">
@@ -39,31 +41,21 @@ const Contact = () => {
                 </p>
               </div>
 
-
               {/* Phone */}
               <div className="flex items-center gap-3">
                 <div className="bg-white w-12 h-12 flex items-center justify-center rounded-full shadow-md hover:bg-[#3ab3a2] transition-all">
                   <MdOutlineCall className="text-[#16423C] text-xl hover:text-white" />
                 </div>
 
-                <p className="text-gray-200">
-                  +234 800 000 0000
-                </p>
+                <p className="text-gray-200">+234 800 000 0000</p>
               </div>
-
             </div>
           </div>
 
-
           {/* Form Section */}
           <div className="w-full bg-white p-8 md:p-10 flex flex-col gap-5 md:rounded-tl-xl md:rounded-bl-3xl">
-
             <div className="flex flex-col gap-5">
-              <Input
-                label="Full Name"
-                type="text"
-                placeholder="John Doe"
-              />
+              <Input label="Full Name" type="text" placeholder="John Doe" />
 
               <Input
                 label="Email"
@@ -72,18 +64,10 @@ const Contact = () => {
               />
             </div>
 
-
-            <Input
-              label="Subject"
-              type="text"
-              placeholder="Subject"
-            />
-
+            <Input label="Subject" type="text" placeholder="Subject" />
 
             <div>
-              <label className="font-semibold">
-                Message
-              </label>
+              <label className="font-semibold">Message</label>
 
               <textarea
                 className="
@@ -109,11 +93,8 @@ const Contact = () => {
               />
             </div>
 
-
             <Button text="Contact Us" />
-
           </div>
-
         </div>
       </div>
     </section>

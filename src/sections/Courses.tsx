@@ -84,7 +84,10 @@ const Courses = () => {
   };
 
   return (
-    <div id="courses" className="bg-transparent p-6 pt-12 md:p-16 md:pt-12 max-w-7xl mx-auto overflow-hidden">
+    <div
+      id="courses"
+      className="bg-transparent p-6 pt-12 md:p-16 md:pt-12 max-w-7xl mx-auto overflow-hidden"
+    >
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div className="flex flex-col gap-1">
           <h3 className="text-2xl md:text-3xl dark:text-white text-gray-900 font-bold tracking-tight">
@@ -94,7 +97,7 @@ const Courses = () => {
             Most chosen by professionals for skill elevation this quarter.
           </p>
         </div>
-        
+
         {/* --- Smart UI Control Bar --- */}
         <div className="flex items-center gap-4 self-end sm:self-auto">
           {/* Main Action Link */}
@@ -103,7 +106,9 @@ const Courses = () => {
             className="group flex items-center gap-2 cursor-pointer bg-transparent border-none outline-none font-semibold text-[#16423C] dark:text-[#a9f5a8] text-sm md:text-base transition-all"
           >
             <span>{currentSlide > 0 ? "Reset View" : "View All Courses"}</span>
-            <FaAngleRight className={`transform transition-transform text-xs ${currentSlide > 0 ? 'rotate-180' : 'group-hover:translate-x-1'}`} />
+            <FaAngleRight
+              className={`transform transition-transform text-xs ${currentSlide > 0 ? "rotate-180" : "group-hover:translate-x-1"}`}
+            />
           </button>
 
           {/* Minimalist Visual Pagination Dots / Navigation Arrows */}
@@ -117,7 +122,11 @@ const Courses = () => {
             </button>
             <button
               onClick={() => instanceRef.current?.next()}
-              disabled={instanceRef.current ? currentSlide >= instanceRef.current.track.details.maxIdx : false}
+              disabled={
+                instanceRef.current
+                  ? currentSlide >= instanceRef.current.track.details.maxIdx
+                  : false
+              }
               className="p-2 rounded-xl border border-gray-100 dark:border-slate-800 disabled:opacity-30 dark:text-white hover:bg-gray-50 dark:hover:bg-slate-800 transition-all cursor-pointer"
             >
               <FaAngleRight className="text-xs" />
@@ -127,7 +136,10 @@ const Courses = () => {
       </div>
 
       {/* --- Swipeable Slider Wrapper (Keen-slider hook injected here) --- */}
-      <div ref={sliderRef} className="keen-slider overflow-visible! sm:overflow-hidden!">
+      <div
+        ref={sliderRef}
+        className="keen-slider overflow-visible! sm:overflow-hidden!"
+      >
         {courses.map((item) => (
           <div
             key={item.id}
@@ -162,7 +174,6 @@ const Courses = () => {
                 </span>
               </div>
             </div>
-
           </div>
         ))}
       </div>

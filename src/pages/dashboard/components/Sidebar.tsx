@@ -1,11 +1,21 @@
 import { Link, useLocation } from "react-router-dom";
-import { 
-  MdDashboard, MdMap, MdBook, MdAssignment, MdWorkspacePremium, MdChevronLeft, MdChevronRight,MdFiberManualRecord,MdSettings,MdTerminal
+import {
+  MdDashboard,
+  MdMap,
+  MdBook,
+  MdAssignment,
+  MdWorkspacePremium,
+  MdChevronLeft,
+  MdChevronRight,
+  MdFiberManualRecord,
+  MdSettings,
+  MdTerminal,
 } from "react-icons/md";
 
 interface SidebarProps {
   isExpanded: boolean;
   setIsExpanded: (expanded: boolean) => void;
+  isAdmin?: boolean;
 }
 
 const Sidebar = ({ isExpanded, setIsExpanded }: SidebarProps) => {
@@ -14,11 +24,15 @@ const Sidebar = ({ isExpanded, setIsExpanded }: SidebarProps) => {
   const menuItems = [
     { name: "Dashboard", href: "/dashboard", icon: MdDashboard },
     { name: "My Roadmap", href: "/dashboard/roadmap", icon: MdMap },
-    { name: "Courses", href: "/courses", icon: MdBook, badge: 3 },
+    { name: "Courses", href: "dashboard/courses", icon: MdBook, badge: 3 },
     { name: "Projects", href: "/dashboard/projects", icon: MdAssignment },
     { name: "IDE Sandbox", href: "/dashboard/ide", icon: MdTerminal },
-    { name: "Certificates", href: "/dashboard/certificates", icon: MdWorkspacePremium },
-    ];
+    {
+      name: "Certificates",
+      href: "/dashboard/certificates",
+      icon: MdWorkspacePremium,
+    },
+  ];
 
   const recentItems = [
     { name: "BST Implementation", href: "/lessons/bst" },
@@ -41,7 +55,9 @@ const Sidebar = ({ isExpanded, setIsExpanded }: SidebarProps) => {
             <span className="text-base font-bold tracking-tight text-gray-900 dark:text-white">
               PerfectScore
             </span>
-            <span className={`text-[10px] font-mono tracking-wider text-gray-400 dark:text-[#6B8A85] uppercase transition-opacity ${isExpanded ? "opacity-100" : "opacity-0"}`}>
+            <span
+              className={`text-[10px] font-mono tracking-wider text-gray-400 dark:text-[#6B8A85] uppercase transition-opacity ${isExpanded ? "opacity-100" : "opacity-0"}`}
+            >
               Pro Workspace
             </span>
           </div>
@@ -51,14 +67,20 @@ const Sidebar = ({ isExpanded, setIsExpanded }: SidebarProps) => {
             className="absolute -right-7 top-3 bg-white dark:bg-[#16423C] border border-gray-200 dark:border-white/10 text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white p-1 rounded-full cursor-pointer transition-colors shadow-sm flex items-center justify-center"
             aria-label="Toggle Sidebar"
           >
-            {isExpanded ? <MdChevronLeft size={16} /> : <MdChevronRight size={16} />}
+            {isExpanded ? (
+              <MdChevronLeft size={16} />
+            ) : (
+              <MdChevronRight size={16} />
+            )}
           </button>
         </div>
 
         {/* --- MENU SECTION --- */}
         <div className="space-y-4">
           <div>
-            <p className={`text-[10px] font-bold tracking-widest text-gray-400 dark:text-[#6B8A85] uppercase px-3 mb-2 transition-opacity ${isExpanded ? "opacity-100" : "opacity-0 h-0 overflow-hidden"}`}>
+            <p
+              className={`text-[10px] font-bold tracking-widest text-gray-400 dark:text-[#6B8A85] uppercase px-3 mb-2 transition-opacity ${isExpanded ? "opacity-100" : "opacity-0 h-0 overflow-hidden"}`}
+            >
               Menu
             </p>
             <nav className="space-y-1">
@@ -77,14 +99,25 @@ const Sidebar = ({ isExpanded, setIsExpanded }: SidebarProps) => {
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <Icon size={18} className={isActive ? "text-white dark:text-[#E2FB6C]" : "text-gray-400 dark:text-gray-500 group-hover:text-gray-900 dark:group-hover:text-white"} />
-                      <span className={`transition-opacity duration-200 whitespace-nowrap ${isExpanded ? "opacity-100" : "opacity-0 pointer-events-none absolute left-16"}`}>
+                      <Icon
+                        size={18}
+                        className={
+                          isActive
+                            ? "text-white dark:text-[#E2FB6C]"
+                            : "text-gray-400 dark:text-gray-500 group-hover:text-gray-900 dark:group-hover:text-white"
+                        }
+                      />
+                      <span
+                        className={`transition-opacity duration-200 whitespace-nowrap ${isExpanded ? "opacity-100" : "opacity-0 pointer-events-none absolute left-16"}`}
+                      >
                         {item.name}
                       </span>
                     </div>
 
                     {item.badge && isExpanded && (
-                      <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded-md ${isActive ? "bg-white/20 text-white" : "bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-gray-400"}`}>
+                      <span
+                        className={`text-[10px] font-mono px-1.5 py-0.5 rounded-md ${isActive ? "bg-white/20 text-white" : "bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-gray-400"}`}
+                      >
                         {item.badge}
                       </span>
                     )}
@@ -101,7 +134,9 @@ const Sidebar = ({ isExpanded, setIsExpanded }: SidebarProps) => {
           </div>
 
           {/* --- RECENT SECTION --- */}
-          <div className={`transition-all duration-200 ${isExpanded ? "opacity-100" : "opacity-0 h-0 overflow-hidden pointer-events-none"}`}>
+          <div
+            className={`transition-all duration-200 ${isExpanded ? "opacity-100" : "opacity-0 h-0 overflow-hidden pointer-events-none"}`}
+          >
             <p className="text-[10px] font-bold tracking-widest text-gray-400 dark:text-[#6B8A85] uppercase px-3 mb-2">
               Recent
             </p>
@@ -112,7 +147,10 @@ const Sidebar = ({ isExpanded, setIsExpanded }: SidebarProps) => {
                   to={item.href}
                   className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-[#16423C] dark:hover:text-[#E2FB6C] hover:bg-gray-50 dark:hover:bg-white/5 transition-all truncate"
                 >
-                  <MdFiberManualRecord size={6} className="text-gray-300 dark:text-gray-600 shrink-0" />
+                  <MdFiberManualRecord
+                    size={6}
+                    className="text-gray-300 dark:text-gray-600 shrink-0"
+                  />
                   <span className="truncate">{item.name}</span>
                 </Link>
               ))}
@@ -132,8 +170,17 @@ const Sidebar = ({ isExpanded, setIsExpanded }: SidebarProps) => {
           }`}
         >
           <div className="flex items-center gap-3">
-            <MdSettings size={18} className={isSettingsActive ? "text-white dark:text-[#E2FB6C]" : "text-gray-400 dark:text-gray-500 group-hover:text-gray-900 dark:group-hover:text-white"} />
-            <span className={`transition-opacity duration-200 whitespace-nowrap ${isExpanded ? "opacity-100" : "opacity-0 pointer-events-none absolute left-16"}`}>
+            <MdSettings
+              size={18}
+              className={
+                isSettingsActive
+                  ? "text-white dark:text-[#E2FB6C]"
+                  : "text-gray-400 dark:text-gray-500 group-hover:text-gray-900 dark:group-hover:text-white"
+              }
+            />
+            <span
+              className={`transition-opacity duration-200 whitespace-nowrap ${isExpanded ? "opacity-100" : "opacity-0 pointer-events-none absolute left-16"}`}
+            >
               settings
             </span>
           </div>

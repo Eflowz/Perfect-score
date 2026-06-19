@@ -16,7 +16,7 @@ export default function Navbar() {
       { name: "Courses", id: "courses", type: "hash" },
       { name: "Contact", id: "/contact", type: "route" }, // Direct page routing handler
     ],
-    []
+    [],
   );
 
   // Dark mode theme initialization toggle
@@ -81,9 +81,16 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <Link to="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
+          <Link
+            to="/"
+            className="flex items-center gap-2"
+            onClick={() => setOpen(false)}
+          >
             <span className="text-xl font-bold tracking-tight text-[#16423C] dark:text-[#C2FFC1]">
-              Perfect<span className="font-light text-gray-700 dark:text-gray-300">Score</span>
+              Perfect
+              <span className="font-light text-gray-700 dark:text-gray-300">
+                Score
+              </span>
             </span>
           </Link>
 
@@ -113,7 +120,7 @@ export default function Navbar() {
                 >
                   {link.name}
                 </a>
-              )
+              ),
             )}
           </div>
 
@@ -124,9 +131,13 @@ export default function Navbar() {
               className="p-2.5 text-xl rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800/50 transition-colors cursor-pointer"
               aria-label="Toggle Dynamic Theme"
             >
-              {darkMode ? <MdDarkMode className="text-[#e1da14]" /> : <MdLightMode className="text-[#16423C]" />}
+              {darkMode ? (
+                <MdDarkMode className="text-[#e1da14]" />
+              ) : (
+                <MdLightMode className="text-[#16423C]" />
+              )}
             </button>
-            
+
             <Link
               to="/login"
               className="hidden md:inline-flex items-center justify-center text-sm font-bold bg-[#16423C] hover:bg-[#0F2C28] dark:bg-[#C2FFC1] dark:hover:bg-[#aefcae] text-white dark:text-[#060e20] px-6 py-2.5 rounded-full transition-all duration-200 shadow-sm"
@@ -134,31 +145,33 @@ export default function Navbar() {
               Sign In
             </Link>
 
-        {/* for the navbar */}
-          <button
-            onClick={() => setOpen(!open)}
-            className="md:hidden flex flex-col items-center justify-center gap-1 w-9 h-9 z-50 cursor-pointer"
-            aria-label="Toggle Drawer Menu"
-          >
-            <span 
-              className={`w-6 h-0.5 bg-gray-800 dark:bg-white transition-all duration-300 ${
-                open ? "rotate-45 translate-y-0.75" : ""
-              }`} 
-            />
-            <span 
-              className={`w-6 h-0.5 bg-gray-800 dark:bg-white transition-all duration-300 ${
-                open ? "-rotate-45 -translate-y-0.75" : ""
-              }`} 
-            />
-          </button>
+            {/* for the navbar */}
+            <button
+              onClick={() => setOpen(!open)}
+              className="md:hidden flex flex-col items-center justify-center gap-1 w-9 h-9 z-50 cursor-pointer"
+              aria-label="Toggle Drawer Menu"
+            >
+              <span
+                className={`w-6 h-0.5 bg-gray-800 dark:bg-white transition-all duration-300 ${
+                  open ? "rotate-45 translate-y-0.75" : ""
+                }`}
+              />
+              <span
+                className={`w-6 h-0.5 bg-gray-800 dark:bg-white transition-all duration-300 ${
+                  open ? "-rotate-45 -translate-y-0.75" : ""
+                }`}
+              />
+            </button>
           </div>
         </div>
       </nav>
 
-{/* for mobile */}
+      {/* for mobile */}
       <div
         className={`fixed inset-x-0 top-0 z-40 bg-[#FAFBF9] dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 transform transition-all duration-300 ease-in-out md:hidden flex flex-col pt-24 pb-8 px-8 gap-8 ${
-          open ? "translate-y-0 opacity-100 shadow-2xl" : "-translate-y-full opacity-0 pointer-events-none"
+          open
+            ? "translate-y-0 opacity-100 shadow-2xl"
+            : "-translate-y-full opacity-0 pointer-events-none"
         }`}
       >
         {/* Left Aligned Content List Stack */}
@@ -190,7 +203,7 @@ export default function Navbar() {
               >
                 {link.name}
               </a>
-            )
+            ),
           )}
         </div>
 

@@ -1,27 +1,13 @@
-import {
- useContext
-} from "react";
+import { useContext } from "react";
 
-import {
- CourseContext
-} from "./CourseContext";
+import { CourseContext } from "./CourseContext";
 
+export const useCourse = () => {
+  const context = useContext(CourseContext);
 
-export const useCourse =()=>{
+  if (!context) {
+    throw new Error("useCourse must be inside CourseProvider");
+  }
 
-const context =
-useContext(CourseContext);
-
-
-if(!context){
-
-throw new Error(
-"useCourse must be inside CourseProvider"
-);
-
-}
-
-
-return context;
-
+  return context;
 };

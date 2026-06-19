@@ -29,16 +29,16 @@ const Home = () => {
   return (
     <div className="dark:bg-gray-900 bg-[#f9f1ff]">
       <Navbar />
-      
-      {sections.map(({ Component, lazy }, index) => (
+
+      {sections.map(({ Component, lazy }, index) =>
         lazy ? (
           <LazySection key={index}>
             <Component />
           </LazySection>
         ) : (
           <Component key={index} />
-        )
-      ))}
+        ),
+      )}
     </div>
   );
 };
