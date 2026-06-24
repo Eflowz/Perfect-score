@@ -1,8 +1,34 @@
 import { MdSettings, MdPerson, MdLock, MdNotifications } from "react-icons/md";
-import { useAuth } from "../../context/auth/useAuth";
+import { useUser } from "../../context/user/useUser";
+//import { useAuth } from "../../context/auth/useAuth";
+import { useState } from "react";
+import { updateUserProfile } from "../../api/user.api";
 
 const Settings = () => {
-  const { user } = useAuth();
+const { user, setUser } = useUser();
+
+ const [name, setName] = useState(user?.name || "");
+ const [saving, setSaving] = useState(false);
+
+
+ const handleSave = async () => {
+ try {
+ setSaving(true);
+
+ const updatedUser = await updateUserProfile({
+ name
+ });
+
+ setUser(updatedUser);
+
+ console.log("Updated:", updatedUser);
+
+ } catch(err) {
+ console.log("Update failed", err);
+ } finally {
+ setSaving(false);
+ }
+ };
 
   return (
     <div className="space-y-6 max-w-3xl animate-in fade-in duration-300">
@@ -29,7 +55,8 @@ const Settings = () => {
               </label>
               <input
                 type="text"
-                defaultValue={user?.name || "Alex"}
+                value={name}
+               onChange={(e)=> setName(e.target.value)}
                 className="w-full bg-gray-50 dark:bg-black/10 border border-gray-200 dark:border-white/5 focus:border-[#16423C]/30 dark:focus:border-[#E2FB6C]/30 rounded-xl px-4 py-2 text-xs text-gray-800 dark:text-white focus:outline-none focus:bg-white dark:focus:bg-[#16423C]/50 transition-all"
               />
             </div>
@@ -112,7 +139,10 @@ const Settings = () => {
       </div>
 
       <div className="flex justify-end">
-        <button className="px-6 py-2.5 bg-[#16423C] dark:bg-[#E2FB6C] text-white dark:text-[#16423C] rounded-xl text-xs font-semibold hover:opacity-90 transition-opacity shadow-sm">
+        <button 
+        onClick={handleSave}
+        disabled={saving}
+        className="px-6 py-2.5 bg-[#16423C] dark:bg-[#E2FB6C] text-white dark:text-[#16423C] rounded-xl text-xs font-semibold hover:opacity-90 transition-opacity shadow-sm">
           Save Settings
         </button>
       </div>

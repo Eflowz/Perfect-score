@@ -18,7 +18,7 @@ import Settings from "./pages/dashboard/Settings";
 import Courses from "./pages/courses/Courses";
 import CourseDetails from "./pages/courses/CourseDetails";
 import LessonPage from "./context/course/LessonPage";
-
+import VerifyCertificate from "./pages/dashboard/verifyCertificate";
 //import CreateCourse from './pages/admin/CreateCourse';
 //import CreateModule from './pages/admin/CreateModules';
 import Contact from "./pages/landingPage/Contact";
@@ -26,16 +26,14 @@ import Contact from "./pages/landingPage/Contact";
 import AdminLayout from "./pages/admin/AdminDashboard";
 import AdminPanel from "./pages/admin/AminPanel";
 import AdminDashBoard from "./pages/admin/AdminDashboard";
-import CreateModule from "./pages/admin/CreateModules";
+//
+// import CreateModule from "./pages/admin/CreateModules";
 import CreateCourse from "./pages/admin/CreateCourse";
-import { useAuth } from "./context/auth/useAuth";
+//import { useAuth } from "./context/auth/useAuth";
 import AdminCourses from "./pages/admin/AdminCourse";
 
 function App() {
-  const { user } = useAuth();
-  const isAdmin = user?.role === "SUPER_ADMIN";
-  console.log("User Role:", user?.role);
-  console.log("Is Admin:", isAdmin);
+ 
   return (
     <>
       <ScrollToTop />
@@ -56,9 +54,14 @@ function App() {
 
           <Route path="courses" element={<Courses />} />
           <Route path="courses/:id" element={<CourseDetails />} />
+          
           <Route
             path="courses/:courseId/modules/:moduleId"
             element={<LessonPage />}
+          />
+          <Route
+          path="verify-certificate"
+          element={<VerifyCertificate />}
           />
         </Route>
 
@@ -70,8 +73,10 @@ function App() {
           <Route path="courses" element={<AdminCourses />} />
           <Route path="courses/new" element={<CreateCourse />} />
           <Route path="courses/:id" element={<CourseDetails />} />
-          <Route path="modules/new" element={<CreateModule />} />
+
         </Route>
+        <Route path="courses/:id" element={<CourseDetails />} />
+          
       </Routes>
     </>
   );

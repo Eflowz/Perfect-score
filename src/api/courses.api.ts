@@ -7,8 +7,7 @@ type CoursesResponse = {
 
 export const getCourses = async (): Promise<Course[]> => {
   const response = await api.get<CoursesResponse>("/courses");
-  console.log(response.data.data);
-  console.log("response", response);
+
   return response.data.data;
 };
 
@@ -17,8 +16,7 @@ export const getCourses = async (): Promise<Course[]> => {
 export const getCourseById = async (id: string): Promise<Course> => {
   const response = await api.get(`/courses/${id}`);
 
-  console.log("Course details response:", response);
-
+ 
   return response.data.data; // ✅ FIX HERE
 };
 type CourseLevel = "BEGINNER" | "INTERMEDIATE" | "ADVANCED";

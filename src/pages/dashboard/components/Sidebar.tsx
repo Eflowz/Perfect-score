@@ -24,7 +24,7 @@ const Sidebar = ({ isExpanded, setIsExpanded }: SidebarProps) => {
   const menuItems = [
     { name: "Dashboard", href: "/dashboard", icon: MdDashboard },
     { name: "My Roadmap", href: "/dashboard/roadmap", icon: MdMap },
-    { name: "Courses", href: "dashboard/courses", icon: MdBook, badge: 3 },
+    { name: "Courses", href: "courses", icon: MdBook, badge: 3 },
     { name: "Projects", href: "/dashboard/projects", icon: MdAssignment },
     { name: "IDE Sandbox", href: "/dashboard/ide", icon: MdTerminal },
     {

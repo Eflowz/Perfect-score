@@ -5,9 +5,13 @@ import {
   MdAutoAwesome,
   MdArrowForward,
 } from "react-icons/md";
-
+//import EmptyState from "../../../components/common/EmptyCardState";
+import { useEffect, useState } from "react";
+import { getRoadmapTrack } from "../../../api/dashboard.api";
+import type { RoadmapTrack } from "../../../types/roadmap";
 const PerformanceTracker = () => {
   // Active course track summary data modeling
+  /*
   const activeTrack = {
     title: "AI Learning Roadmap",
     trackName: "Python Pro Track",
@@ -46,6 +50,34 @@ const PerformanceTracker = () => {
       percentage: 0,
     },
   ];
+*/
+
+ const [data, setData] = useState<RoadmapTrack | null>(null);
+ const [loading, setLoading] = useState(false);
+
+ useEffect(() => {
+ const loadTrack = async () => {
+ try {
+ setLoading(true);
+
+ const res = await getRoadmapTrack();
+ console.log("track:", res);
+
+ setData(res);
+ } catch (err) {
+ console.log("Track error:", err);
+ } finally {
+ setLoading(false);
+ }
+ };
+
+ loadTrack();
+ }, []);
+
+if (loading) return <p>Loading roadmap...</p>;
+ 
+if (!data) return <p>Loading roadmap...</p>;
+
 
   return (
     <div className="bg-white dark:bg-[#16423C] border border-gray-200/60 dark:border-white/5 rounded-2xl shadow-sm dark:shadow-xl p-6 transition-all duration-200 space-y-6">
@@ -57,13 +89,13 @@ const PerformanceTracker = () => {
               <MdAutoAwesome size={16} />
             </span>
             <h3 className="text-base font-bold text-gray-900 dark:text-white tracking-tight">
-              {activeTrack.title}
+              {data.title}
             </h3>
           </div>
           <p className="text-xs text-gray-400 dark:text-[#6B8A85] font-medium">
             Active Module Overview •{" "}
             <span className="text-gray-600 dark:text-gray-300 font-mono">
-              {activeTrack.stats}
+              {data.stats}
             </span>
           </p>
         </div>
@@ -71,14 +103,15 @@ const PerformanceTracker = () => {
         {/* Track tag label */}
         <div>
           <span className="text-xs font-semibold px-3 py-1.5 rounded-xl bg-[#16423C]/5 dark:bg-white/5 text-[#16423C] dark:text-[#E2FB6C] border border-[#16423C]/10 dark:border-white/10">
-            {activeTrack.trackName}
+            {data.trackName}
           </span>
         </div>
       </div>
 
       {/* 2. Visual Roadmap Nodes Pipeline Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 relative">
-        {modules.map((mod) => (
+        {data.modules.length ?
+        (data.modules.map((mod) => (
           <div
             key={mod.id}
             className={`p-4 rounded-xl border transition-all duration-200 relative group flex flex-col justify-between h-32 ${
@@ -141,7 +174,10 @@ const PerformanceTracker = () => {
               )}
             </div>
           </div>
-        ))}
+        ))):(
+          <p className="text-sm text-gray-500 w-full">No modules available yet</p>
+        )
+        }
       </div>
 
       {/* 3. Action Insight Callout Card Banner */}
@@ -151,7 +187,7 @@ const PerformanceTracker = () => {
             Insight
           </span>
           <p className="text-xs text-gray-500 dark:text-gray-300 leading-relaxed font-medium">
-            {activeTrack.recommendation}
+            {data.recommendation}
           </p>
         </div>
         <button className="flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold px-3 py-2 bg-[#16423C] dark:bg-[#E2FB6C] text-white dark:text-[#16423C] rounded-xl hover:opacity-90 transition-opacity cursor-pointer shadow-sm">

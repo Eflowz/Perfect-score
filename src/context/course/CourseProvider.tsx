@@ -75,6 +75,7 @@ export function CourseProvider({ children }: { children: React.ReactNode }) {
         fetchCourseById,
         removeCourse,
         updateCourse,
+        setSelectedCourse
       }}
     >
       {children}

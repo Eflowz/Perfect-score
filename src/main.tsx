@@ -9,6 +9,7 @@ import App from "./App.tsx";
 import { AuthProvider } from "./context/auth/AuthProvider.tsx";
 import { CourseProvider } from "./context/course/CourseProvider.tsx";
 import { ToastProvider } from "./context/toast/ToastProvider.tsx";
+import { UserProvider } from "./context/user/UserProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -16,7 +17,9 @@ createRoot(document.getElementById("root")!).render(
       <ToastProvider>
         <CourseProvider>
           <AuthProvider>
-            <App />
+            <UserProvider>
+             <App />
+            </UserProvider>
           </AuthProvider>
         </CourseProvider>
       </ToastProvider>

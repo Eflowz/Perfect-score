@@ -28,7 +28,7 @@ export const loginUser = async (data: LoginRequest): Promise<AuthResponse> => {
   const res = await api.post<AuthResponse>("/auth/login", data);
 
   const response = res.data;
-  console.log(response);
+
   setUser(response.user);
   setAccessToken(response.accessToken);
   setRefreshToken(response.refreshToken);

@@ -1,6 +1,7 @@
 import PerformanceTracker from "./components/PerformanceTracker";
 import Leaderboard from "./components/Leaderboard";
 import DaysChallenge from "./components/DaysChallenge";
+import MetricsGrid from "./components/MetricsGrid";
 
 const DashboardHome = () => {
   return (
@@ -9,6 +10,8 @@ const DashboardHome = () => {
       <div className="lg:col-span-2 space-y-6">
         <DaysChallenge />
         <PerformanceTracker />
+        <MetricsGrid />
+        
       </div>
 
       {/* Right Content Analytic Standings Row */}

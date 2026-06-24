@@ -7,13 +7,13 @@ type Props = {
   courseId: string;
 };
 
-export default function ModuleCard({ module, index, courseId }: Props) {
+export default function ModuleCard({ module, index}: Props) {
   const preview =
     module.content?.replace("#", "").slice(0, 120) ||
     "Start this lesson and begin learning.";
   return (
     <Link
-      to={`/courses/${courseId}/modules/${module.id}`}
+      to="{`/dashboard/courses/${courseId}/modules/${module.id}`}"
       className="
  group relative block overflow-hidden
  bg-white/50 dark:bg-white/5
@@ -162,10 +162,10 @@ export default function ModuleCard({ module, index, courseId }: Props) {
         >
           <span
             className="
- text-xs
- text-gray-400
- dark:text-gray-500
- "
+            text-xs
+            text-gray-400
+            dark:text-gray-500
+            "
           >
             Start learning
           </span>

@@ -1,5 +1,14 @@
 import { MdTerminal, MdPlayArrow, MdCached } from "react-icons/md";
-import { useState } from "react";
+import { useState, useEffect, useRef} from "react";
+import { connectIDE } from "../../api/ide.api";
+import { sendMessage } from "../../api/ide.api";
+import { getAccessToken } from "../../utlis/storage";
+//import { useCourse } from "../../context/course/useCourse";
+import { executeCode } from "../../api/ide.api";
+import { submitSolution } from "../../api/submission.api";
+import { getSubmissionReview } from "../../api/submission.api";
+import { useParams } from "react-router-dom";
+
 
 const Sandbox = () => {
   const [code, setCode] = useState(`# Perfect Score IDE Sandbox
@@ -9,11 +18,157 @@ def greet(name):
 greet("Perfect Learner")
 `);
 
+const [submissionId] = useState("");
+const [review, setReview] = useState<any>(null);
   const [output, setOutput] = useState(
     "Run your script to see outputs here...",
   );
   const [isRunning, setIsRunning] = useState(false);
+//dummy text handle
+  /*
+const runCode = async () => {
+ try {
+ setIsRunning(true);
+ setOutput("Executing script...");
+ 
+ const res = await executeCode({
+ code,
+ language: "python",
+ });
+ const data=res.data
+console.log(res)
+ if (data.success) {
+ setOutput(data.stdout || "[No output]");
+ } else {
+ setOutput(data.stderr || "Execution failed");
+ }
 
+ } catch (err: any) {
+ console.log("FULL ERROR:", err);
+ console.log("STATUS:", err?.response?.status);
+ console.log("DATA:", err?.response?.data);
+
+ setOutput("Error executing code. Please try again.");
+}finally {
+ setIsRunning(false);
+ }
+};
+
+useEffect(() => {
+ const token = getAccessToken();
+
+ const sessionId = "demo-session-1"; // later this will come from backend or URL
+if(!token) return
+ connectIDE(sessionId, token);
+}, []);
+*/
+ const isRemoteUpdate = useRef(false);
+
+ //CONNECT WEBSOCKET
+
+ useEffect(() => {
+ const token = getAccessToken();
+ const sessionId = "demo-session-1";
+
+ if (!token) return;
+
+ connectIDE(
+ sessionId,
+ token,
+
+ 
+ );
+ }, []);
+
+ // RUN CODE
+
+ const runCode = async () => {
+ try {
+ setIsRunning(true);
+ setOutput("Executing script...");
+
+ const res = await executeCode({
+ code,
+ language: "python",
+ });
+
+ const data = res.data;
+
+ if (data.success) {
+ const lines = (data.stdout || "[No output]").split("\n");
+
+ // 👇 show line by line
+ setOutput(""); 
+
+ lines.forEach((line: string, index: number) => {
+ setTimeout(() => {
+ setOutput((prev) => prev + line + "\n");
+ }, index * 200); // 200ms per line
+ });
+ } else {
+ setOutput(data.stderr || "Execution failed");
+ }
+ } catch (err) {
+ setOutput("Error executing code. Please try again.");
+ } finally {
+ setIsRunning(false);
+ }
+};
+
+//submission api call
+const { id } = useParams<{ id: string }>();
+
+const handleSubmit = async () => {
+ try {
+ if (!id) {
+ console.log("❌ No course id found");
+ return;
+ }
+
+ console.log("🚀 Submitting for course:", id);
+ console.log("🧠 Code:", code);
+
+ const res = await submitSolution({
+ courseId: id,
+ code,
+ language: "python",
+ });
+
+ console.log("🎯 Submitted:", res);
+
+ } catch (err: any) {
+ console.log("❌ Submit error:", err);
+ console.log("STATUS:", err?.response?.status);
+ console.log("DATA:", err?.response?.data);
+ }
+};
+
+
+// handle ai review
+const handleReview = async () => {
+ try {
+
+ if (!submissionId) {
+
+ console.log("No submission available yet");
+ return;
+ }
+
+ const data = await getSubmissionReview(submissionId);
+
+ console.log("🤖 AI Review:", data);
+
+ setReview(data);
+
+ } catch (err) {
+ console.log("Review error:", err);
+ }
+};
+
+
+
+  {/* 
+    //dummy text replacement with real api
   const runCode = () => {
     setIsRunning(true);
     setOutput("Executing script...");
@@ -22,7 +177,7 @@ greet("Perfect Learner")
       setOutput(`Hello, Perfect Learner!\n\n[Process completed successfully]`);
     }, 1200);
   };
-
+*/}
   return (
     <div className="space-y-6 flex flex-col h-[calc(100vh-140px)] animate-in fade-in duration-300">
       <div className="flex items-center justify-between">
@@ -35,6 +190,52 @@ greet("Perfect Learner")
             Test algorithms, write code snippets, and play around with
             interactive environments.
           </p>
+
+           <button
+           onClick={handleSubmit}
+           className="px-4 py-2 bg-green-900 text-white rounded"
+          >
+           Submit Solution
+          </button>
+          <button
+            onClick={handleReview}
+            className="px-4 py-2 bg-green-900/70 text-white rounded"
+            >
+            Get AI Review
+          </button>
+          {/* submission of ai review*/}
+                 {review && (
+                    <div className="mt-5 p-4 border rounded">
+
+                    <h2 className="font-bold text-white">
+                    AI Review
+                    </h2>
+
+                    <p>
+                    Score: {review.score}/100
+                    </p>
+
+                    <p>
+                    {review.aiReview.feedback}
+                    </p>
+
+
+                    <h3 className="font-semibold mt-3">
+                    Suggestions
+                    </h3>
+
+                    <ul>
+                    {review.aiReview.suggestions.map(
+                    (item:string)=>(
+                    <li key={item}>
+                    - {item}
+                    </li>
+                    )
+                    )}
+                    </ul>
+
+                    </div>
+                  )}
         </div>
 
         <button
@@ -60,11 +261,26 @@ greet("Perfect Learner")
               Python 3.10
             </span>
           </div>
+          
           <textarea
             value={code}
-            onChange={(e) => setCode(e.target.value)}
             className="flex-1 p-4 bg-transparent text-white font-mono text-xs focus:outline-none resize-none leading-relaxed"
             spellCheck="false"
+            onChange={(e) => {
+            const newCode = e.target.value;
+            
+            setCode(newCode);
+            
+            // prevent echo loop
+            if (isRemoteUpdate.current) {
+            isRemoteUpdate.current = false;
+            return;
+            }
+            sendMessage({
+            type: "code-change",
+            code: newCode,
+            });
+            }}
           />
         </div>
 
@@ -77,6 +293,8 @@ greet("Perfect Learner")
             {output}
           </pre>
         </div>
+
+      
       </div>
     </div>
   );

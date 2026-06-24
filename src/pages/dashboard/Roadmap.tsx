@@ -1,3 +1,4 @@
+/*
 import {
   MdMap,
   MdCheckCircle,
@@ -56,7 +57,7 @@ const Roadmap = () => {
       <div className="relative border-l border-gray-200 dark:border-white/10 pl-6 ml-4 space-y-8">
         {milestones.map((milestone) => (
           <div key={milestone.id} className="relative group">
-            {/* Status node icon */}
+         
             <span className="absolute -left-[35px] top-1 bg-white dark:bg-gray-950 p-1 rounded-full border border-gray-200 dark:border-white/10 flex items-center justify-center">
               {milestone.status === "completed" && (
                 <MdCheckCircle
@@ -110,3 +111,89 @@ const Roadmap = () => {
 };
 
 export default Roadmap;
+*/
+
+import { useEffect, useState } from "react";
+import { getUserRoadmap, generateRoadmap } from "../../api/roadmap.api";
+import type { Roadmap } from "../../types/roadmap";
+
+export default function Roadmap() {
+ const [roadmap, setRoadmap] = useState<Roadmap | null>(null);
+ const [loading, setLoading] = useState(true);
+ const [error, setError] = useState("");
+
+ useEffect(() => {
+ const loadRoadmap = async () => {
+ try {
+ setLoading(true);
+ setError("");
+
+ console.log("📡 Trying to fetch roadmap...");
+
+ let data;
+
+ try {
+ const res = await getUserRoadmap();
+ data=res.data
+ console.log("✅ Roadmap found:", data);
+ } catch (err: any) {
+ console.log("⚠️ No roadmap found, generating...");
+
+ if (err?.response?.status === 404) {
+ const generated = await generateRoadmap();
+ console.log("🎯 Generated roadmap:", generated);
+
+ // IMPORTANT: use generated directly
+ data = generated;
+ } else {
+ throw err;
+ }
+ }
+
+ // 🧠 SAFETY CHECK (VERY IMPORTANT)
+ if (!data || !Array.isArray(data.courses)) {
+ console.log("❌ Invalid roadmap format:", data);
+ setError("Invalid roadmap data");
+ return;
+ }
+
+ setRoadmap(data);
+ } catch (err: any) {
+ console.log("❌ Failed completely:", err?.response?.data);
+ setError("Failed to load roadmap");
+ } finally {
+ setLoading(false);
+ }
+ };
+
+ loadRoadmap();
+ }, []);
+
+ // ✅ LOADING STATE
+ if (loading) return <p>Loading roadmap...</p>;
+
+ // ❌ ERROR STATE
+ if (error) return <p className="text-red-500">{error}</p>;
+
+ // ❌ EMPTY SAFE STATE (prevents white screen)
+ if (!roadmap || !roadmap.courses) {
+ return <p>No roadmap available</p>;
+ }
+
+ return (
+ <div>
+ <h1 className="text-xl font-bold">Your Learning Roadmap</h1>
+
+ <ul className="mt-4 space-y-3">
+ {roadmap.courses.map((c) => (
+ <li key={c.id} className="p-3 border rounded">
+ <p>Course ID: {c.courseId}</p>
+ <p>Order: {c.order}</p>
+ <p>Status: {c.status}</p>
+ </li>
+ ))}
+ </ul>
+ </div>
+ );
+}
+

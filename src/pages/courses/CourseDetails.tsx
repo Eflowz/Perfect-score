@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaBookOpen, FaLayerGroup } from "react-icons/fa";
 
@@ -6,13 +6,26 @@ import { useCourse } from "../../context/course/useCourse";
 import ModuleCard from "../../components/courses/ModuleCard";
 import ModuleCardSkeleton from "../../components/courses/ModuleCardSkeleton";
 import Skeleton from "../../components/common/Skeleton";
+import EmptyModulesState from "../../components/courses/EmptyModulesState";
+import { useAuth } from "../../context/auth/useAuth";
+import Modal from "../../components/common/Modal";
+import CreateModules from "../admin/CreateModules";
+
+
 
 export default function CourseDetails() {
   const { id } = useParams();
-
+  const params=useParams()
+ 
+  console.log("course-id:", params)
+  console.log("params ID:", id); // 👈 PUT IT HERE
+  const [openCreateModal, setOpenCreateModal] = useState(false);
+  const {user}= useAuth()
+  
+const isAdmin= user?.role === "SUPER_ADMIN"
   const { selectedCourse, fetchCourseById, loading } = useCourse();
 
-  useEffect(() => {
+useEffect(() => {
     if (id) {
       fetchCourseById(id);
     }
@@ -25,11 +38,11 @@ export default function CourseDetails() {
         {/* COURSE HEADER SKELETON */}
         <div
           className="
- rounded-3xl p-6 md:p-8
- border border-gray-200/60 dark:border-white/10
- bg-white/70 dark:bg-white/5
- space-y-4
- "
+          rounded-3xl p-6 md:p-8
+          border border-gray-200/60 dark:border-white/10
+          bg-white/70 dark:bg-white/5
+          space-y-4
+          "
         >
           <Skeleton className="h-5 w-32" />
 
@@ -62,7 +75,21 @@ export default function CourseDetails() {
 
   if (!selectedCourse) {
     return (
-      <div className="mt-10 text-center text-gray-500">Course not found</div>
+      
+       <EmptyModulesState
+ title={isAdmin ? "No modules yet" : "No modules available"}
+ description={
+ isAdmin
+ ? "This course doesn't have any modules. Start building your learning content."
+ : "This course does not have any learning modules yet. Please check back later."
+ }
+ onAction={
+ isAdmin
+ ? () => setOpenCreateModal(true)
+ : undefined
+ }
+ actionText="Create Module"
+ />
     );
   }
 
@@ -72,24 +99,23 @@ export default function CourseDetails() {
 
       <section
         className="
- relative overflow-hidden
- bg-white/80 dark:bg-white/5
- border border-gray-200/60 dark:border-white/10
- rounded-3xl
- p-6 md:p-8
-
- animate-fade-in
- "
+        relative overflow-hidden
+        bg-white/80 dark:bg-white/5
+        border border-gray-200/60 dark:border-white/10
+        rounded-3xl
+        p-6 md:p-8
+        animate-fade-in
+        "
       >
         {/* background glow */}
         <div
           className="
- absolute -right-20 -top-20
- w-48 h-48
- rounded-full
- bg-[#16423C]/10
- blur-3xl
- "
+          absolute -right-20 -top-20
+          w-48 h-48
+          rounded-full
+          bg-[#16423C]/10
+          blur-3xl
+          "
         />
 
         <div className="relative">
@@ -98,26 +124,26 @@ export default function CourseDetails() {
           <div className="flex items-center gap-3 mb-4">
             <span
               className="
- px-3 py-1
- rounded-full
- text-xs font-semibold
+              px-3 py-1
+              rounded-full
+              text-xs font-semibold
 
- bg-[#16423C]/10
- text-[#16423C]
+              bg-[#16423C]/10
+              text-[#16423C]
 
- dark:bg-[#dcf36c]/10
- dark:text-[#dcf36c]
- "
+              dark:bg-[#dcf36c]/10
+              dark:text-[#dcf36c]
+              "
             >
               {selectedCourse.level}
             </span>
 
             <span
               className="
- text-xs
- text-gray-400
- "
-            >
+              text-xs
+              text-gray-400
+              "
+              >
               Step {selectedCourse.order}
             </span>
           </div>
@@ -172,12 +198,12 @@ export default function CourseDetails() {
 
             <div
               className="
- flex items-center gap-2
- text-xs
+                flex items-center gap-2
+                text-xs
 
- text-gray-500
- dark:text-gray-400
- "
+                text-gray-500
+                dark:text-gray-400
+                "
             >
               <FaBookOpen />
               Learning Path
@@ -192,23 +218,23 @@ export default function CourseDetails() {
         <div className="mb-5">
           <h2
             className="
- text-xl
- font-bold
+            text-xl
+            font-bold
 
- text-gray-900
- dark:text-white
- "
+            text-gray-900
+            dark:text-white
+            "
           >
             Course Modules
           </h2>
 
           <p
             className="
- text-sm
- text-gray-500
- dark:text-gray-400
- mt-1
- "
+            text-sm
+            text-gray-500
+            dark:text-gray-400
+            mt-1
+            "
           >
             Follow these lessons step by step to complete the course.
           </p>
@@ -225,10 +251,37 @@ export default function CourseDetails() {
               />
             ))
           ) : (
-            <p className="text-gray-500">No modules available</p>
+            <EmptyModulesState
+            title={isAdmin ? "No modules yet" :"No modules available"}
+            description={isAdmin ? "This cpourse doesn't have any modules. Start building and learning content.": "This course doesn't have any modules yet. Plesase check back later."}
+           actionText="Create Modules"
+            onAction={() => setOpenCreateModal(true)}
+            >
+              
+            </EmptyModulesState>
+
           )}
         </div>
+
+        
       </section>
+      {isAdmin && (
+ <Modal
+ open={openCreateModal}
+ onClose={() => setOpenCreateModal(false)}
+ >
+
+ <CreateModules
+ courseId={selectedCourse?.id}
+ onSuccess={() => {
+ setOpenCreateModal(false);
+
+ fetchCourseById(selectedCourse.id);
+ }}
+ />
+
+ </Modal>
+)}
     </div>
   );
 }

@@ -16,6 +16,6 @@ export const createCourse = async (
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(token);
+
   return res.data;
 };

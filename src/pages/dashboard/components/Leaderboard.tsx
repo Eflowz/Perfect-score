@@ -1,6 +1,8 @@
 import { MdTrendingUp, MdWorkspacePremium, MdLayers } from "react-icons/md";
-
+import { useState, useEffect } from "react";
+import { getLeaderboard } from "../../../api/dashboard.api";
 const Leaderboard = () => {
+  {/*
   const students = [
     { rank: 1, name: "Priya K.", xp: "4,820", delta: "+320", isUser: false },
     { rank: 2, name: "Jonas M.", xp: "4,610", delta: "+280", isUser: false },
@@ -8,8 +10,42 @@ const Leaderboard = () => {
     { rank: 4, name: "Sofia R.", xp: "3,980", delta: "+160", isUser: false },
     { rank: 5, name: "Tariq N.", xp: "3,750", delta: "+140", isUser: false },
   ];
+*/}
+  const [leaderboard, setLeaderboard] = useState<any>(null);
+const [loading, setLoading] = useState(false);
+
+
+useEffect(() => {
+ const loadLeaderboard = async () => {
+ try {
+ setLoading(true);
+
+ const data = await getLeaderboard();
+ setLeaderboard(data);
+
+ } catch (err) {
+ console.log("Leaderboard error", err);
+ } finally {
+ setLoading(false);
+ }
+ };
+
+ loadLeaderboard();
+}, []);
+if(loading){
+ return <p>loading</p>
+}
+if (!leaderboard) {
+ return <p>Loading leaderboard...</p>;
+}
+
+if (leaderboard.students.length === 0) {
+ return <p>No leaderboard data</p>;
+}
 
   return (
+    <>
+   
     <div className="bg-white dark:bg-[#16423C] border border-gray-200/60 dark:border-white/5 rounded-2xl shadow-sm dark:shadow-xl p-6 transition-all duration-200 flex flex-col justify-between h-full space-y-5">
       {/* Header Info Block */}
       <div className="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-white/5">
@@ -33,7 +69,7 @@ const Leaderboard = () => {
 
       {/* High-Density Row Grid Stack */}
       <div className="space-y-1.5 flex-1">
-        {students.map((student) => (
+        {leaderboard.students.map((student:any) => (
           <div
             key={student.rank}
             className={`flex items-center justify-between p-2.5 rounded-xl transition-all border ${
@@ -76,8 +112,14 @@ const Leaderboard = () => {
                     : "text-gray-700 dark:text-gray-200"
                 }`}
               >
+
                 {student.name}
-              </span>
+                {student.isUser && (
+                <span className="text-xs text-green-600">
+                (You)
+                </span>
+                )}
+               </span>
             </div>
 
             {/* Right Hand: Metric Readings & Delta Variations */}
@@ -114,6 +156,8 @@ const Leaderboard = () => {
         </span>
       </div>
     </div>
+    
+     </>
   );
 };
 

@@ -1,6 +1,50 @@
 import { MdExtension, MdCheckCircleOutline } from "react-icons/md";
-
+import { useEffect, useState } from "react";
+import { getTodayChallenge } from "../../../api/dashboard.api";
+type Challenge = {
+ id: string;
+ title: string;
+ description: string;
+ lessonsToUnlock: number;
+ nextMilestone: string;
+ overallProgress: number;
+ completedProjects: number;
+ totalProjects: number;
+};
 const DaysChallenge = () => {
+  const [challenge, setChallenge] = useState<Challenge |null>(null);
+const [loading, setLoading] = useState(true);
+const radius = 15;
+const circumference = 2 * Math.PI * radius;
+
+const progressOffset =
+ circumference - (challenge?.overallProgress ?? 0/ 100) * circumference;
+  useEffect(() => {
+ const loadChallenge = async () => {
+ try {
+ setLoading(true);
+
+ const data = await getTodayChallenge();
+ setChallenge(data);
+console.log("challenge:", data)
+ } catch (err) {
+ console.log("Failed to load challenge", err);
+ } finally {
+ setLoading(false);
+ }
+ };
+
+ loadChallenge();
+}, []);
+
+  //when api is ready
+if (loading) {
+ return <div className="h-32 w-full bg-gray-200 animate-pulse rounded-xl" />;
+}
+if (!challenge) {
+ return <p>No challenge available today</p>;
+}
+
   return (
     <div className="w-full p-4 bg-white dark:bg-[#16423C] border border-gray-200/60 dark:border-white/5 rounded-2xl shadow-sm dark:shadow-xl flex flex-col md:flex-row items-center justify-between gap-4 transition-all duration-200">
       {/* Left Column: Challenge Prompt details */}
@@ -12,17 +56,17 @@ const DaysChallenge = () => {
           <p className="text-[11px] font-mono uppercase tracking-wider text-gray-400 dark:text-[#6B8A85] font-bold">
             Today's Challenge
           </p>
-          <p className="text-xs font-medium text-gray-700 dark:text-gray-200 leading-relaxed">
-            Implement a{" "}
+          <p className="text-sm font-semibold dark:text-white">{challenge.title}</p>
+    
             <code className="px-1.5 py-0.5 font-mono text-[11px] font-bold rounded bg-gray-100 dark:bg-black/30 text-purple-600 dark:text-purple-300">
-              BinarySearchTree.inorder()
+              {challenge.description}
             </code>{" "}
-            with $O(n)$ traversal. You're{" "}
+            
             <span className="text-emerald-600 dark:text-[#E2FB6C] font-bold underline decoration-2">
-              2 lessons
+              {challenge.lessonsToUnlock} lessons
             </span>{" "}
             away from unlocking Algorithms.
-          </p>
+         
         </div>
       </div>
 
@@ -40,6 +84,7 @@ const DaysChallenge = () => {
                 className="stroke-gray-100 dark:stroke-white/10"
                 strokeWidth="3"
                 fill="transparent"
+                strokeDasharray={circumference}
               />
               <circle
                 cx="18"
@@ -48,12 +93,13 @@ const DaysChallenge = () => {
                 className="stroke-[#16423C] dark:stroke-[#E2FB6C]"
                 strokeWidth="3"
                 fill="transparent"
-                strokeDasharray="94"
-                strokeDashoffset="30"
+                strokeDasharray={circumference}
+                strokeDashoffset={progressOffset}
+                strokeLinecap="round"
               />
             </svg>
             <span className="text-[10px] font-mono font-bold text-gray-700 dark:text-white">
-              68%
+              {challenge.overallProgress}
             </span>
           </div>
           <div className="hidden sm:block">
@@ -77,8 +123,8 @@ const DaysChallenge = () => {
           />
           <div className="text-right">
             <p className="text-xs font-mono font-bold text-gray-900 dark:text-white">
-              5{" "}
-              <span className="text-gray-400 font-normal text-[10px]">/ 8</span>
+              {challenge.completedProjects}{" "}
+              <span className="text-gray-400 font-normal text-[10px]">/ {challenge.totalProjects}</span>
             </p>
             <p className="text-[9px] font-sans font-medium text-gray-400 dark:text-[#6B8A85] tracking-tight whitespace-nowrap">
               Projects Done
@@ -86,6 +132,9 @@ const DaysChallenge = () => {
           </div>
         </div>
       </div>
+
+
+
     </div>
   );
 };

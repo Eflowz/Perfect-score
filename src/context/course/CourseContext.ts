@@ -19,7 +19,7 @@ type CourseContextType = {
   ) => Promise<void>;
 
   fetchCourses: () => Promise<void>;
-
+    setSelectedCourse: (course: Course | null) => void;
   fetchCourseById: (id: string) => Promise<void>;
 };
 

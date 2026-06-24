@@ -1,6 +1,6 @@
 import { FaLongArrowAltRight } from "react-icons/fa";
 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { deleteCourse, updateCourse } from "../../api/courses.api";
 //import { getAccessToken } from "../../utlis/storage";
 import type { Course } from "../../types/courses.types";
@@ -18,6 +18,8 @@ type Props = {
 
 export default function CourseCard({ course, removeCourse}: Props) {
   const { user } = useAuth();
+  const params =useParams
+  console.log("aram:", params)
   const role = user?.role;
   const handleDelete = async (course: Course) => {
     const confirmDelete = window.confirm(

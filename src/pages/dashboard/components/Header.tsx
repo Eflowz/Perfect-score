@@ -1,4 +1,4 @@
-import { useAuth } from "../../../context/auth/useAuth";
+//import { useAuth } from "../../../context/auth/useAuth";
 import { LogoutButton } from "../../auth/Logout";
 import {
   MdSearch,
@@ -11,20 +11,53 @@ import {
 } from "react-icons/md";
 import CreateCourseModal from "../../admin/Adminsection/CreateCourseModal";
 // import { FiLogOut } from "react-icons/fi";
+import { getCurrentUser } from "../../../api/user.api";
 import { useState, useEffect, useMemo, useRef } from "react";
+
+import { useUser } from "../../../context/user/useUser";
+
 //import { useCourse } from "../../../context/course/useCourse";
 const Header = () => {
-  const { user } = useAuth();
+  //const { user } = useAuth();
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
+const {user, setUser}= useUser()
+ const [loading, setLoading] = useState(true);
   // Theme state setup
   const [darkMode, setDarkMode] = useState(() => {
     if (typeof window === "undefined") return false;
     return localStorage.getItem("theme") === "dark";
   });
+useEffect(() => {
 
+ const loadUser = async () => {
+
+ try {
+
+ const data = await getCurrentUser();
+
+ console.log("User:", data);
+
+ setUser(data);
+
+ } catch (error) {
+
+ console.log("Failed to fetch user", error);
+
+ } finally {
+
+ setLoading(false);
+
+ }
+
+ };
+
+
+ loadUser();
+
+ }, []);
   const toggleTheme = () => {
     setDarkMode((prev) => {
       const next = !prev;
@@ -78,6 +111,17 @@ const Header = () => {
   };
 
   const isAdmin = user?.role === "SUPER_ADMIN";
+
+  
+ if (loading) {
+ return <p>Loading profile...</p>;
+ }
+
+
+ if (!user) {
+ return <p>No user found</p>;
+ }
+
   return (
     <>
       <header className="w-full h-16 border-b border-gray-200/80 dark:border-white/5 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md sticky top-0 z-30 flex items-center justify-between px-8 transition-colors duration-200">
@@ -150,7 +194,7 @@ const Header = () => {
               {/* Account Details Block */}
               <div className="flex-col space-y-0.5 hidden sm:block">
                 <span className="text-xs font-bold text-gray-900 dark:text-white leading-none tracking-tight flex items-center gap-1">
-                  {getUserDisplayName()}
+                  {user.name}
                   <MdKeyboardArrowDown
                     size={14}
                     className={`text-gray-400 transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`}
@@ -158,10 +202,10 @@ const Header = () => {
                 </span>
                 <div className="flex items-center space-x-1.5 font-mono text-[9px] font-bold">
                   <span className="px-1 py-0.5 rounded bg-blue-500/10 dark:bg-[#E2FB6C]/10 text-blue-600 dark:text-[#E2FB6C] uppercase scale-95 origin-left">
-                    LV {xpMetrics.level}
+                    LV {user.level}
                   </span>
                   <span className="text-gray-400 dark:text-[#6B8A85]">
-                    {xpMetrics.xpDisplay} XP
+                    {user.xp} XP
                   </span>
                 </div>
               </div>
@@ -175,7 +219,7 @@ const Header = () => {
                     {getUserDisplayName()}
                   </p>
                   <p className="text-[9px] font-mono text-gray-400 dark:text-[#6B8A85] mt-0.5">
-                    Level {xpMetrics.level} • {xpMetrics.xpDisplay} XP
+                    Level {user.level} • {xpMetrics.xpDisplay} XP
                   </p>
                 </div>
                 {/* Use LogoutButton as a child or wrapper */}

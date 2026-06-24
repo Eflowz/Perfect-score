@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import {
   MdDashboard,
   MdMap,
-  MdBook,
   MdAssignment,
   MdChevronLeft,
   MdChevronRight,
@@ -22,9 +21,7 @@ const AdminSidebar = ({ isExpanded, setIsExpanded }: SidebarProps) => {
   const menuItems = [
     { name: "Dashboard", href: "/admin", icon: MdDashboard },
 
-    { name: "Courses", href: "/admin/courses", icon: MdMap },
-
-    { name: "Modules", href: "/admin/modules", icon: MdBook, badge: 3 },
+    { name: "Courses", href: "courses", icon: MdMap },
 
     { name: "Users", href: "/admin/users", icon: MdAssignment },
 
@@ -97,11 +94,7 @@ ${isExpanded ? "w-64" : "w-20"}`}
                     {isExpanded && <span>{item.name}</span>}
                     </div>
 
-                    {item.badge && isExpanded && (
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-white/10">
-                        {item.badge}
-                    </span>
-                    )}
+                    
                 </Link>
             );
           })}
