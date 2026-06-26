@@ -17,7 +17,7 @@ import Certificates from "./pages/dashboard/Certificates";
 import Settings from "./pages/dashboard/Settings";
 import Courses from "./pages/courses/Courses";
 import CourseDetails from "./pages/courses/CourseDetails";
-import LessonPage from "./context/course/LessonPage";
+import LessonPage from "./pages/courses/LessonPage";
 import VerifyCertificate from "./pages/dashboard/verifyCertificate";
 //import CreateCourse from './pages/admin/CreateCourse';
 //import CreateModule from './pages/admin/CreateModules';
@@ -31,6 +31,9 @@ import AdminDashBoard from "./pages/admin/AdminDashboard";
 import CreateCourse from "./pages/admin/CreateCourse";
 //import { useAuth } from "./context/auth/useAuth";
 import AdminCourses from "./pages/admin/AdminCourse";
+import CreateQuiz from "./pages/admin/CreateQuiz";
+import QuizManagement from "./pages/admin/Adminsection/QuizManagement";
+import QuizPage from "./pages/admin/Adminsection/QuizPage";
 
 function App() {
  
@@ -73,6 +76,15 @@ function App() {
           <Route path="courses" element={<AdminCourses />} />
           <Route path="courses/new" element={<CreateCourse />} />
           <Route path="courses/:id" element={<CourseDetails />} />
+          <Route path="courses/:id/create-quiz" element={<CreateQuiz />} />
+          <Route
+            path="quiz/:id"
+            element={<QuizPage />}
+          />
+          <Route
+ path="/admin/quizzes"
+ element={<QuizManagement />}
+/>
 
         </Route>
         <Route path="courses/:id" element={<CourseDetails />} />

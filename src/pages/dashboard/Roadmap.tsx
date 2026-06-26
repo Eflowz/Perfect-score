@@ -116,6 +116,7 @@ export default Roadmap;
 import { useEffect, useState } from "react";
 import { getUserRoadmap, generateRoadmap } from "../../api/roadmap.api";
 import type { Roadmap } from "../../types/roadmap";
+//import CompleteButton from "../progress/progress";
 
 export default function Roadmap() {
  const [roadmap, setRoadmap] = useState<Roadmap | null>(null);
@@ -183,7 +184,7 @@ export default function Roadmap() {
  return (
  <div>
  <h1 className="text-xl font-bold">Your Learning Roadmap</h1>
-
+  
  <ul className="mt-4 space-y-3">
  {roadmap.courses.map((c) => (
  <li key={c.id} className="p-3 border rounded">

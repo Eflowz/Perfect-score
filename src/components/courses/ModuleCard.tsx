@@ -1,19 +1,72 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { getCourseProgress } from "../../api/progress.api";
 import type { Module } from "../../types/courses.types";
 import { FaArrowRight, FaPlay } from "react-icons/fa6";
+import { getCourseQuizzes } from "../../api/quiz.api";
+//import CompleteButton from "../../pages/progress/progress";
 type Props = {
   module: Module;
   index: number;
   courseId: string;
 };
 
-export default function ModuleCard({ module, index}: Props) {
+export default function ModuleCard({ module, index, courseId}: Props) {
+  const [progress, setProgress] = useState<any[]>([]);
+
+const [quizzes, setQuizzes] = useState<any[]>([]);
+// handle start quiz
+useEffect(() => {
+
+const loadQuizzes = async () => {
+
+try {
+
+if (!courseId) return;
+
+const data = await getCourseQuizzes(courseId);
+
+console.log("Course quizzes:", data);
+
+setQuizzes(data);
+
+} catch (error) {
+
+console.log("Failed to load quizzes:", error);
+
+}
+
+};
+
+
+loadQuizzes();
+
+}, [courseId]);
+useEffect(() => {
+
+const loadProgress = async () => {
+ try {
+
+ const data = await getCourseProgress(courseId);
+
+ console.log("Course progress:", data);
+
+ setProgress(data);
+
+ } catch(err){
+ console.log("Progress error:", err);
+ }
+};
+
+loadProgress();
+
+}, [courseId]);
   const preview =
     module.content?.replace("#", "").slice(0, 120) ||
     "Start this lesson and begin learning.";
   return (
-    <Link
-      to="{`/dashboard/courses/${courseId}/modules/${module.id}`}"
+    <div
+
       className="
  group relative block overflow-hidden
  bg-white/50 dark:bg-white/5
@@ -104,11 +157,34 @@ export default function ModuleCard({ module, index}: Props) {
               >
                 {module.title}
               </h3>
+{/*progress for a course */}
+              <div>
+
+{progress.map((item:any)=>(
+<div key={item.id}>
+
+
+<p>{item.timeSpent} time spent</p>
+
+<p className="text-sm bg-green-900 p-4 rounded text-white">
+{
+ item.completed 
+ ? "Completed "
+ : "Not completed"
+}
+</p>
+
+</div>
+))}
+
+
+</div>
             </div>
           </div>
 
           {/* play icon */}
-          <div
+          <Link
+      to={`/dashboard/courses/${courseId}/modules/${module.id}`}
             className="
  w-8 h-8
  rounded-full
@@ -128,7 +204,7 @@ export default function ModuleCard({ module, index}: Props) {
  "
           >
             <FaPlay size={10} />
-          </div>
+          </Link>
         </div>
 
         {/* Description */}
@@ -169,8 +245,74 @@ export default function ModuleCard({ module, index}: Props) {
           >
             Start learning
           </span>
+          <div className="mt-8">
 
-          <div
+<h2 className="
+text-xl font-bold
+text-gray-900 dark:text-white
+">
+Quizzes & Assessments
+</h2>
+
+
+<div className="grid md:grid-cols-2 gap-4 mt-4">
+
+{quizzes.map((quiz)=>(
+
+<div
+key={quiz.id}
+className="
+bg-white dark:bg-[#16423C]
+rounded-2xl
+border border-gray-200 dark:border-white/10
+p-5
+"
+>
+
+<h3 className="
+font-bold
+text-gray-900 dark:text-white
+">
+{quiz.title}
+</h3>
+
+
+<p className="text-sm text-gray-500 mt-2">
+Passing Score: {quiz.passingScore}%
+</p>
+
+
+<p className="text-sm text-gray-500">
+Time Limit: {quiz.timeLimit} minutes
+</p>
+
+
+<button
+className="
+mt-4
+px-4 py-2
+rounded-xl
+bg-[#16423C]
+dark:bg-[#E2FB6C]
+text-white
+dark:text-[#16423C]
+text-sm font-semibold
+"
+>
+Start Quiz
+</button>
+
+
+</div>
+
+))}
+
+</div>
+
+</div>
+
+          <Link
+      to={`/dashboard/courses/${courseId}/modules/${module.id}`}
             className="
  flex items-center gap-2
 
@@ -190,9 +332,10 @@ export default function ModuleCard({ module, index}: Props) {
  group-hover:translate-x-1
  "
             />
-          </div>
+          </Link>
+  
         </div>
       </div>
-    </Link>
+    </div>
   );
 }

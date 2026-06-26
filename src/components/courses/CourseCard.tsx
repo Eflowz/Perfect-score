@@ -134,7 +134,7 @@ export default function CourseCard({ course, removeCourse}: Props) {
           <p className="text-[13px] text-gray-500 dark:text-gray-400 mt-1.5 line-clamp-2 leading-relaxed flex-1">
             {course.description}
           </p>
-
+          
           {/* DIVIDER */}
           <div className="h-px bg-gray-100 dark:bg-white/8 mt-4 mb-3" />
 
@@ -150,6 +150,8 @@ export default function CourseCard({ course, removeCourse}: Props) {
             View Course
             <FaLongArrowAltRight className="transition-transform duration-300 group-hover/link:translate-x-1" />
           </Link>
+
+
         </div>
       </div>
       {role === "SUPER_ADMIN" && (

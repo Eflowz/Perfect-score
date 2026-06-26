@@ -2,6 +2,7 @@ import PerformanceTracker from "./components/PerformanceTracker";
 import Leaderboard from "./components/Leaderboard";
 import DaysChallenge from "./components/DaysChallenge";
 import MetricsGrid from "./components/MetricsGrid";
+import ProgressOverview from "./components/ProgressOverview";
 
 const DashboardHome = () => {
   return (
@@ -10,6 +11,8 @@ const DashboardHome = () => {
       <div className="lg:col-span-2 space-y-6">
         <DaysChallenge />
         <PerformanceTracker />
+        
+        <ProgressOverview />
         <MetricsGrid />
         
       </div>
@@ -17,6 +20,7 @@ const DashboardHome = () => {
       {/* Right Content Analytic Standings Row */}
       <div className="h-full">
         <Leaderboard />
+        
       </div>
     </div>
   );

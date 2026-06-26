@@ -24,6 +24,7 @@ const AdminSidebar = ({ isExpanded, setIsExpanded }: SidebarProps) => {
     { name: "Courses", href: "courses", icon: MdMap },
 
     { name: "Users", href: "/admin/users", icon: MdAssignment },
+    { name: "Create Quiz", href: "/admin/quizzes", icon: MdAssignment },
 
     { name: "Settings", href: "/admin/settings", icon: MdSettings },
   ];

@@ -15,6 +15,7 @@ import {
   MdCheck,
   MdLightbulbOutline,
 } from "react-icons/md";
+import CompleteButton from "../progress/progress";
 
 export default function LessonPage() {
   const { courseId, moduleId } = useParams();
@@ -190,7 +191,7 @@ export default function LessonPage() {
   };
 
   const exercise = getExerciseData();
-
+console.log("current:", currentModule)
   const handleVerifyExercise = () => {
     if (exerciseAnswer.trim() === exercise.correct) {
       setExerciseSubmitted(true);
@@ -289,6 +290,7 @@ export default function LessonPage() {
                 >
                   <span className="text-xs truncate max-w-[160px]">
                     {m.title}
+                    
                   </span>
                   {isPast ? (
                     <MdCheckCircle
@@ -319,6 +321,7 @@ export default function LessonPage() {
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white leading-snug">
                 {currentModule.title}
               </h1>
+              <CompleteButton moduleId={currentModule.id} />
             </div>
 
             {/* Markdown Text */}
