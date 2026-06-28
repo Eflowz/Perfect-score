@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { FaBookOpen, FaLayerGroup } from "react-icons/fa";
 
 import { useCourse } from "../../context/course/useCourse";
+import { getCourseQuizzes } from "../../api/quiz.api";
 import ModuleCard from "../../components/courses/ModuleCard";
 import ModuleCardSkeleton from "../../components/courses/ModuleCardSkeleton";
 import Skeleton from "../../components/common/Skeleton";
@@ -20,6 +21,7 @@ export default function CourseDetails() {
   console.log("course-id:", params)
   console.log("params ID:", id); // 👈 PUT IT HERE
   const [openCreateModal, setOpenCreateModal] = useState(false);
+  const [quizzes, setQuizzes] = useState<any[]>([]);
   const {user}= useAuth()
   
 const isAdmin= user?.role === "SUPER_ADMIN"
@@ -31,6 +33,23 @@ useEffect(() => {
     }
     console.log("Fetching course details for ID:", id);
   }, [id]);
+
+  useEffect(() => {
+    const loadQuizzes = async () => {
+      if (!id) return;
+      try {
+        const data = await getCourseQuizzes(id);
+        setQuizzes(data || []);
+      } catch (error) {
+        console.error("Failed to load course quizzes:", error);
+      }
+    };
+
+    loadQuizzes();
+  }, [id]);
+
+  const hasQuizForModule = (moduleId: string) =>
+    quizzes.some((quiz) => quiz.moduleId === moduleId);
 
   if (loading) {
     return (
@@ -248,6 +267,7 @@ useEffect(() => {
                 module={module}
                 index={index}
                 courseId={selectedCourse.id}
+                quizAvailable={hasQuizForModule(module.id)}
               />
             ))
           ) : (

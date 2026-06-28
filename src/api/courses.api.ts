@@ -6,20 +6,19 @@ type CoursesResponse = {
 };
 
 export const getCourses = async (): Promise<Course[]> => {
-  const response = await api.get<CoursesResponse>("/courses");
+  const response = await api.get<CoursesResponse | Course[]>("/courses");
 
-  return response.data.data;
+  return Array.isArray(response.data) ? response.data : response.data.data;
 };
-
-// GET COURSE DETAILS
 
 export const getCourseById = async (id: string): Promise<Course> => {
-  const response = await api.get(`/courses/${id}`);
+  const response = await api.get<Course | { data: Course }>(`/courses/${id}`);
 
- 
-  return response.data.data; // ✅ FIX HERE
+  return "data" in response.data ? response.data.data : response.data;
 };
+
 type CourseLevel = "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
+
 export type UpdateCourseRequest = {
   title?: string;
   description?: string;

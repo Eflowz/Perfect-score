@@ -13,8 +13,12 @@ useEffect (()=>{
   fetchCourses()
 },[])
 
-  if (user?.role !== "SUPER_ADMIN") {
-    return <Navigate to="/admindashboard" />;
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (user.role !== "SUPER_ADMIN") {
+    return <Navigate to="/dashboard" replace />;
   }
 
   return (

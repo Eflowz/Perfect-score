@@ -1,41 +1,10 @@
-import Skeleton from "../common/Skeleton";
-
 export default function ModuleCardSkeleton() {
   return (
-    <div
-      className="
- relative overflow-hidden
- border border-gray-200/60 dark:border-white/10
- rounded-2xl p-5
- bg-white/60 dark:bg-white/5
- space-y-4
- "
-    >
-      {/* top row */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Skeleton className="w-9 h-9 rounded-xl" />
-
-          <div className="space-y-2">
-            <Skeleton className="h-3 w-24" />
-            <Skeleton className="h-4 w-40" />
-          </div>
-        </div>
-
-        <Skeleton className="w-8 h-8 rounded-full" />
-      </div>
-
-      {/* content preview */}
-      <div className="space-y-2">
-        <Skeleton className="h-3 w-full" />
-        <Skeleton className="h-3 w-5/6" />
-      </div>
-
-      {/* footer */}
-      <div className="flex justify-between items-center pt-2 border-t border-gray-100 dark:border-white/10">
-        <Skeleton className="h-3 w-20" />
-        <Skeleton className="h-3 w-24" />
-      </div>
+    <div className="animate-pulse rounded-2xl border border-gray-200/70 bg-white p-5 dark:border-white/10 dark:bg-white/5">
+      <div className="mb-3 h-6 w-24 rounded-full bg-gray-200 dark:bg-white/10" />
+      <div className="mb-2 h-5 w-2/3 rounded bg-gray-200 dark:bg-white/10" />
+      <div className="h-4 w-full rounded bg-gray-200 dark:bg-white/10" />
+      <div className="mt-2 h-4 w-5/6 rounded bg-gray-200 dark:bg-white/10" />
     </div>
   );
 }

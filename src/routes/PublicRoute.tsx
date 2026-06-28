@@ -12,6 +12,9 @@ export const PublicRoute = ({ children }: Props) => {
   }
 
   if (user) {
+    if (user.role === "SUPER_ADMIN") {
+      return <Navigate to="/admin" replace />;
+    }
     return <Navigate to="/dashboard" replace />;
   }
 

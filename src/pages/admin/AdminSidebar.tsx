@@ -4,10 +4,12 @@ import {
   MdDashboard,
   MdMap,
   MdAssignment,
+  MdForum,
+  MdBookmark,
+  MdQuiz,
   MdChevronLeft,
   MdChevronRight,
   MdSettings,
-
 } from "react-icons/md";
 
 interface SidebarProps {
@@ -20,14 +22,14 @@ const AdminSidebar = ({ isExpanded, setIsExpanded }: SidebarProps) => {
 
   const menuItems = [
     { name: "Dashboard", href: "/admin", icon: MdDashboard },
-
-    { name: "Courses", href: "courses", icon: MdMap },
-
+    { name: "Courses", href: "/admin/courses", icon: MdMap },
     { name: "Users", href: "/admin/users", icon: MdAssignment },
-    { name: "Create Quiz", href: "/admin/quizzes", icon: MdAssignment },
-
-    { name: "Settings", href: "/admin/settings", icon: MdSettings },
+    { name: "Quizzes", href: "/admin/quizzes", icon: MdQuiz },
+    { name: "Discussions", href: "/admin/discussions", icon: MdForum },
+    { name: "Bookmarks", href: "/admin/bookmarks", icon: MdBookmark },
   ];
+
+  const isSettingsActive = location.pathname === "/admin/settings";
 
   return (
     <aside
@@ -75,7 +77,10 @@ ${isExpanded ? "w-64" : "w-20"}`}
           {menuItems.map((item) => {
             const Icon = item.icon;
 
-            const isActive = location.pathname.startsWith(item.href);
+            const isActive =
+              item.href === "/admin"
+                ? location.pathname === "/admin"
+                : location.pathname.startsWith(item.href);
 
             return (
                 <Link
@@ -107,7 +112,11 @@ ${isExpanded ? "w-64" : "w-20"}`}
       <div className="p-4 border-t border-gray-200/50 dark:border-white/5">
         <Link
           to="/admin/settings"
-          className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 dark:hover:bg-white/5 transition"
+          className={`flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition ${
+            isSettingsActive
+              ? "bg-[#16423C] text-white"
+              : "text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5"
+          }`}
         >
           <MdSettings />
 

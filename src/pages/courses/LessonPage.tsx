@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useCourse } from "../../context/course/useCourse";
+import { getCourseQuizzes } from "../../api/quiz.api";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
-  MdMap,
-  MdCheckCircle,
-  MdPlayCircleFilled,
-  MdLock,
-  MdArrowBack,
+  // MdMap,
   MdPlayArrow,
   MdCached,
   MdAssignmentTurnedIn,
@@ -21,6 +18,7 @@ export default function LessonPage() {
   const { courseId, moduleId } = useParams();
   const navigate = useNavigate();
   const { selectedCourse, fetchCourseById, loading } = useCourse();
+  const [courseQuizzes, setCourseQuizzes] = useState<any[]>([]);
 
   // Sandbox State
   const [sandboxCode, setSandboxCode] = useState("");
@@ -40,12 +38,25 @@ export default function LessonPage() {
     }
   }, [courseId]);
 
+  useEffect(() => {
+    const loadQuizzes = async () => {
+      if (!courseId) return;
+      try {
+        const data = await getCourseQuizzes(courseId);
+        setCourseQuizzes(data || []);
+      } catch (error) {
+        console.error("Failed to load module quizzes:", error);
+      }
+    };
+
+    loadQuizzes();
+  }, [courseId]);
+
   // Load default script on module change
   useEffect(() => {
     if (selectedCourse && moduleId) {
       const module = selectedCourse.modules?.find((m) => m.id === moduleId);
       if (module) {
-        // Look for code in module content or load a default
         const match = /```python([\s\S]*?)```/.exec(module.content);
         if (match && match[1]) {
           setSandboxCode(match[1].trim());
@@ -83,7 +94,7 @@ export default function LessonPage() {
           Course not found
         </p>
         <Link
-          to="/courses"
+          to="/dashboard/courses"
           className="mt-4 text-xs font-semibold text-[#16423C] dark:text-[#E2FB6C] hover:underline"
         >
           Back to Courses
@@ -100,6 +111,9 @@ export default function LessonPage() {
   const prevModule = modules[currentIndex - 1];
   const nextModule = modules[currentIndex + 1];
   const currentModule = modules[currentIndex];
+  const currentModuleQuizzes = currentModule
+    ? courseQuizzes.filter((quiz) => quiz.moduleId === currentModule.id)
+    : [];
 
   if (currentIndex === -1 || !currentModule) {
     return (
@@ -108,7 +122,7 @@ export default function LessonPage() {
           Module not found
         </p>
         <Link
-          to={`/courses/${courseId}`}
+          to={`/dashboard/courses/${courseId}`}
           className="mt-4 text-xs font-semibold text-[#16423C] dark:text-[#E2FB6C] hover:underline"
         >
           Back to Course
@@ -117,19 +131,16 @@ export default function LessonPage() {
     );
   }
 
-  // Load clicked snippet into right editor
   const handleLoadToSandbox = (codeText: string) => {
     setSandboxCode(codeText);
     setSandboxOutput("Code loaded successfully! Press Run to test.");
   };
 
-  // Run python script simulation
   const runSandboxCode = () => {
     setIsRunning(true);
     setSandboxOutput("Executing script on backend server...");
     setTimeout(() => {
       setIsRunning(false);
-      // Basic mock output generator
       if (sandboxCode.includes("print(")) {
         const matches = [...sandboxCode.matchAll(/print\(([^)]+)\)/g)];
         const outputs = matches.map((m) => {
@@ -151,7 +162,6 @@ export default function LessonPage() {
     }, 1000);
   };
 
-  // Determine exercise based on module name
   const getExerciseData = () => {
     const title = currentModule.title.toLowerCase();
     if (title.includes("variable") || title.includes("basic")) {
@@ -180,7 +190,6 @@ export default function LessonPage() {
         hint: "The range function generates a sequence.",
       };
     }
-    // Fallback/Default
     return {
       question:
         'Call the built-in function to display "Success" on the screen:',
@@ -191,7 +200,7 @@ export default function LessonPage() {
   };
 
   const exercise = getExerciseData();
-console.log("current:", currentModule)
+
   const handleVerifyExercise = () => {
     if (exerciseAnswer.trim() === exercise.correct) {
       setExerciseSubmitted(true);
@@ -201,7 +210,6 @@ console.log("current:", currentModule)
     }
   };
 
-  // Customize markdown components to show "Try it Yourself" buttons
   const markdownRenderers = {
     code({ node, inline, className, children, ...props }: any) {
       const match = /language-(\w+)/.exec(className || "");
@@ -234,21 +242,9 @@ console.log("current:", currentModule)
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-800 dark:text-gray-100 flex flex-col transition-colors duration-200">
+    <div className="min-h-screen  text-gray-800 dark:text-gray-100 flex flex-col transition-colors duration-200">
       {/* Workspace Sub Header */}
-      <header className="h-14 border-b border-gray-200/80 dark:border-white/5 bg-white dark:bg-[#0F2C28] px-6 flex items-center justify-between z-10 shrink-0">
-        <div className="flex items-center gap-3">
-          <Link
-            to={`/dashboard/courses/${courseId}`}
-            className="p-1.5 rounded-lg border border-gray-200 dark:border-white/10 hover:bg-gray-100 dark:hover:bg-white/5 text-gray-500 dark:text-gray-300 transition-colors"
-          >
-            <MdArrowBack size={16} />
-          </Link>
-          <span className="text-xs font-bold font-mono text-gray-400 dark:text-[#6B8A85] uppercase">
-            {selectedCourse.title}
-          </span>
-        </div>
-
+      <header className="h-14 border-b border-gray-200/80 dark:border-white/5  px-6 flex items-center justify-between z-10 shrink-0">
         <div className="flex items-center gap-4">
           <span className="text-xs font-mono text-gray-400 dark:text-[#6B8A85]">
             Module {currentNumber} of {totalModules}
@@ -264,58 +260,8 @@ console.log("current:", currentModule)
 
       {/* Main Workspace Body */}
       <div className="flex-1 flex overflow-hidden min-h-0">
-        {/* Left Pane: Course Syllabus Sidebar */}
-        <aside className="w-64 border-r border-gray-200/80 dark:border-white/5 bg-white dark:bg-[#0F2C28] overflow-y-auto hidden md:block shrink-0">
-          <div className="p-4 border-b border-gray-100 dark:border-white/5">
-            <h3 className="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
-              <MdMap className="text-[#16423C] dark:text-[#E2FB6C]" /> Course
-              Outline
-            </h3>
-          </div>
-          <nav className="p-2 space-y-1">
-            {modules.map((m, idx) => {
-              const isActive = m.id === moduleId;
-              const isPast = idx < currentIndex;
-              return (
-                <button
-                  key={m.id}
-                  onClick={() =>
-                    navigate(`/courses/${courseId}/modules/${m.id}`)
-                  }
-                  className={`w-full flex items-center justify-between text-left p-3 rounded-xl transition-all ${
-                    isActive
-                      ? "bg-[#16423C] dark:bg-[#16423C] text-white dark:text-[#E2FB6C] font-semibold"
-                      : "hover:bg-gray-100 dark:hover:bg-white/5 text-gray-600 dark:text-gray-400"
-                  }`}
-                >
-                  <span className="text-xs truncate max-w-[160px]">
-                    {m.title}
-                    
-                  </span>
-                  {isPast ? (
-                    <MdCheckCircle
-                      className="text-emerald-600 dark:text-[#E2FB6C]"
-                      size={16}
-                    />
-                  ) : isActive ? (
-                    <MdPlayCircleFilled
-                      className="text-white dark:text-[#E2FB6C]"
-                      size={16}
-                    />
-                  ) : (
-                    <MdLock
-                      className="text-gray-300 dark:text-gray-600"
-                      size={14}
-                    />
-                  )}
-                </button>
-              );
-            })}
-          </nav>
-        </aside>
-
         {/* Center Pane: Markdown Reading panel */}
-        <main className="flex-1 flex flex-col overflow-y-auto bg-white dark:bg-[#0F2D29] border-r border-gray-200/80 dark:border-white/5 p-6 lg:p-8">
+        <main className="flex-1 flex flex-col overflow-y-auto  border-r border-gray-200/80 dark:border-white/5 p-6 lg:p-8">
           <div className="flex-1 space-y-6 max-w-2xl mx-auto w-full">
             <div>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white leading-snug">
@@ -333,6 +279,30 @@ console.log("current:", currentModule)
                 {currentModule.content}
               </ReactMarkdown>
             </div>
+
+            {currentModuleQuizzes.length > 0 && (
+              <div className="p-6 bg-gray-50 dark:bg-black/20 border border-gray-200/60 dark:border-white/5 rounded-2xl space-y-4">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <p className="text-xs uppercase tracking-widest text-[#16423C] dark:text-[#E2FB6C] font-semibold">
+                      Module quiz available
+                    </p>
+                    <h3 className="mt-1 text-lg font-bold text-gray-900 dark:text-white">
+                      Complete the quiz for this lesson before moving on.
+                    </h3>
+                  </div>
+                  <Link
+                    to={`/dashboard/quiz/${currentModuleQuizzes[0].id}`}
+                    className="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-[#16423C] dark:bg-[#E2FB6C] text-white dark:text-[#16423C] text-xs font-semibold hover:opacity-90 transition"
+                  >
+                    Start Quiz
+                  </Link>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
+                  This quiz is attached to the current module and validates your understanding at the end of the lesson.
+                </p>
+              </div>
+            )}
 
             {/* Inline Micro Exercise */}
             <div className="p-6 bg-gray-50 dark:bg-black/20 border border-gray-200/60 dark:border-white/5 rounded-2xl space-y-4">
@@ -398,7 +368,7 @@ console.log("current:", currentModule)
             <button
               onClick={() => {
                 if (prevModule)
-                  navigate(`/courses/${courseId}/modules/${prevModule.id}`);
+                  navigate(`/dashboard/courses/${courseId}/modules/${prevModule.id}`);
               }}
               disabled={!prevModule}
               className={`px-4 py-2 rounded-xl text-xs font-semibold border transition-all ${
@@ -413,7 +383,7 @@ console.log("current:", currentModule)
             <button
               onClick={() => {
                 if (nextModule)
-                  navigate(`/courses/${courseId}/modules/${nextModule.id}`);
+                  navigate(`/dashboard/courses/${courseId}/modules/${nextModule.id}`);
               }}
               disabled={!nextModule || !exerciseSubmitted}
               className={`px-5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm ${
@@ -428,12 +398,10 @@ console.log("current:", currentModule)
         </main>
 
         {/* Right Pane: Live Python Sandbox */}
-        <section className="w-[30rem] border-l border-gray-200/80 dark:border-white/5 bg-gray-900 dark:bg-[#081816] flex flex-col justify-between hidden lg:flex shrink-0">
-          {/* Header toolbar */}
+        <section className="w-120 border-l border-gray-200/80 dark:border-white/5 bg-gray-900 dark:bg-[#081816] flex flex-col justify-between lg:flex shrink-0">
           <div className="h-12 border-b border-gray-800/80 dark:border-white/5 px-4 flex items-center justify-between text-xs text-gray-400 font-mono">
             <span className="flex items-center gap-1.5">
-              <span className="w-2 h-2 bg-emerald-500 rounded-full" /> Sandbox
-              Playground
+              <span className="w-2 h-2 bg-emerald-500 rounded-full" /> Sandbox Playground
             </span>
 
             <button
@@ -450,7 +418,6 @@ console.log("current:", currentModule)
             </button>
           </div>
 
-          {/* Editor body */}
           <textarea
             value={sandboxCode}
             onChange={(e) => setSandboxCode(e.target.value)}
@@ -458,7 +425,6 @@ console.log("current:", currentModule)
             spellCheck="false"
           />
 
-          {/* Terminal output box */}
           <div className="h-44 bg-black/50 border-t border-gray-800/80 dark:border-white/5 flex flex-col font-mono text-[11px] text-gray-300">
             <div className="bg-black/70 px-4 py-1.5 border-b border-gray-800/40 text-gray-500 select-none">
               Console Output
