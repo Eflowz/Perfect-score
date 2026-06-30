@@ -24,31 +24,113 @@ export const Input = ({
 
   return (
     <div>
-      {label && <label className="font-semibold">{label}</label>}
+      {label && <label className="font-semibold dark:text-white text-gray-800 ">{label}</label>}
 
       <div className="relative">
-        <input
-          type={inputType}
-          value={value}
-          placeholder={placeholder}
-          onChange={onChange}
-          className="w-full h-14 border border-[#fef7ff] bg-gray-50 rounded-2xl px-6 text-[#1d1a24] placeholder:text-[#7b7486] focus:ring-2 focus:ring-[#16423C] outline-none transition-all text-md md:text-lg"
-        />
 
-        {showPasswordToggle && (
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-5 cursor-pointer"
-          >
-            {showPassword ? (
-              <FaEye className="text-[#277268]" />
-            ) : (
-              <FaEyeSlash className="text-[#277268]" />
-            )}
-          </button>
-        )}
-      </div>
+ <input
+ type={inputType}
+ value={value}
+ placeholder={placeholder}
+ onChange={onChange}
+
+ className="
+ w-full
+ h-14
+
+ rounded-2xl
+
+ px-6
+
+ text-md
+ md:text-lg
+
+
+ /* Light mode */
+ bg-gray-50
+ border
+ border-gray-200
+
+ text-[#1d1a24]
+
+ placeholder:text-[#7b7486]
+
+
+
+ /* Dark mode */
+ dark:bg-white/[0.05]
+
+ dark:border-white/10
+
+ dark:text-white
+
+ dark:placeholder:text-[#6B8A85]
+
+
+
+ focus:ring-2
+
+ focus:ring-[#16423C]
+
+ dark:focus:ring-[#E2FB6C]
+
+
+ outline-none
+
+ transition-all
+
+ duration-300
+ "
+ />
+
+
+
+ {showPasswordToggle && (
+
+ <button
+ type="button"
+ onClick={() => setShowPassword(!showPassword)}
+
+ className="
+ absolute
+ right-4
+ top-5
+
+ cursor-pointer
+
+ transition
+ "
+ >
+
+ {
+ showPassword ?
+
+ (
+ <FaEye
+ className="
+ text-[#16423C]
+ dark:text-[#E2FB6C]
+ "
+ />
+ )
+
+ :
+
+ (
+ <FaEyeSlash
+ className="
+ text-[#16423C]
+ dark:text-[#E2FB6C]
+ "
+ />
+ )
+ }
+
+ </button>
+
+ )}
+
+</div>
     </div>
   );
 };

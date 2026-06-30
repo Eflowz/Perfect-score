@@ -22,11 +22,9 @@ export default function Bookmarks() {
       try {
         setLoading(true);
         // Replace with your endpoint data grab if you create a getBookmarks route
-        const mockSaved = [
-          { id: "cuid-course-1", title: "Python Engineering Pro Track", description: "Deep dive backend systems architecture with automated task verification.", category: "Backend" },
-          { id: "cuid-course-2", title: "Full Stack React & Next.js Core", description: "High-density dashboard development using modern enterprise primitives.", category: "Frontend" }
-        ];
-        setSavedCourses(mockSaved);
+       
+        
+        setSavedCourses([]);
       } catch (err) {
         console.error(err);
       } finally {

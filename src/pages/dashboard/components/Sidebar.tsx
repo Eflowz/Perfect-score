@@ -87,7 +87,7 @@ const Sidebar = ({ isExpanded, setIsExpanded }: SidebarProps) => {
 
   return (
     <aside
-      className={`fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out z-40 flex flex-col justify-between p-4 border-r border-gray-200/80 dark:border-white/5 ${
+      className={`fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out  z-40 flex flex-col justify-between p-4 border-r border-gray-200/80 dark:border-white/5 ${
         isExpanded ? "w-64" : "w-20"
       } bg-white dark:bg-[#0F2C28] text-gray-800 dark:text-gray-200`}
     >
@@ -109,7 +109,7 @@ const Sidebar = ({ isExpanded, setIsExpanded }: SidebarProps) => {
 
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="absolute -right-7 top-3 bg-white dark:bg-[#16423C] border border-gray-200 dark:border-white/10 text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white p-1 rounded-full cursor-pointer transition-colors shadow-sm flex items-center justify-center"
+            className="absolute -right-2 top-3 bg-white dark:bg-[#16423C] border border-gray-200 dark:border-white/10 text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white p-1 rounded-full cursor-pointer transition-colors shadow-sm flex items-center justify-center"
             aria-label="Toggle Sidebar"
           >
             {isExpanded ? <MdChevronLeft size={16} /> : <MdChevronRight size={16} />}

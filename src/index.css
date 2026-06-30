@@ -22,7 +22,7 @@ html {
 }
 @custom-variant dark (&:where(.dark, .dark *));
 .image {
-  background-image: url("/images/libary.jpg");
+  background-image: url("/images/book-2.jpg");
   background-size: cover;
   background-position: center;
 }
@@ -40,4 +40,22 @@ html {
 
 .animate-fade-in {
   animation: fade-in 0.4s ease-out;
+}
+@keyframes lightMove {
+ 0% {
+ transform: translateX(-20px);
+ }
+
+ 50% {
+ transform: translateX(20px);
+ }
+
+ 100% {
+ transform: translateX(-20px);
+ }
+}
+
+
+.light-rays {
+ animation: lightMove 8s ease-in-out infinite;
 }

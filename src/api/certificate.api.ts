@@ -6,8 +6,8 @@ export const getMyCertificates = async () => {
  const token = getAccessToken();
 
  try {
- console.log("🎓 Fetching certificates...");
- console.log("🔑 Token exists:", !!token);
+ //console.log("🎓 Fetching certificates...");
+ //console.log("🔑 Token exists:", !!token);
 
 
  const res = await api.get(
@@ -20,15 +20,15 @@ export const getMyCertificates = async () => {
  );
 
 
- console.log("✅ Certificates response:", res.data.data);
+ //console.log("✅ Certificates response:", res.data.data);
 
  return res.data.data;
 
 
  } catch (err: any) {
 
- console.log("❌ Certificate fetch failed");
-
+ //console.log("❌ Certificate fetch failed");
+{/*
  console.log(
  "📛 STATUS:",
  err?.response?.status
@@ -38,7 +38,7 @@ export const getMyCertificates = async () => {
  "📛 DATA:",
  err?.response?.data.data
  );
-
+*/}
  throw err;
  }
 };
@@ -50,8 +50,8 @@ export const verifyCertificate = async (
 
  try {
 
- console.log("🔍 Verifying certificate...");
- console.log("Credential ID:", credentialId);
+ //console.log("🔍 Verifying certificate...");
+ //console.log("Credential ID:", credentialId);
 
 
  const res = await api.post(
@@ -61,18 +61,18 @@ export const verifyCertificate = async (
  }
  );
 
-
+{/* 
  console.log(
  "✅ Verification response:",
  res.data
  );
-
+*/}
 
  return res.data;
 
 
  } catch(err:any){
-
+{/*
  console.log("❌ Verification failed");
 
  console.log(
@@ -84,7 +84,7 @@ export const verifyCertificate = async (
  "DATA:",
  err?.response?.data
  );
-
+*/}
 
  throw err;
  }
