@@ -559,151 +559,6 @@ lg:hidden
 {/* FORM SIDE */}
 
 
-<div
-className="
-p-6
-sm:p-10
-lg:p-14
-
-flex
-flex-col
-justify-center
-"
->
-
-
-<h1
-className="
-text-3xl
-font-bold
-
-text-[#16423C]
-
-dark:text-white
-"
->
-PerfectScore
-</h1>
-
-
-
-<p
-className="
-mt-3
-
-text-gray-500
-
-dark:text-[#6B8A85]
-"
->
-Create your learning account
-</p>
-
-
-
-
-<form className="space-y-6" onSubmit={handleSubmit}>
-              
-              <div>
-                <Input
-                  label="Full Name"
-                  placeholder="Enter your name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-                {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
-              </div>
-              <div>
-                <Input
-                  label="Email"
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-
-                {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-              </div>
-              <div>
-                <Input
-                  label="Password"
-                  type="password"
-                  placeholder="Create password"
-                  value={password}
-                  showPasswordToggle
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-
-                <PasswordStrength password={password} />
-              </div>
-
-              <div>
-                <Input
-                  label="Confirm Password"
-                  type="password"
-                  placeholder="Confirm password"
-                  value={confirmPassword}
-                  showPasswordToggle
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-                {errors.confirmPassword && (
-                  <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
-                )}
-                {errors.password && <p>{errors.password}</p>}
-              </div>
-             
-              <div className="flex items-start  gap-2">
-                <div className="flex items-center h-5 ">
-                  <input
-                    className="w-5 h-5 cursor-pointer accent-[#1d1a24] border-[#7b7486] rounded-md focus:ring-[#16423C]"
-                    id="terms"
-                    type="checkbox"
-                    onChange={(e) => setAccepted(e.target.checked)}
-                  />
-                </div>
-
-                <label
-                  className="text-xs font-semibold text-[#4a4455] dark:text-gray-200"
-                  htmlFor="terms"
-                >
-                  I agree to the{" "}
-                  <span className="text-[#16423C] dark:text-[#E2FB6C] font-semibold ">
-                    Terms of Service
-                  </span>{" "}
-                  and{" "}
-                  <span className="text-[#16423C] dark:text-[#E2FB6C] font-semibold ">
-                    Privacy Policy
-                  </span>
-                </label>
-              </div>
-              {errors.accepted && <p>{errors.accepted}</p>}
-      
-
-              <Button
-                text="Create Account"
-                loading={loading}
-                loadingText="Creating account..."
-                type="submit"
-              />
-            </form>
-            <p className="mt-12 text-center text-[16px] leading-[1.5] text-[#4a4455] dark:text-gray-200">
-              Already have an account?{" "}
-              <Link
-                className="text-[#16423C] dark:text-[#E2FB6C] font-bold hover:underline"
-                to="/login"
-              >
-                Log In
-              </Link>
-            </p>
-
-
-</div>
-
-
-
-
-
-
 
 
 
@@ -835,35 +690,7 @@ backgroundImage:
 <div className="relative z-10">
 
 
-<div
-className="
-inline-flex
-items-center
-gap-2
 
-px-4
-py-2
-
-rounded-full
-
-bg-white/10
-
-border
-border-white/10
-
-backdrop-blur-xl
-
-text-white/70
-
-text-xs
-"
->
-
-<BsStars className="text-[#E2FB6C]" />
-
-Premium Learning Experience
-
-</div>
 
 
 
@@ -1149,7 +976,145 @@ bg-white/30
 
 </div>
 
+<div
+className="
+p-6
+sm:p-10
+lg:p-14
 
+flex
+flex-col
+justify-center
+"
+>
+
+
+<h1
+className="
+text-3xl
+font-bold
+
+text-[#16423C]
+
+dark:text-white
+"
+>
+PerfectScore
+</h1>
+
+
+
+<p
+className="
+mt-3
+
+text-gray-500
+
+dark:text-[#6B8A85]
+"
+>
+Create your learning account
+</p>
+
+
+
+
+<form className="space-y-6" onSubmit={handleSubmit}>
+              
+              <div>
+                <Input
+                  label="Full Name"
+                  placeholder="Enter your name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+              </div>
+              <div>
+                <Input
+                  label="Email"
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+
+                {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+              </div>
+              <div>
+                <Input
+                  label="Password"
+                  type="password"
+                  placeholder="Create password"
+                  value={password}
+                  showPasswordToggle
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+
+                <PasswordStrength password={password} />
+              </div>
+
+              <div>
+                <Input
+                  label="Confirm Password"
+                  type="password"
+                  placeholder="Confirm password"
+                  value={confirmPassword}
+                  showPasswordToggle
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+                {errors.confirmPassword && (
+                  <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
+                )}
+                {errors.password && <p>{errors.password}</p>}
+              </div>
+             
+              <div className="flex items-start  gap-2">
+                <div className="flex items-center h-5 ">
+                  <input
+                    className="w-5 h-5 cursor-pointer accent-[#1d1a24] border-[#7b7486] rounded-md focus:ring-[#16423C]"
+                    id="terms"
+                    type="checkbox"
+                    onChange={(e) => setAccepted(e.target.checked)}
+                  />
+                </div>
+
+                <label
+                  className="text-xs font-semibold text-[#4a4455] dark:text-gray-200"
+                  htmlFor="terms"
+                >
+                  I agree to the{" "}
+                  <span className="text-[#16423C] dark:text-[#E2FB6C] font-semibold ">
+                    Terms of Service
+                  </span>{" "}
+                  and{" "}
+                  <span className="text-[#16423C] dark:text-[#E2FB6C] font-semibold ">
+                    Privacy Policy
+                  </span>
+                </label>
+              </div>
+              {errors.accepted && <p>{errors.accepted}</p>}
+      
+
+              <Button
+                text="Create Account"
+                loading={loading}
+                loadingText="Creating account..."
+                type="submit"
+              />
+            </form>
+            <p className="mt-12 text-center text-[16px] leading-[1.5] text-[#4a4455] dark:text-gray-200">
+              Already have an account?{" "}
+              <Link
+                className="text-[#16423C] dark:text-[#E2FB6C] font-bold hover:underline"
+                to="/login"
+              >
+                Log In
+              </Link>
+            </p>
+
+
+</div>
 
 </section>
 

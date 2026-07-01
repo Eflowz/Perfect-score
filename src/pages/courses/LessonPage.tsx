@@ -13,6 +13,7 @@ import {
   MdLightbulbOutline,
 } from "react-icons/md";
 import CompleteButton from "../progress/progress";
+import LessonSkeleton from "./LessonSkeleton";
 
 export default function LessonPage() {
   const { courseId, moduleId } = useParams();
@@ -76,30 +77,13 @@ export default function LessonPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-4 border-t-transparent border-[#16423C] dark:border-t-transparent dark:border-[#E2FB6C] rounded-full animate-spin"></div>
-          <p className="text-xs font-mono text-gray-500">
-            Loading lesson workspace...
-          </p>
-        </div>
-      </div>
+      <LessonSkeleton />
     );
   }
 
   if (!selectedCourse) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col items-center justify-center p-6 text-center">
-        <p className="text-sm font-bold text-gray-800 dark:text-white">
-          Course not found
-        </p>
-        <Link
-          to="/dashboard/courses"
-          className="mt-4 text-xs font-semibold text-[#16423C] dark:text-[#E2FB6C] hover:underline"
-        >
-          Back to Courses
-        </Link>
-      </div>
+      <LessonSkeleton />
     );
   }
 

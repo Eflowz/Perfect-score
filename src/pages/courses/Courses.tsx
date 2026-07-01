@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useCourse } from "../../context/course/useCourse";
 import { MdBook } from "react-icons/md";
 import CourseCard from "../../components/common/CourseCard"; 
-import CourseCardSkeleton from "../../components/common/Skeleton";
+import CourseCardSkeleton from "../../components/common/CourseCradSkeleton";
 import EmptyState from "../../components/common/EmptyCardState";
 
 export default function Courses() {
