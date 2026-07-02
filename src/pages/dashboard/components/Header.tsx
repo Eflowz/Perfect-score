@@ -13,6 +13,7 @@ import { getCurrentUser } from "../../../api/user.api";
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect, useMemo, useRef } from "react";
 import { useUser } from "../../../context/user/useUser";
+import NotificationDropdown from "../../../components/common/NotificationDropdown";
 
 const Header = () => {
   const { pathname } = useLocation();
@@ -21,7 +22,11 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const { user, setUser } = useUser();
   const [loading, setLoading] = useState(true);
+const location = useLocation();
 
+const showSearch =
+ location.pathname.includes("/courses") ||
+ location.pathname.includes("/modules");
   // Theme state setup
   const [darkMode, setDarkMode] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -130,7 +135,7 @@ const Header = () => {
         <div className="flex items-center space-x-4 sm:space-x-5">
           
           {/* Dynamic Search */}
-          <div className="relative hidden lg:block group">
+          {showSearch && <div className="relative hidden lg:block group">
             <MdSearch
               className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#16423C] dark:group-focus-within:text-[#E2FB6C] transition-colors"
               size={18}
@@ -144,13 +149,10 @@ const Header = () => {
               <MdOutlineKeyboardCommandKey size={10} />
               <span>K</span>
             </div>
-          </div>
+          </div>}
 
           {/* Alerts Notification Anchor */}
-          <button className="relative text-gray-400 dark:text-gray-400 hover:text-[#16423C] dark:hover:text-white p-1.5 rounded-xl hover:bg-gray-100 dark:hover:bg-white/5 transition-all cursor-pointer">
-            <MdNotificationsNone size={20} />
-            <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-[#16423C] dark:bg-[#E2FB6C] rounded-full ring-2 ring-white dark:ring-gray-950"></span>
-          </button>
+          <NotificationDropdown />
 
           {/* Theme Selector */}
           <button
