@@ -1,22 +1,13 @@
 import api from "./axios";
-import { getAccessToken } from "../utlis/storage";
 
 
 export const getMyCertificates = async () => {
- const token = getAccessToken();
-
  try {
  //console.log("🎓 Fetching certificates...");
- //console.log("🔑 Token exists:", !!token);
 
 
  const res = await api.get(
- "/certifications/my",
- {
- headers: {
- Authorization: `Bearer ${token}`,
- },
- }
+ "/certifications/my"
  );
 
 

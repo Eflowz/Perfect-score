@@ -1,19 +1,26 @@
-import { useState } from "react";
-
-import { createModule } from "../../api/admin.modules.api";
-//import { useAuth } from "../../context/auth/useAuth";
-
+import { useEffect, useState } from "react";
+import { updateModule } from "../../api/admin.modules.api";
 import { getAccessToken } from "../../utlis/storage";
-
-import { MdAdd, MdRemove } from "react-icons/md";
+import { MdAdd, MdRemove, MdClose } from "react-icons/md";
 import { useCourse } from "../../context/course/useCourse";
+import type { Module } from "../../types/courses.types";
+
 type Props = {
- courseId: string;
- onSuccess: () => void;
+  open: boolean;
+  onClose: () => void;
+  courseId: string;
+  module: Module | null;
+  onSuccess: () => void;
 };
-export default function CreateModule({ courseId, onSuccess }: Props) {
-  
- const {fetchCourseById}=useCourse()
+
+export default function EditModuleDrawer({
+  open,
+  onClose,
+  courseId,
+  module,
+  onSuccess,
+}: Props) {
+  const { fetchCourseById } = useCourse();
 
   const [title, setTitle] = useState("");
   const [contentType, setContentType] = useState<"text" | "video">("text");
@@ -24,13 +31,34 @@ export default function CreateModule({ courseId, onSuccess }: Props) {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  const isVideoUrl = (str: string) => {
+    if (!str) return false;
+    const trimmed = str.trim();
+    if (trimmed.includes("\n")) return false;
+    const isYoutube = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/i.test(trimmed);
+    const isDirectVideo = /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(trimmed);
+    return isYoutube || isDirectVideo;
+  };
 
+  useEffect(() => {
+    if (module) {
+      setTitle(module.title);
+      setOrder(module.order);
+      const isVideo = isVideoUrl(module.content);
+      setContentType(isVideo ? "video" : "text");
+      setContent(module.content);
+      setError("");
+      setSuccess("");
+    }
+  }, [module, open]);
+
+  if (!open || !module) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!courseId) {
-      setError("Please select a course");
+      setError("Course ID missing");
       return;
     }
 
@@ -43,9 +71,10 @@ export default function CreateModule({ courseId, onSuccess }: Props) {
       setLoading(true);
       setError("");
       setSuccess("");
-    
-      await createModule(
+
+      await updateModule(
         courseId,
+        module.id,
         {
           title,
           content: content.trim(),
@@ -53,54 +82,55 @@ export default function CreateModule({ courseId, onSuccess }: Props) {
         },
         getAccessToken() as string,
       );
-      await fetchCourseById(courseId)
-      onSuccess();
-      setSuccess("Module created successfully 🎉");
 
-      // reset form
-      setTitle("");
-      setContent("");
-      setOrder(1);
+      await fetchCourseById(courseId);
+      setSuccess("Module updated successfully 🎉");
+      setTimeout(() => {
+        onSuccess();
+        onClose();
+      }, 800);
     } catch (err: any) {
-      setError(err?.response?.data?.message || "Failed to create module");
+      setError(err?.response?.data?.message || "Failed to update module");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div>
-      {/* HEADER */}
-      <div className="mb-6 text-center">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-          Create New Module
-        </h1>
+    <div className="fixed inset-0 z-50 flex items-center justify-end bg-black/50 backdrop-blur-sm transition-opacity">
+      {/* BACKGROUND DISMISS */}
+      <div className="absolute inset-0" onClick={onClose} />
 
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-          Add structured learning content to a course
-        </p>
-      </div>
+      {/* DRAWER CONTAINER */}
+      <div className="relative w-full max-w-lg h-full bg-white dark:bg-[#0d1a17] shadow-2xl p-6 overflow-y-auto flex flex-col justify-between animate-fade-in border-l border-gray-100 dark:border-white/10">
+        <div>
+          {/* HEADER */}
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                Edit Module
+              </h2>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                Modify course lesson properties and content
+              </p>
+            </div>
+            <button
+              onClick={onClose}
+              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 text-gray-500 dark:text-gray-400 transition"
+            >
+              <MdClose size={20} />
+            </button>
+          </div>
 
-      {/* FORM */}
-      <div>
+          {/* FORM */}
           <form onSubmit={handleSubmit} className="space-y-5">
-           
-
             {/* TITLE */}
             <div>
               <label className="text-xs font-semibold text-gray-500 dark:text-gray-400">
                 Module Title
               </label>
-
               <input
-                className="
- mt-2 w-full px-4 py-3 rounded-xl
- bg-gray-50 dark:bg-white/5
- border border-gray-200 dark:border-white/10
- text-gray-900 dark:text-white
- focus:outline-none focus:ring-2 focus:ring-[#16423C]
- transition
- "
+                className="mt-2 w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#16423C] transition"
                 placeholder="e.g. Variables and Data Types"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -108,7 +138,7 @@ export default function CreateModule({ courseId, onSuccess }: Props) {
               />
             </div>
 
-            {/* CONTENT TYPE SELECTOR */}
+            {/* CONTENT TYPE */}
             <div>
               <label className="text-xs font-semibold text-gray-500 dark:text-gray-400">
                 Content Type
@@ -118,7 +148,6 @@ export default function CreateModule({ courseId, onSuccess }: Props) {
                   type="button"
                   onClick={() => {
                     setContentType("text");
-                    setContent("");
                   }}
                   className={`py-2 text-xs font-semibold rounded-lg transition-all ${
                     contentType === "text"
@@ -132,7 +161,6 @@ export default function CreateModule({ courseId, onSuccess }: Props) {
                   type="button"
                   onClick={() => {
                     setContentType("video");
-                    setContent("");
                   }}
                   className={`py-2 text-xs font-semibold rounded-lg transition-all ${
                     contentType === "video"
@@ -145,7 +173,7 @@ export default function CreateModule({ courseId, onSuccess }: Props) {
               </div>
             </div>
 
-            {/* CONDITIONAL CONTENT FIELDS */}
+            {/* CONDITIONAL FIELD */}
             {contentType === "video" ? (
               <div>
                 <label className="text-xs font-semibold text-gray-500 dark:text-gray-400">
@@ -153,14 +181,7 @@ export default function CreateModule({ courseId, onSuccess }: Props) {
                 </label>
                 <input
                   type="url"
-                  className="
- mt-2 w-full px-4 py-3 rounded-xl
- bg-gray-50 dark:bg-white/5
- border border-gray-200 dark:border-white/10
- text-gray-900 dark:text-white
- focus:outline-none focus:ring-2 focus:ring-[#16423C]
- transition
- "
+                  className="mt-2 w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#16423C] transition"
                   placeholder="e.g. https://www.youtube.com/watch?v=dQw4w9WgXcQ"
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
@@ -173,14 +194,7 @@ export default function CreateModule({ courseId, onSuccess }: Props) {
                 </label>
                 <textarea
                   rows={6}
-                  className="
- mt-2 w-full px-4 py-3 rounded-xl
- bg-gray-50 dark:bg-white/5
- border border-gray-200 dark:border-white/10
- text-gray-900 dark:text-white
- focus:outline-none focus:ring-2 focus:ring-[#16423C]
- transition resize-none
- "
+                  className="mt-2 w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#16423C] transition resize-none"
                   placeholder="Write HTML or Markdown content..."
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
@@ -193,46 +207,22 @@ export default function CreateModule({ courseId, onSuccess }: Props) {
               <label className="text-xs font-semibold text-gray-500 dark:text-gray-400">
                 Order
               </label>
-
-              <div
-                className="
- mt-2 flex items-center justify-between
- w-full px-4 py-3 rounded-xl
- bg-gray-50 dark:bg-white/5
- border border-gray-200 dark:border-white/10
- "
-              >
-                {/* VALUE (LEFT SIDE) */}
+              <div className="mt-2 flex items-center justify-between w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10">
                 <span className="text-sm font-semibold text-gray-900 dark:text-white">
                   {order}
                 </span>
-
-                {/* CONTROLS (RIGHT SIDE) */}
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
-                    onClick={() =>
-                      setOrder((prev: number) => Math.max(1, prev - 1))
-                    }
-                    className="
- p-2 rounded-lg
- hover:bg-gray-200 dark:hover:bg-white/10
- transition
- text-gray-600 dark:text-gray-300
- "
+                    onClick={() => setOrder((prev) => Math.max(1, prev - 1))}
+                    className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-white/10 transition text-gray-600 dark:text-gray-300"
                   >
                     <MdRemove size={18} />
                   </button>
-
                   <button
                     type="button"
-                    onClick={() => setOrder((prev: number) => prev + 1)}
-                    className="
- p-2 rounded-lg
- hover:bg-gray-200 dark:hover:bg-white/10
- transition
- text-gray-600 dark:text-gray-300
- "
+                    onClick={() => setOrder((prev) => prev + 1)}
+                    className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-white/10 transition text-gray-600 dark:text-gray-300"
                   >
                     <MdAdd size={18} />
                   </button>
@@ -241,33 +231,27 @@ export default function CreateModule({ courseId, onSuccess }: Props) {
             </div>
 
             {error && (
-              <p className="text-sm text-red-600 dark:text-red-400">
+              <p className="text-sm text-red-600 dark:text-red-400 font-medium">
                 {error}
               </p>
             )}
             {success && (
-              <p className="text-sm text-green-600 dark:text-green-400">
+              <p className="text-sm text-green-600 dark:text-green-400 font-medium">
                 {success}
               </p>
             )}
 
-            {/* BUTTON */}
+            {/* SUBMIT BUTTON */}
             <button
               type="submit"
               disabled={loading}
-              className="
- w-full py-3 rounded-xl
- bg-[#16423C] hover:bg-[#1d6158]
- text-white font-semibold
- transition
- disabled:opacity-50 disabled:cursor-not-allowed
- "
+              className="w-full mt-4 py-3 rounded-xl bg-[#16423C] hover:bg-[#1d6158] text-white font-semibold transition disabled:opacity-50"
             >
-              {loading ? "Creating Module..." : "Create Module"}
+              {loading ? "Saving Changes..." : "Save Changes"}
             </button>
           </form>
         </div>
       </div>
-
+    </div>
   );
 }

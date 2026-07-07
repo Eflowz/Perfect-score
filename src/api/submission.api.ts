@@ -1,5 +1,4 @@
 import api from "./axios";
-import { getAccessToken } from "../utlis/storage";
 
 type SubmitPayload = {
  courseId: string;
@@ -8,16 +7,10 @@ type SubmitPayload = {
 };
 
 export const submitSolution = async (payload: SubmitPayload) => {
- const token = getAccessToken();
-
  try {
  console.log("🚀 Submitting solution...", payload);
 
- const res = await api.post("/submissions", payload, {
- headers: {
- Authorization: `Bearer ${token}`,
- },
- });
+ const res = await api.post("/submissions", payload);
 
  console.log("✅ Submission success:", res.data);
 
@@ -33,19 +26,12 @@ export const submitSolution = async (payload: SubmitPayload) => {
 
 
 export const getSubmissionReview = async (submissionId: string) => {
- const token = getAccessToken();
-
  try {
  console.log("🤖 Getting AI review...");
  console.log("📌 Submission ID:", submissionId);
 
  const res = await api.get(
- `/submissions/${submissionId}/review`,
- {
- headers: {
- Authorization: `Bearer ${token}`,
- },
- }
+ `/submissions/${submissionId}/review`
  );
 
  console.log("✅ AI Review Response:", res.data);

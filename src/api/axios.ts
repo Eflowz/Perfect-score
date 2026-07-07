@@ -28,7 +28,22 @@ type RetryableRequestConfig = InternalAxiosRequestConfig & {
   _retry?: boolean;
 };
 
-let refreshPromise: Promise<string> | null = null;
+let isRefreshing = false;
+let failedQueue: Array<{
+  resolve: (token: string) => void;
+  reject: (err: any) => void;
+}> = [];
+
+const processQueue = (error: any, token: string | null = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else if (token) {
+      prom.resolve(token);
+    }
+  });
+  failedQueue = [];
+};
 
 const refreshAccessToken = async () => {
   const refreshToken = getRefreshToken();
@@ -45,7 +60,9 @@ const refreshAccessToken = async () => {
   const { accessToken, refreshToken: nextRefreshToken, user } = response.data;
 
   setAccessToken(accessToken);
-  setRefreshToken(nextRefreshToken);
+  if (nextRefreshToken) {
+    setRefreshToken(nextRefreshToken);
+  }
 
   if (user) {
     setUser(user);
@@ -75,7 +92,18 @@ api.interceptors.response.use(
     const originalRequest = error.config as RetryableRequestConfig | undefined;
     const status = error.response?.status;
 
-    if (!originalRequest || status !== 401 || originalRequest._retry) {
+    if (!originalRequest) {
+      return Promise.reject(error);
+    }
+
+    // If retried request still gets 401, session is dead. Clear it!
+    if (status === 401 && originalRequest._retry) {
+      clearExpiredSession();
+      return Promise.reject(error);
+    }
+
+    // Only attempt refresh on 401 and if it hasn't been retried yet
+    if (status !== 401 || originalRequest._retry) {
       return Promise.reject(error);
     }
 
@@ -88,21 +116,34 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
+    if (isRefreshing) {
+      return new Promise<string>((resolve, reject) => {
+        failedQueue.push({ resolve, reject });
+      })
+        .then((token) => {
+          originalRequest.headers.Authorization = `Bearer ${token}`;
+          return api(originalRequest);
+        })
+        .catch((err) => Promise.reject(err));
+    }
+
     originalRequest._retry = true;
+    isRefreshing = true;
 
     try {
-      refreshPromise = refreshPromise ?? refreshAccessToken();
-      const nextAccessToken = await refreshPromise;
-
+      const nextAccessToken = await refreshAccessToken();
+      
       originalRequest.headers.Authorization = `Bearer ${nextAccessToken}`;
+      
+      processQueue(null, nextAccessToken);
+      isRefreshing = false;
 
       return api(originalRequest);
     } catch (refreshError) {
+      processQueue(refreshError, null);
+      isRefreshing = false;
       clearExpiredSession();
-
       return Promise.reject(refreshError);
-    } finally {
-      refreshPromise = null;
     }
   },
 );

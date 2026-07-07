@@ -1,8 +1,5 @@
 
-
 import api from "./axios";
-
-import { getAccessToken } from "../utlis/storage";
 
 export const createQuiz = async (
  courseId: string,
@@ -11,14 +8,32 @@ export const createQuiz = async (
 
  const response = await api.post(
  `/courses/${courseId}/quizzes`,
- data,
- {
- headers: {
- Authorization: `Bearer ${getAccessToken()}`,
- "Content-Type": "application/json",
- },
- }
+ data
  );
-console.log("TOKEN:", getAccessToken());
  return response.data.data ?? response.data;
+};
+
+export const updateQuiz = async (
+  quizId: string,
+  data: any,
+  token: string,
+) => {
+  const response = await api.put(`/quizzes/${quizId}`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data.data ?? response.data;
+};
+
+export const deleteQuiz = async (
+  quizId: string,
+  token: string,
+) => {
+  const response = await api.delete(`/quizzes/${quizId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
 };

@@ -33,7 +33,11 @@ useEffect (()=>{
           isSidebarExpanded ? "pl-64" : "pl-20"
         }`}
       >
-        <Header />
+        <Header
+          showSidebarToggle
+          isSidebarExpanded={isSidebarExpanded}
+          onSidebarToggle={() => setIsSidebarExpanded((prev) => !prev)}
+        />
 
         <main className="p-8 max-w-7xl w-full mx-auto space-y-6 flex-1">
           <Outlet />

@@ -1,9 +1,11 @@
 import "./index.css";
 import { Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/common/ScrollToTop";
+import { useTokenRefresh } from "./hooks/useTokenRefresh";
 
 import { ProtectedRoute } from "./routes/ProtectedRoutes";
 import { PublicRoute } from "./routes/PublicRoute";
+// ... (rest of imports unchanged)
 
 import Home from "./pages/landingPage/Home";
 import Register from "./pages/auth/Register";
@@ -36,6 +38,8 @@ import QuizManagement from "./pages/admin/Adminsection/QuizManagement";
 import QuizPage from "./pages/admin/Adminsection/QuizPage";
 
 function App() {
+  useTokenRefresh();
+
   return (
     <>
       <ScrollToTop />

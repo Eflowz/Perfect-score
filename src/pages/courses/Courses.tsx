@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 import { useCourse } from "../../context/course/useCourse";
 import { MdBook } from "react-icons/md";
@@ -7,6 +8,8 @@ import CourseCardSkeleton from "../../components/common/CourseCradSkeleton";
 import EmptyState from "../../components/common/EmptyCardState";
 
 export default function Courses() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
   const { courses, loading, fetchCourses, removeCourse } = useCourse();
 
   useEffect(() => {
@@ -57,6 +60,7 @@ export default function Courses() {
               key={course.id}
               course={course}
               removeCourse={removeCourse}
+              isAdmin={isAdminRoute}
             />
           ))}
         </div>

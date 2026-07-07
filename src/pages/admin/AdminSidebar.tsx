@@ -7,8 +7,6 @@ import {
   MdForum,
   MdBookmark,
   MdQuiz,
-  MdChevronLeft,
-  MdChevronRight,
   MdSettings,
 } from "react-icons/md";
 
@@ -17,7 +15,7 @@ interface SidebarProps {
   setIsExpanded: (expanded: boolean) => void;
 }
 
-const AdminSidebar = ({ isExpanded, setIsExpanded }: SidebarProps) => {
+const AdminSidebar = ({ isExpanded, setIsExpanded: _setIsExpanded }: SidebarProps) => {
   const location = useLocation();
 
   const menuItems = [
@@ -48,7 +46,7 @@ ${isExpanded ? "w-64" : "w-20"}`}
       <div className="p-4">
         {/* BRAND */}
 
-        <div className="flex items-center justify-between mb-6">
+        <div className="mb-6">
           <div className="overflow-hidden">
             <h1 className="text-lg font-bold text-gray-900 dark:text-white">
               PerfectScore
@@ -62,13 +60,6 @@ ${isExpanded ? "w-64" : "w-20"}`}
               Admin Workspace
             </p>
           </div>
-
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="p-1.5 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 transition"
-          >
-            {isExpanded ? <MdChevronLeft /> : <MdChevronRight />}
-          </button>
         </div>
 
         {/* MENU */}

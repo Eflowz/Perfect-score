@@ -10,7 +10,7 @@ import EmptyState from "../../../components/common/EmptyCardState";
 import type { Course } from "../../../types/courses.types";
 import EditCourseDrawer from "../EditCourseDrawer";
 export default function AdminCoursesSection() {
-  const { courses, removeCourse } = useCourse();
+  const { courses, removeCourse, updateCourse: updateCourseInContext } = useCourse();
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
 
   const [open, setOpen] = useState(false);
@@ -191,16 +191,27 @@ export default function AdminCoursesSection() {
           course={selectedCourse}
           loading={false}
           onSave={async (data) => {
-            console.log("Selected course:", selectedCourse);
-            console.log("Update data:", data);
+            if (!selectedCourse) return;
 
-            await updateCourse(
-              selectedCourse!.id,
-              data,
-              getAccessToken() as string,
-            );
+            try {
+              await updateCourse(
+                selectedCourse.id,
+                data,
+                getAccessToken() as string,
+              );
 
-            setOpen(false);
+              await updateCourseInContext(selectedCourse.id, {
+                title: data.title,
+                description: data.description,
+                level: data.level,
+                order: data.order,
+              } as Partial<Course>);
+
+              setOpen(false);
+            } catch (error) {
+              console.error("Failed to update course:", error);
+              alert("Failed to update course.");
+            }
           }}
         />
       </div>

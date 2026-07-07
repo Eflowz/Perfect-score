@@ -1,6 +1,4 @@
 import api from "./axios";
-import { getAccessToken } from "../utlis/storage";
- const token = getAccessToken();
 
 export const getCourseQuizzes = async (
  courseId:string
@@ -8,12 +6,7 @@ export const getCourseQuizzes = async (
 
  
 const res = await api.get(
- `/courses/${courseId}/quizzes`,
- {
- headers: {
- Authorization: `Bearer ${token}`,
- },
- }
+ `/courses/${courseId}/quizzes`
  );
  
  return res.data.data;

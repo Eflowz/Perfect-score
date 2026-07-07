@@ -9,6 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { getRoadmapTrack } from "../../../api/dashboard.api";
 import type { RoadmapTrack } from "../../../types/roadmap";
+import LoadingState from "../../../components/common/loadingState";
 const PerformanceTracker = () => {
   // Active course track summary data modeling
   /*
@@ -74,9 +75,9 @@ const PerformanceTracker = () => {
  loadTrack();
  }, []);
 
-if (loading) return <p>Loading roadmap...</p>;
- 
-if (!data) return <p>Loading roadmap...</p>;
+if (loading) return <LoadingState />;
+
+if (!data) return <LoadingState/>;
 
 
   return (

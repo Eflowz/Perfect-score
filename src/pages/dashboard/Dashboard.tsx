@@ -13,7 +13,6 @@ const DashBoard = () => {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex">
       <Sidebar
         isExpanded={isSidebarExpanded}
-        setIsExpanded={setIsSidebarExpanded}
         isAdmin={isAdmin}
       />
 
@@ -22,7 +21,11 @@ const DashBoard = () => {
           isSidebarExpanded ? "pl-64" : "pl-20"
         }`}
       >
-        <Header />
+        <Header
+          showSidebarToggle
+          isSidebarExpanded={isSidebarExpanded}
+          onSidebarToggle={() => setIsSidebarExpanded((prev) => !prev)}
+        />
 
         <main className="p-8 max-w-7xl w-full mx-auto flex-1">
           <Outlet />

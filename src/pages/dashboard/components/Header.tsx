@@ -1,12 +1,13 @@
 import { LogoutButton } from "../../auth/Logout";
 import {
   MdSearch,
-  MdNotificationsNone,
   MdOutlineKeyboardCommandKey,
   MdDarkMode,
   MdLightMode,
   MdKeyboardArrowDown,
   MdAdd,
+  MdChevronLeft,
+  MdChevronRight,
 } from "react-icons/md";
 import CreateCourseModal from "../../admin/Adminsection/CreateCourseModal";
 import { getCurrentUser } from "../../../api/user.api";
@@ -15,7 +16,17 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import { useUser } from "../../../context/user/useUser";
 import NotificationDropdown from "../../../components/common/NotificationDropdown";
 
-const Header = () => {
+interface HeaderProps {
+  showSidebarToggle?: boolean;
+  isSidebarExpanded?: boolean;
+  onSidebarToggle?: () => void;
+}
+
+const Header = ({
+  showSidebarToggle = false,
+  isSidebarExpanded = true,
+  onSidebarToggle,
+}: HeaderProps) => {
   const { pathname } = useLocation();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -100,6 +111,16 @@ const showSearch =
         
         {/* Left Column: Breadcrumbs */}
         <div className="flex items-center space-x-2 text-[10px] font-mono tracking-wide">
+          {showSidebarToggle && (
+            <button
+              type="button"
+              onClick={onSidebarToggle}
+              className="mr-2 p-2 rounded-xl border border-gray-200/80 dark:border-white/10 bg-white/70 dark:bg-gray-950/70 hover:bg-gray-100 dark:hover:bg-white/5 text-gray-700 dark:text-gray-200 transition-colors"
+              aria-label={isSidebarExpanded ? "Collapse sidebar" : "Expand sidebar"}
+            >
+              {isSidebarExpanded ? <MdChevronLeft size={18} /> : <MdChevronRight size={18} />}
+            </button>
+          )}
           {pathnames.map((value, index) => {
             const to = `/${pathnames.slice(0, index + 1).join("/")}`;
             const isLast = index === pathnames.length - 1;

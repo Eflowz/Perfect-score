@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MdPlayArrow, MdMenuBook, MdDeleteOutline } from "react-icons/md"; 
+import { getCourseProgress } from "../../api/progress.api";
 
 interface ModuleItem {
   id: string;
@@ -22,12 +24,38 @@ interface CourseCardProps {
 
 export default function CourseCard({ course, removeCourse, isAdmin = false }: CourseCardProps) {
   const totalModules = course.modules?.length || 0;
+  const [hasStartedCourse, setHasStartedCourse] = useState(false);
+  
+  useEffect(() => {
+    const loadProgress = async () => {
+      try {
+        const progress = await getCourseProgress(course.id);
+        const items = Array.isArray(progress)
+          ? progress
+          : progress?.data || progress?.progress || [];
+
+        const started = items.some((item: any) => {
+          const hasActivity = Boolean(item?.moduleId || item?.completed || item?.lastAccessed || item?.timeSpent);
+          return hasActivity;
+        });
+
+        setHasStartedCourse(started);
+      } catch (error) {
+        console.error("Failed to load course progress:", error);
+        setHasStartedCourse(false);
+      }
+    };
+
+    loadProgress();
+  }, [course.id]);
   
   // Safe default module link generation
   const firstModuleId = course.modules && course.modules.length > 0 ? course.modules[0].id : null;
-  const targetLink = firstModuleId 
-    ? `/dashboard/courses/${course.id}/modules/${firstModuleId}`
-    : `/dashboard/courses/${course.id}`;
+  const targetLink = isAdmin
+    ? `/admin/courses/${course.id}`
+    : firstModuleId
+      ? `/dashboard/courses/${course.id}/modules/${firstModuleId}`
+      : `/dashboard/courses/${course.id}`;
 
   return (
     <div className="group flex flex-col justify-between bg-white dark:bg-[#0F2C28] border border-gray-200/80 dark:border-white/5 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-gray-300 dark:hover:border-emerald-800/40 transition-all duration-300 h-64 relative overflow-hidden">
@@ -92,7 +120,7 @@ export default function CourseCard({ course, removeCourse, isAdmin = false }: Co
           to={targetLink}
           className="inline-flex items-center gap-1.5 h-9 px-4 rounded-xl bg-[#16423C] dark:bg-[#E2FB6C] text-white dark:text-[#0F2C28] text-xs font-bold hover:bg-[#0F2C28] dark:hover:bg-[#d0f04c] transition-colors shadow-sm select-none"
         >
-          <span>Start Learning</span>
+          <span>{isAdmin ? "Edit Course" : hasStartedCourse ? "Continue Learning" : "Start Learning"}</span>
           <MdPlayArrow size={14} className="group-hover:translate-x-0.5 transition-transform" />
         </Link>
       </div>

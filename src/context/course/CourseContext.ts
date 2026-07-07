@@ -12,10 +12,7 @@ type CourseContextType = {
 
   updateCourse: (
     id: string,
-    data: {
-      id: string;
-      data: Partial<Course>;
-    },
+    data: Partial<Course>,
   ) => Promise<void>;
 
   fetchCourses: () => Promise<void>;

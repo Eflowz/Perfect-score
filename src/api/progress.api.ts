@@ -1,6 +1,5 @@
 import api from "./axios";
-import { getAccessToken } from "../utlis/storage";
- const token = getAccessToken();
+
 export const completeModule = async (
  moduleId: string,
  timeSpent: number
@@ -16,12 +15,7 @@ export const completeModule = async (
 
 export const getCourseProgress = async (courseId: string) => {
 const res = await api.get(
- `/progress/course/${courseId}`,
- {
- headers: {
- Authorization: `Bearer ${token}`,
- },
- }
+ `/progress/course/${courseId}`
  );
 
    

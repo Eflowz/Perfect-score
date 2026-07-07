@@ -7,10 +7,11 @@ import { getAccessToken } from "../../utlis/storage";
 import { executeCode } from "../../api/ide.api";
 import { submitSolution } from "../../api/submission.api";
 import { getSubmissionReview } from "../../api/submission.api";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 
 const Sandbox = () => {
+  const location = useLocation();
   const [code, setCode] = useState(`# Perfect Score IDE Sandbox
 def greet(name):
     print(f"Hello, {name}!")
@@ -63,6 +64,16 @@ if(!token) return
 }, []);
 */
  const isRemoteUpdate = useRef(false);
+
+ useEffect(() => {
+   const params = new URLSearchParams(location.search);
+   const prefilledCode = params.get("code");
+
+   if (prefilledCode) {
+     setCode(decodeURIComponent(prefilledCode));
+     setOutput("Run the script to see outputs here...");
+   }
+ }, [location.search]);
 
  //CONNECT WEBSOCKET
 

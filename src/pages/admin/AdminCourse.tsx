@@ -1,9 +1,5 @@
-import Courses from "../courses/Courses";
+import AdminCoursesSection from "./Adminsection/AdminCourseSection";
 
 export default function AdminCourses() {
-  return (
-    <>
-      <Courses />
-    </>
-  );
+  return <AdminCoursesSection />;
 }

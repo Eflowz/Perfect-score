@@ -355,7 +355,7 @@ export default CreateQuiz;
 */
 
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { FiPlus, FiTrash2, FiCheckCircle } from "react-icons/fi";
 
 import { createQuiz } from "../../api/admin.quiz.api";
@@ -377,13 +377,22 @@ type Question = {
 const CreateQuiz = () => {
 
  const { id: courseId } = useParams();
+ const [searchParams] = useSearchParams();
+ const queryModuleId = searchParams.get("moduleId") || "";
 
 
  const [course, setCourse] = useState<Course | null>(null);
 
  const [moduleId, setModuleId] = useState("");
 
+ useEffect(() => {
+   if (queryModuleId) {
+     setModuleId(queryModuleId);
+   }
+ }, [queryModuleId]);
+
  const [title, setTitle] = useState("");
+
 
  const [passingScore, setPassingScore] = useState(70);
 
