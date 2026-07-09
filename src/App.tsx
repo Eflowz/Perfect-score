@@ -1,7 +1,7 @@
 import "./index.css";
 import { Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/common/ScrollToTop";
-import { useTokenRefresh } from "./hooks/useTokenRefresh";
+// Token refresh is handled by the axios interceptor; remove the duplicate hook call.
 
 import { ProtectedRoute } from "./routes/ProtectedRoutes";
 import { PublicRoute } from "./routes/PublicRoute";
@@ -38,8 +38,6 @@ import QuizManagement from "./pages/admin/Adminsection/QuizManagement";
 import QuizPage from "./pages/admin/Adminsection/QuizPage";
 
 function App() {
-  useTokenRefresh();
-
   return (
     <>
       <ScrollToTop />

@@ -1,15 +1,20 @@
 import { completeModule } from "../../api/progress.api";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MdCheckCircle, MdSchool } from "react-icons/md";
 
 interface CompleteButtonProps {
   moduleId: string;
+  initialCompleted?: boolean;
   onComplete?: () => void;
 }
 
-const CompleteButton = ({ moduleId, onComplete }: CompleteButtonProps) => {
+const CompleteButton = ({ moduleId, initialCompleted = false, onComplete }: CompleteButtonProps) => {
   const [loading, setLoading] = useState(false);
-  const [completed, setCompleted] = useState(false);
+  const [completed, setCompleted] = useState(initialCompleted);
+
+  useEffect(() => {
+    setCompleted(initialCompleted);
+  }, [initialCompleted]);
 
   const handleComplete = async () => {
     try {

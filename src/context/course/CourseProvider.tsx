@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import { CourseContext } from "./CourseContext";
-
 import { getCourses, getCourseById } from "../../api/courses.api";
 import { getAccessToken } from "../../utlis/storage";
 import { updateCourse as updateCourseApi } from "../../api/courses.api";
@@ -35,7 +34,7 @@ export function CourseProvider({ children }: { children: React.ReactNode }) {
     const data = await getCourseById(id);
 
     setSelectedCourse(data);
-    console.log("Fetched course by ID:", data);
+    // console.log("Fetched course by ID:", data);
   };
 
   const removeCourse = (id: string) => {

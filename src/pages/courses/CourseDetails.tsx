@@ -23,11 +23,11 @@ import type { Module as ModuleType } from "../../types/courses.types";
 
 export default function CourseDetails() {
   const { id } = useParams();
-  const params = useParams();
+  // const params = useParams();
   const navigate = useNavigate();
  
-  console.log("course-id:", params);
-  console.log("params ID:", id); // 👈 PUT IT HERE
+  // console.log("course-id:", params);
+  // console.log("params ID:", id); 
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [openEditDrawer, setOpenEditDrawer] = useState(false);
   const [editingModule, setEditingModule] = useState<ModuleType | null>(null);
@@ -129,6 +129,13 @@ export default function CourseDetails() {
 
   const handleManageQuiz = (module: ModuleType) => {
     navigate(`/admin/courses/${id}/create-quiz?moduleId=${module.id}`);
+  };
+
+  const handleEditQuiz = (module: ModuleType) => {
+    const quiz = quizzes.find((q) => q.moduleId === module.id);
+    if (quiz) {
+      navigate(`/admin/courses/${id}/create-quiz?quizId=${quiz.id}&moduleId=${module.id}`);
+    }
   };
 
 
@@ -354,6 +361,7 @@ export default function CourseDetails() {
                 onDelete={() => handleDeleteModule(module)}
                 onManageQuiz={() => handleManageQuiz(module)}
                 onDeleteQuiz={() => handleDeleteQuiz(module.id)}
+                onEditQuiz={() => handleEditQuiz(module)}
               />
             ))
           ) : (

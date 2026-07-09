@@ -16,6 +16,7 @@ type ModuleCardProps = {
   onDelete?: () => void;
   onManageQuiz?: () => void;
   onDeleteQuiz?: () => void;
+  onEditQuiz?: () => void;
 };
 
 export default function ModuleCard({
@@ -31,6 +32,7 @@ export default function ModuleCard({
   onDelete,
   onManageQuiz,
   onDeleteQuiz,
+  onEditQuiz,
 }: ModuleCardProps) {
   const [openMenu, setOpenMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -144,16 +146,28 @@ export default function ModuleCard({
                   <div className="border-t border-gray-100 dark:border-white/5 my-1" />
 
                   {quizAvailable ? (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setOpenMenu(false);
-                        onDeleteQuiz?.();
-                      }}
-                      className="flex items-center gap-2 w-full px-3 py-2 text-left text-xs font-semibold text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10"
-                    >
-                      <MdDelete size={14} /> Delete Quiz
-                    </button>
+                    <>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setOpenMenu(false);
+                          onEditQuiz?.();
+                        }}
+                        className="flex items-center gap-2 w-full px-3 py-2 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5"
+                      >
+                        <MdEdit size={14} className="text-gray-400" /> Edit Quiz
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setOpenMenu(false);
+                          onDeleteQuiz?.();
+                        }}
+                        className="flex items-center gap-2 w-full px-3 py-2 text-left text-xs font-semibold text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10"
+                      >
+                        <MdDelete size={14} /> Delete Quiz
+                      </button>
+                    </>
                   ) : (
                     <button
                       onClick={(e) => {

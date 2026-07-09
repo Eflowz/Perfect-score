@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useCourse } from "../../context/course/useCourse";
-import { getCourseQuizzes } from "../../api/quiz.api";
+import { getCourseQuizzes, getQuizById } from "../../api/quiz.api";
+import { getCourseProgress } from "../../api/progress.api";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
@@ -39,6 +40,7 @@ export default function LessonPage() {
   const navigate = useNavigate();
   const { selectedCourse, fetchCourseById, loading } = useCourse();
   const [courseQuizzes, setCourseQuizzes] = useState<any[]>([]);
+  const [completedModuleIds, setCompletedModuleIds] = useState<string[]>([]);
   const [lessonCompleted, setLessonCompleted] = useState(false);
   const [activeQuiz, setActiveQuiz] = useState<any>(null);
   const [activeQuizLoading, setActiveQuizLoading] = useState(false);
@@ -66,15 +68,39 @@ export default function LessonPage() {
   }, [courseId]);
 
   useEffect(() => {
+    const loadProgress = async () => {
+      if (!courseId) return;
+      try {
+        const progressData = await getCourseProgress(courseId);
+        const items = Array.isArray(progressData)
+          ? progressData
+          : progressData?.data || progressData?.progress || [];
+
+        const completedIds = items
+          .filter((item: any) => item?.completed)
+          .map((item: any) => item?.moduleId)
+          .filter(Boolean);
+
+        setCompletedModuleIds(completedIds);
+      } catch (error) {
+        console.error("Failed to load course progress:", error);
+      }
+    };
+
+    loadProgress();
+  }, [courseId]);
+
+  useEffect(() => {
     if (selectedCourse && moduleId) {
-      setLessonCompleted(false);
+      const isCompleted = completedModuleIds.includes(moduleId);
+      setLessonCompleted(isCompleted);
       setActiveQuiz(null);
       setActiveQuizLoading(false);
       setQuizAnswers([]);
       setQuizSubmitted(false);
       setQuizScore(null);
     }
-  }, [selectedCourse, moduleId]);
+  }, [selectedCourse, moduleId, completedModuleIds]);
 
   const modules = selectedCourse?.modules || [];
   const currentIndex = modules.findIndex((m) => m.id === moduleId);
@@ -86,10 +112,9 @@ export default function LessonPage() {
   const currentModuleQuizzes = currentModule
     ? courseQuizzes.filter((quiz) => quiz.moduleId === currentModule.id)
     : [];
+  const currentQuizId = currentModuleQuizzes[0]?.id;
 
   useEffect(() => {
-    const currentQuizId = currentModuleQuizzes[0]?.id;
-
     if (!currentQuizId) {
       setActiveQuiz(null);
       setQuizAnswers([]);
@@ -101,11 +126,10 @@ export default function LessonPage() {
     const loadQuizDetails = async () => {
       setActiveQuizLoading(true);
       try {
-        const data = await getCourseQuizzes(courseId!);
-        const matchingQuiz = data?.find((quiz: any) => quiz.id === currentQuizId);
-        if (matchingQuiz) {
-          setActiveQuiz(matchingQuiz);
-          setQuizAnswers(new Array(matchingQuiz.questions?.length || 0).fill(""));
+        const data = await getQuizById(currentQuizId);
+        if (data) {
+          setActiveQuiz(data);
+          setQuizAnswers(new Array(data.questions?.length || 0).fill(""));
         } else {
           setActiveQuiz(null);
         }
@@ -117,7 +141,7 @@ export default function LessonPage() {
     };
 
     loadQuizDetails();
-  }, [courseId, currentModuleQuizzes]);
+  }, [courseId, currentQuizId]);
 
   if (loading || !selectedCourse) {
     return <LessonSkeleton />;
@@ -380,6 +404,7 @@ export default function LessonPage() {
               </div>
               <CompleteButton
                 moduleId={currentModule.id}
+                initialCompleted={lessonCompleted}
                 onComplete={() => setLessonCompleted(true)}
               />
             </div>
